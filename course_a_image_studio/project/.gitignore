@@ -1,0 +1,10 @@
+# Never commit your key.
+.env
+
+# Your generated images - keep the ones you like somewhere else
+gallery/
+
+# Python leftovers
+__pycache__/
+*.pyc
+.venv/

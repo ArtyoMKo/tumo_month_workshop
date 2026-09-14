@@ -1,0 +1,22 @@
+# AI Image Studio - the packages this project needs.
+#
+# Install them with:   pip install -r requirements.txt
+# (Activate your virtual environment first, or they'll go to the wrong place.)
+#
+# The >= means "this version or newer". Pinning a minimum rather than an exact version
+# means you get bug fixes, but nothing from before the features we rely on existed.
+
+langchain>=1.0.0             # the provider-agnostic layer: init_chat_model, content_blocks
+langchain-openai>=1.0.0      # the OpenAI part of it, including image generation
+python-dotenv>=1.0.0         # reads the .env file so our key stays out of the code
+
+# --- For the notebooks (sessions 1-5) ---------------------------------------
+jupyter>=1.0.0               # only needed for the notebooks, not for main.py
+ipykernel>=6.29.0            # lets VS Code run this venv as a notebook kernel
+
+# --- Optional: other providers ----------------------------------------------
+# Uncomment a line here if you change CHAT_MODEL in config.py to that provider.
+#
+# langchain-anthropic>=1.0.0        # for "anthropic:..."
+# langchain-google-genai>=2.0.0     # for "google-genai:..."
+# langchain-ollama>=1.0.0           # for "ollama:..." - free, runs on this computer
