@@ -3,9 +3,13 @@
 # Install them with:   pip install -r requirements.txt
 # (Activate your virtual environment first, or they'll go to the wrong place.)
 #
-# This is a bigger download than it looks: langchain-huggingface pulls in PyTorch (~1.1 GB)
-# and the embedding model itself is another ~470 MB. It only happens once, but leave it
-# time - and on a shared network, ask your teacher whether it is already cached.
+# AT TUMO YOU DO NOT NEED TO RUN THIS. The lab Macs already have everything installed at
+# /opt/tumo/ai-workshop/.venv - just switch it on:
+#     source /opt/tumo/ai-workshop/.venv/bin/activate
+#
+# This file is for running the project on your own computer after the workshop. It is a
+# bigger download than it looks: langchain-huggingface pulls in PyTorch (~1.1 GB) and the
+# embedding model is another ~470 MB. Once only, but leave it time.
 
 langchain>=1.0.0                 # the provider-agnostic layer: init_chat_model
 langchain-anthropic>=1.0.0       # the Claude part of it - this is what answers questions

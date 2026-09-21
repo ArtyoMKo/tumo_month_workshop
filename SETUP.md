@@ -1,140 +1,169 @@
-# Setup - getting your laptop ready
+# Setup — getting started
 
-This takes about 40 minutes the first time, and it only has to happen once.
-Work through it in order. If a step fails, **stop and raise your hand** - don't skip ahead,
-because every step depends on the one before it.
+**Mac. Lesson 1. About 15 minutes.**
 
-> **Teachers:** please read `TEACHER_NOTES.md` first. If the lab machines are prepared in
-> advance (Steps 1 and 2 done, and for Course B the embedding model pre-downloaded),
-> this drops from ~40 minutes to ~15 and Lesson 1 gets its hands-on time back.
+TUMO's IT team has already installed Python, VS Code and every package you need, so
+there is no waiting for downloads. You are connecting the pieces, not installing them.
+
+> **Teachers:** the install itself is covered by `IT_REQUIREMENTS.md`, which IT completes
+> before Lesson 1. This page assumes that was done.
 
 ---
 
-## Step 1 - Install Python
+## Before anything: where your work lives
 
-Go to https://www.python.org/downloads/ and install **Python 3.12**.
+You may sit at a **different laptop each lesson**. So your work does **not** live on the
+laptop — it lives in **your own folder on TUMO's shared storage**, which follows you
+between machines.
 
-**On Windows, there is one checkbox that matters more than anything else on the screen:**
+| | Where it lives | Why |
+|---|---|---|
+| Python and the packages | on the laptop, at `/opt/tumo/ai-workshop/.venv` | large, and identical on every machine |
+| **Your code, your documents, your index** | **your shared folder** | so it is there next lesson, whichever Mac you sit at |
 
-> ☑ **Add python.exe to PATH**
+Your teacher will give you your folder's exact path. It looks something like:
 
-Tick it. If you forget, nothing else in this guide will work, and the error message
-you get will not mention Python at all. Re-run the installer and tick it.
-
-Check it worked. Open a terminal (Windows: press Win+R, type `cmd`, Enter. Mac: open
-Terminal from Applications > Utilities) and type:
-
-```bash
-python --version
+```
+/Volumes/TUMO/students/your_name/
 ```
 
-You should see `Python 3.12.something`. On Mac you may need `python3 --version` instead -
-if so, use `python3` and `pip3` everywhere below.
+Everything you make in this workshop goes inside it.
 
-## Step 2 - Install VS Code and two extensions
+<br/>
 
-Install VS Code from https://code.visualstudio.com/
+> ### ⚠️ Your workshop folder is not private
+>
+> **Your teacher can see everything in your workshop folder**, including the documents
+> you bring from Lesson 2. That is normal — it is how he helps when something breaks.
+>
+> So: **do not put anything private in it.** Not a diary, not personal messages, not
+> anything about your health, your family, or anyone else. Bring notes about a *subject*
+> — biology, history, a game you play, a book you like.
+>
+> If you are ever unsure whether something is fine to bring: it probably isn't. Pick
+> something else. There is no shortage of things to build an assistant about.
 
-Then open it, click the **Extensions** icon in the left sidebar (the four squares), and install:
+---
 
-1. **Python** - made by Microsoft
-2. **Jupyter** - made by Microsoft
+## Step 1 — Open a Terminal
 
-These two are what let VS Code run notebooks. Without them the `.ipynb` files open as
-unreadable JSON.
+Press **Cmd + Space**, type `Terminal`, press Enter.
 
-## Step 3 - Make your project folder and a virtual environment
-
-Pick where your work will live. In a terminal:
+Check Python is there:
 
 ```bash
-cd Desktop
+python3.12 --version
+```
+
+You should see `Python 3.12.something`. If you get "command not found", raise your hand —
+that's IT's job, not yours.
+
+## Step 2 — Go to your folder and make the project
+
+Replace the path below with the one your teacher gave you:
+
+```bash
+cd /Volumes/TUMO/students/your_name
+
 mkdir ai_workshop
 cd ai_workshop
+mkdir documents
 ```
 
-Now create a **virtual environment**. This is a private box of Python packages that belongs
-to this project only, so that installing something here can never break anything else on
-the computer:
+`documents` is where your own notes go from Lesson 2.
+
+## Step 3 — Turn on the Python environment
+
+Everything you need is already installed, in one shared place. You just switch it on:
 
 ```bash
-python -m venv .venv
+source /opt/tumo/ai-workshop/.venv/bin/activate
 ```
 
-Then **activate** it:
+Your prompt now starts with `(.venv)`. That is how you know it worked.
+
+> **You must do this in every new Terminal window, every lesson.** It is not permanent.
+> When something that worked yesterday says "module not found", this is almost always why.
+>
+> Tired of typing it? Run this once and it becomes `aiwork`:
+> ```bash
+> echo "alias aiwork='source /opt/tumo/ai-workshop/.venv/bin/activate'" >> ~/.zshrc
+> ```
+> (This lives on the laptop, so you'd repeat it if you change machines.)
+
+## Step 4 — Your API key
+
+Your teacher will give you a key starting `sk-ant-`. **It is a password.** Do not paste it
+into your code, into a message, or into a screenshot.
+
+Create a file called exactly `.env` inside `ai_workshop`:
 
 ```bash
-# Windows:
-.venv\Scripts\activate
-
-# Mac / Linux:
-source .venv/bin/activate
+echo "ANTHROPIC_API_KEY=sk-ant-paste-your-key-here" > .env
 ```
 
-You'll know it worked because your terminal prompt now starts with `(.venv)`.
+Then open it and replace the placeholder with the real key.
 
-> You have to activate the venv **every time you open a new terminal**. If a command
-> suddenly says "module not found" after it worked yesterday, this is almost always why.
+Rules for that line: **no quotes, no spaces around the `=`, no space at the end.**
 
-## Step 4 - Install the packages
+The dot at the start makes it hidden, and it is on every sensible project's ignore-list —
+so it never gets shared by accident.
 
-Your teacher will give you a `requirements.txt` file. Put it in your project folder, then:
+## Step 5 — Open the folder in VS Code
 
 ```bash
-pip install -r requirements.txt
+code .
 ```
 
-This downloads a few hundred megabytes. It is the slowest step. Go get a drink.
+(Or: VS Code → File → Open Folder → your `ai_workshop` folder.)
 
-## Step 5 - Your API key
+Copy the lesson notebooks your teacher gives you into this folder.
 
-You will be given a key that looks like `sk-ant-...`. **This key is a password.
-Do not paste it into your code, do not put it on Discord, do not commit it to GitHub.**
+## Step 6 — Pick the kernel
 
-Instead, create a file called exactly `.env` (yes, starting with a dot) in your project
-folder, containing one line:
+Open `lesson1.ipynb`. At the **top right** there is a button saying **Select Kernel**:
 
-```
-ANTHROPIC_API_KEY=sk-ant-paste-your-key-here
-```
+1. Click it
+2. **Python Environments...**
+3. Choose the one whose path contains **`/opt/tumo/ai-workshop/.venv`**
 
-No quotes. No spaces around the `=`. No spaces at the end of the line.
+**You must do this for every notebook you open.** If a notebook claims a package isn't
+installed even though it obviously is, check the kernel first. This is the single most
+common problem in the whole workshop.
 
-The reason for the dot at the start: files beginning with `.` are hidden by default, and
-`.env` is on every sensible project's ignore-list, so it never accidentally gets shared.
-
-## Step 6 - Open the notebook and pick the kernel
-
-Open your project folder in VS Code (File > Open Folder), then open `lesson1.ipynb`.
-
-At the **top right** of the notebook you'll see a button saying **Select Kernel**. Click it:
-
-1. Choose **Python Environments...**
-2. Choose the one that says `.venv` and is marked **Recommended** with a star
-
-**You have to do this for every new notebook you open.** If a notebook says a package
-isn't installed even though you definitely installed it, check the kernel first.
-
-## Step 7 - Check everything works
-
-Run `check_setup.py` from the terminal:
+## Step 7 — Check it works
 
 ```bash
 python check_setup.py
 ```
 
-Green ticks all the way down means you're ready. Anything red, raise your hand.
+Eight checks, in order. It stops at the first problem and tells you how to fix that
+specific thing. Green all the way down and you're ready.
 
 ---
 
-## The four errors you will actually hit
+## Every lesson after the first
 
-| What you see | What it means | The fix |
+You only do the full setup once. After that:
+
+```bash
+cd /Volumes/TUMO/students/your_name/ai_workshop
+source /opt/tumo/ai-workshop/.venv/bin/activate
+code .
+```
+
+Three lines. Then pick the kernel in whichever notebook you open.
+
+---
+
+## The four things that actually go wrong
+
+| What you see | What it means | Fix |
 |---|---|---|
-| `ModuleNotFoundError: No module named 'langchain'` | Wrong kernel, or venv not activated | Re-pick the kernel (Step 6), or re-activate the venv (Step 3) |
-| `NameError: name 'client' is not defined` | You skipped a cell, or restarted the kernel | Run every cell from the top, in order |
-| `AuthenticationError` / `401` | The key in `.env` is missing, wrong, or has a stray space | Re-check Step 5, character by character |
-| `python: command not found` | Python isn't on PATH (Windows), or it's `python3` (Mac) | Re-run the installer with the PATH box ticked, or use `python3` |
+| `ModuleNotFoundError` | Wrong kernel, or you forgot Step 3 in this Terminal | Re-pick the kernel (Step 6), or re-run Step 3 |
+| `NameError: name 'x' is not defined` | You skipped a cell, or restarted the kernel | Run every cell from the top, in order |
+| `No ANTHROPIC_API_KEY found` | `.env` is missing, misnamed, or in the wrong folder | It must be exactly `.env`, inside `ai_workshop` |
+| `No such file or directory` | You're in the wrong folder | `pwd` shows where you are; `cd` to your `ai_workshop` |
 
-Notice that three of these four have nothing to do with the code you wrote. That's normal.
-Most of the time you lose to a computer, you lose it to setup, not to logic.
+Three of those four have nothing to do with the code you wrote. That's normal. Most of
+the time you lose to a computer, you lose it to setup.

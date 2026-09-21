@@ -68,19 +68,30 @@ That's deliberate, and in Lesson 7 you'll find out why it matters.
 
 ## Step 1 — Make the folder (5 min)
 
+**In your shared folder, not on the laptop** — you may be at a different Mac next lesson,
+and your project needs to come with you. Replace the path with your own:
+
 ```bash
-cd Desktop
+cd /Volumes/TUMO/students/your_name
+
 mkdir study_buddy
 cd study_buddy
 mkdir documents
+
+source /opt/tumo/ai-workshop/.venv/bin/activate    # prompt must show (.venv)
+code .
 ```
 
-Copy your `.md` / `.txt` notes into `documents/`. Then open the folder in VS Code:
-**File → Open Folder → study_buddy**.
+Copy your `.md` / `.txt` notes into `documents/`, and copy your `.env` in too — the one
+with your API key.
 
-Copy your `.env` file in too — the one with your API key. And your `requirements.txt`.
+> **Why the split?** Python and the packages live on the laptop at
+> `/opt/tumo/ai-workshop/.venv` because they're large and identical everywhere. Only
+> *your* work — code, documents, the index you're about to build — goes on shared
+> storage, so it follows you between machines.
 
-✅ **Check:** VS Code's Explorer shows `study_buddy` with `documents/` inside it.
+✅ **Check:** VS Code's Explorer shows `study_buddy` with `documents/` inside it, and
+`pwd` shows your shared path, not `/Users/...`.
 
 ---
 

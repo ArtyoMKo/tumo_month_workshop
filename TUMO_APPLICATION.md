@@ -18,7 +18,11 @@ Artyom Kosakyan
 ```
 
 ## Workshop dates
-*Required — only you know these. 8 days.*
+```
+October 1st - October 25th 2026
+Thursdays 19:30-21:30 | Sundays 14:00-16:00
+8 lessons x 2 hours = 16 hours
+```
 
 ## Number of students
 ```
@@ -75,8 +79,8 @@ AI WORKSHOP
 
 BUILD AN AI ASSISTANT THAT ANSWERS FROM YOUR OWN NOTES
 
-[DATES]
-[DAYS] [START TIME] - [END TIME]
+October 1st - October 25th
+Thursdays 19:30 - 21:30 | Sundays 14:00 - 16:00
 
 
 Description
@@ -98,11 +102,11 @@ into numbers that capture meaning rather than spelling - so that a question in A
 can find an answer written in English - and how to search those numbers to retrieve
 exactly the paragraphs a question needs. Halfway through, the working code leaves the
 notebook: students move into VS Code and assemble a real, organised Python project with
-its own modules, a requirements file and a README. The final days are spent loading
+its own modules, a requirements file and a README. The final lessons are spent loading
 their own material, diagnosing why an answer came out wrong, measuring quality against a
 test set they write themselves, and presenting the result. Each student leaves with a
-program that runs on their own computer, that they wrote, and that knows about something
-they chose.
+program they wrote, running on a computer they can keep using, that knows about
+something they chose.
 
 
 To apply
@@ -116,10 +120,20 @@ Please also tell us what programming you have done so far, including any Python,
 what you would most like to understand about how AI tools actually work. No experience
 with AI is required.
 
+Please note that the documents you bring will be stored in your TUMO workshop folder,
+which your instructor can see. Choose material about a subject, not anything personal.
+
 
 Bio.
 
-[TO BE COMPLETED - see ANNOUNCEMENT.md]
+Artyom Kosakyan is an AI Engineer at Async Armenia, where he specialises in Voice
+AI. He studied Applied Mathematics and Informatics at Yerevan State University, and has
+spent the last three years teaching Python to students with the FAST Foundation -
+experience that shapes how this workshop is built: students write and run everything
+themselves from the first lesson, and every idea is introduced by making it work before
+naming it. His engineering work is in getting language and speech models to behave
+reliably in real products, which is exactly the problem at the centre of this course:
+not making an AI talk, but making it answer from something you can check.
 ```
 
 ---
@@ -139,11 +153,17 @@ DAY 1 - SETUP AND YOUR FIRST AI CALL
 - what an API is; why the key is a password
 
 > STEP 1: Setup (25mn)
-- Python 3.12, VS Code + the "Python" and "Jupyter" extensions
-- python -m venv .venv, activate (prompt shows "(.venv)"), pip install -r requirements.txt
-- create ".env" holding: ANTHROPIC_API_KEY=sk-ant-...   (no quotes, no spaces)
-- open lesson1.ipynb > Select Kernel > Python Environments > the .venv one.
-  Needed for EVERY notebook - the #1 cause of errors all workshop.
+- everything is pre-installed by IT, so this is connecting pieces, not installing them
+- explain the split: Python lives on the laptop, YOUR WORK lives in your shared folder,
+  because you may be at a different Mac next lesson
+- cd to your shared folder; mkdir ai_workshop; mkdir documents
+- source /opt/tumo/ai-workshop/.venv/bin/activate   (prompt must show "(.venv)" - this
+  is needed in EVERY new Terminal, every lesson)
+- create ".env" holding ANTHROPIC_API_KEY=sk-ant-...  (no quotes, no spaces)
+- code .   then open lesson1.ipynb > Select Kernel > Python Environments > the
+  /opt/tumo/ai-workshop/.venv one. Needed for EVERY notebook - the #1 error all workshop.
+- SAY OUT LOUD: your workshop folder is visible to me. When you bring documents next
+  lesson, bring notes about a subject - never a diary or anything personal.
 - hand out PYTHON_CHEATSHEET.ipynb. Runs with no key or internet, so it also occupies
   whoever finishes setup first.
 
@@ -554,35 +574,52 @@ test set with before/after scores; a live demo including one correct refusal.
 
 ## What software will you require?
 ```
-All free except the AI service. Everything runs locally - no cloud, no server.
+All free except the AI service. Everything runs on the laptop - no cloud, no server.
+All machines are macOS.
 
-- Python 3.12; VS Code + the Microsoft "Python" and "Jupyter" extensions
-- packages from a provided requirements.txt: langchain, langchain-anthropic,
-  langchain-chroma, langchain-huggingface, langchain-text-splitters,
-  sentence-transformers, chromadb, python-dotenv, jupyter, ipykernel, numpy
-- one Anthropic API key (Claude) from TUMO's existing contract, with a spend limit.
-  Students cannot create their own - API accounts require 18+.
+INSTALLED BY TUMO IT BEFORE DAY 1 (full instructions sent separately as
+IT_REQUIREMENTS.md):
+- Python 3.12
+- VS Code + the Microsoft "Python" and "Jupyter" extensions
+- one shared Python environment per machine at /opt/tumo/ai-workshop/.venv, containing:
+  langchain, langchain-anthropic, langchain-chroma, langchain-huggingface,
+  langchain-text-splitters, sentence-transformers, python-dotenv, jupyter, ipykernel,
+  numpy
+- THE CRITICAL ONE: pre-download the local embedding model (~470 MB per machine). It
+  downloads automatically on first use, so if it is not cached, 16 students trigger it
+  at once in lesson 4 and the lesson is lost. A one-line command is in the document.
 
-PREPARATION REQUEST FOR IT, the day before Day 1: pre-install Python, VS Code and the
-two extensions on all 16 machines, and pre-cache the packages and the local embedding
-model (~1.5 GB per machine). Sixteen students downloading that at once over shared wifi
-would cost a whole lesson. The one-line command is in the repo. With machines prepared,
-Day 1 setup takes 15 minutes instead of 40.
+Students do not run pip and do not need admin rights.
+
+PROVIDED BY ME:
+- one Anthropic API key (Claude) from TUMO's contract, with a spend limit. Students
+  cannot create their own - API accounts require 18+.
+
+NETWORK: outbound HTTPS to api.anthropic.com every lesson. If the lab uses a proxy or
+TLS inspection, I need to know beforehand.
 ```
 
 ## What hardware will you require?
 ```
-- 16 laptops or lab PCs (Windows, macOS or Linux - all three tested)
-- 8 GB RAM, ~3 GB free disk. The embedding model runs on the CPU. NO GPU REQUIRED.
-- permission to install software, or machines prepared by IT (preferred)
-- internet access, a projector, and a whiteboard
+- 16 macOS laptops
+- 8 GB RAM, ~4 GB free disk per machine. The embedding model runs on the CPU.
+  NO GPU REQUIRED.
+- a projector, and a whiteboard
 
 The whiteboard is used properly, not decoratively: on Day 4 students physically place
 word cards on a drawn 2-axis space to build intuition for embeddings, and Day 5 opens
 with them rebuilding the whole pipeline on it from memory.
 
-If machines are reset between lessons, the software prep must be reapplied and students
-must recreate their .env. Please confirm with IT beforehand.
+STORAGE - students may sit at a different laptop each lesson, so:
+- each student needs their personal directory on TUMO's shared storage, with write
+  access and ~2 GB free
+- the directory path must be the SAME on every machine, so one instruction works for
+  everyone
+- their code, documents and search index live there and follow them between machines;
+  the Python environment stays local to each laptop
+
+I need IT to confirm the exact path, and whether students can read each other's
+directories - see the materials section.
 ```
 
 ## What specific tools and materials will you require?
@@ -598,12 +635,20 @@ PROVIDED BY ME (public at https://github.com/ArtyoMKo/tumo_month_workshop):
 - a sample document set describing an INVENTED project, used on Day 2. Fictional on
   purpose: no AI has seen it, so students can prove a correct answer came from their own
   retrieval. Doubles as backup material for anyone who forgets their own.
+- IT_REQUIREMENTS.md, a complete install and verification checklist for the IT team
 
 FROM TUMO:
 - one Anthropic API key with a spend limit. Estimated total for 16 students across all
   16 hours: about $7. Embeddings run locally and cost nothing; only the final answer is
   paid for, roughly 0.14 cents per question.
-- machines prepared in advance (see software)
+- machines prepared per IT_REQUIREMENTS.md
+- a personal shared-storage directory per student
+
+PRIVACY - one point I want to flag. From Day 2 students bring their own documents into
+their workshop folder, and I can see that folder. I will tell them so explicitly in Day
+1, in writing and out loud, and instruct them to bring notes about a SUBJECT and never
+anything personal. I have asked IT to confirm whether students can also read each
+other's directories; if so I would ask for that to be tightened before the workshop.
 
 FROM STUDENTS:
 - 3-10 of their own .txt/.md files from Day 2 onward, any language. This is what makes

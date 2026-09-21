@@ -14,43 +14,54 @@ Read this before Lesson 1.
 
 ---
 
-## 1. The local-machine tax on the time budget
+## 1. Machines, storage, and the time budget
 
-Both courses are costed at **exactly 16 hours (8 x 2h)**. Local installs are not free, and
-the cost lands entirely in Lesson 1. Two scenarios:
+**All 16 machines are macOS**, and TUMO IT prepares them in advance. Everything they must
+do is in `IT_REQUIREMENTS.md` — send them that document, and chase the two replies it
+asks for (the student directory path, and whether students can read each other's folders).
 
-| Scenario | Setup time in Lesson 1 | Consequence |
+| Scenario | Lesson 1 setup | Consequence |
 |---|---|---|
-| **Machines prepared in advance** (recommended) | ~15 min | Lesson 1 runs as written, students ask their first question in Lesson 1 |
-| **Students install from scratch** | ~40-50 min | Lesson 1's hands-on block shrinks; the schedule still fits, but the "wow moment" slides to the end of the lesson and some students won't reach it |
+| **IT completed `IT_REQUIREMENTS.md`** (expected) | ~15 min | Lesson 1 runs as written |
+| IT did not | 45+ min | Lesson 1 is lost. `pip install` pulls ~2 GB per machine; the embedding model is another 470 MB × 16 over shared wifi |
 
-**What "prepared in advance" means.** Ask TUMO IT to do this on every machine, once:
+**The critical item is §4 of that document** — pre-downloading the embedding model. It is
+the single most likely way to lose a lesson.
 
-1. Python 3.12 installed and on PATH.
-2. VS Code installed with the **Python** and **Jupyter** extensions.
-3. `pip download`-ed or pre-installed wheels for the course's `requirements.txt`,
-   so Lesson 1 is a cache hit rather than a 300 MB download x 16 machines.
-4. **The big one:** pre-run this once per machine so the
-   embedding model is already in the HuggingFace cache:
+### Students change laptops between lessons
 
-   ```bash
-   python -c "from langchain_huggingface import HuggingFaceEmbeddings; HuggingFaceEmbeddings(model_name='paraphrase-multilingual-MiniLM-L12-v2')"
-   ```
+They may sit at a different Mac each time, so the split matters:
 
-   This downloads PyTorch (~1.1 GB) plus the model (~470 MB). Sixteen students triggering
-   that simultaneously on shared lab wifi is the single most likely way to lose an entire
-   lesson. Do it the day before.
+| | Where | Why |
+|---|---|---|
+| Python + packages | laptop, `/opt/tumo/ai-workshop/.venv` | large, machine-specific, identical everywhere |
+| Student's code, documents, index | **their shared folder** | follows them between machines |
 
-   **Why the multilingual model and not the usual `all-MiniLM-L6-v2`?** Because students
-   choose their own documents, and many will bring Armenian notes. `all-MiniLM-L6-v2` is
-   English-only, and on Armenian it does not degrade gracefully - it scores a correct
-   answer and a completely unrelated sentence within 0.004 of each other, so retrieval
-   becomes random and gives no error to say so. The multilingual model scores the same
-   pair 0.145 apart, comparable to its English performance. It costs ~370 MB more and a
-   little English precision. Worth it.
+So the two lines that start every lesson are:
 
-If the machines are reset/reimaged between lessons, steps 1-4 must be re-applied, and
-students must re-create their `.env`. Check this with IT before the workshop starts.
+```bash
+cd /Volumes/TUMO/students/<name>/ai_workshop
+source /opt/tumo/ai-workshop/.venv/bin/activate
+```
+
+Put them on the board every lesson for the first three lessons. "It worked last time" is
+almost always a forgotten `source`.
+
+**Do not let students create their own venv on shared storage.** A venv hardcodes
+absolute paths and symlinks a specific Python binary; on network storage it is slow and
+fragile, and 16 copies of PyTorch is ~18 GB.
+
+### ⚠️ Privacy — handle this in Lesson 1, before the homework
+
+From Lesson 2 students bring their **own documents**, and you can see them. Say so out
+loud in Lesson 1 and make sure the written warning in the lesson 1 notebook is read:
+bring notes about a *subject*, never a diary, personal messages, health, family, or
+anything about another person.
+
+These are 13–18 year olds being told to bring "your own notes" — some will bring exactly
+the wrong thing unless told plainly not to. If IT confirms students can also read *each
+other's* folders, escalate: either get the permissions tightened or tell students very
+explicitly before Lesson 2.
 
 ## 2. API keys and ages
 
