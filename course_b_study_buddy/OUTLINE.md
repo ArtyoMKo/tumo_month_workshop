@@ -1,6 +1,6 @@
-# Workshop Outline — Study Buddy
+# Workshop Outline — AI Study Buddy
 
-**Track:** Complex · **Duration:** 16 hours (8 sessions x 2 hours) · **Ages:** 13-18 · **Group size:** 16
+**Duration:** 16 hours (8 lessons × 2 hours) · **Ages:** 13-18 · **Group size:** 16
 
 ---
 
@@ -17,9 +17,9 @@ surprisingly understandable: cut documents into pieces, turn each piece into a l
 numbers that captures its meaning, find the pieces closest in meaning to the question, and
 paste those pieces into the prompt before asking.
 
-The course is built around **feeling the problem before being given the solution**. Session
+The course is built around **feeling the problem before being given the solution**. Lesson
 2 asks a model about a student's notes and it invents an answer — confidently, fluently and
-wrongly. Session 2 then tries the obvious fix, pasting the whole document in, and that
+wrongly. Lesson 2 then tries the obvious fix, pasting the whole document in, and that
 breaks too, for reasons students can measure themselves. Only then does chunking, and
 embedding, and retrieval, arrive — each one as an answer to a problem they already have.
 
@@ -27,7 +27,7 @@ The assistant answers with **Claude Haiku 4.5**, Anthropic's cheapest current mo
 that is a deliberate teaching point rather than a budget compromise. In RAG the model isn't
 doing the hard part: retrieval has already found the answer and put it in front of it, so
 the job is to read four paragraphs and write four sentences without inventing anything.
-Session 8 has students test that claim by swapping to a pricier model and scoring both
+Lesson 8 has students test that claim by swapping to a pricier model and scoring both
 against their own questions.
 
 Everything runs through LangChain, so the model, the embeddings and the vector store are
@@ -37,8 +37,11 @@ of configuration, not a rewrite. It also demonstrates something useful: Anthropi
 make an embedding model at all, so this project already spans three organisations
 (Anthropic, Hugging Face, Chroma) and is beholden to none of them.
 
-Students already know JavaScript from TUMO's permanent Programming workshops. Python is
-introduced by direct comparison in Session 1 and thereafter assumed.
+Students arrive with basic Python from other TUMO tracks, so Python is **not taught**
+here. They receive `PYTHON_CHEATSHEET.md` in Lesson 1 - a JavaScript↔Python translation
+table, the syntax this project uses, and how to read an error - for lookup, never
+lectured from. The hour that saves is spent on prompt engineering in Lesson 1 and
+conversation memory in Lesson 5, both of which make the finished assistant better.
 
 ## 2. New skills developed
 
@@ -52,8 +55,8 @@ introduced by direct comparison in Session 1 and thereafter assumed.
 - Judging a RAG system: was the right chunk retrieved, *and* was the answer grounded in it?
 
 **Python & software skills**
-- Python syntax for people who already know JavaScript
-- Lists, dictionaries, list comprehensions, f-strings, functions with defaults
+- Applying existing Python to a real project (syntax is looked up, not taught)
+- Writing functions with default arguments, and the mutable-default-argument trap
 - Reading a folder of files; working with paths
 - Using a library through an abstraction rather than a vendor's own SDK
 - Refactoring notebook code into modules with one clear responsibility each
@@ -72,19 +75,20 @@ introduced by direct comparison in Session 1 and thereafter assumed.
 - **8 GB RAM** and ~3 GB free disk — the embedding model runs locally
 - **Python 3.12**
 - **VS Code** with the Microsoft **Python** and **Jupyter** extensions (PyCharm works too)
+- `PYTHON_CHEATSHEET.md`, provided - a lookup reference, not homework
 - An **Anthropic API key**, supplied by TUMO (students cannot create their own - see `TEACHER_NOTES.md`)
 - **Their own documents** — 3 to 10 text or markdown files. Students should be told to bring
-  these from Session 2 onward. Have a backup set ready; some will forget.
+  these from Lesson 2 onward. Have a backup set ready; some will forget.
 
 **Provided by the workshop**
 - `requirements.txt` (LangChain, langchain-anthropic, langchain-chroma, langchain-huggingface, sentence-transformers, chromadb, python-dotenv, jupyter)
 - A sample knowledge base, so nobody is blocked on not having material
-- Five session notebooks
+- Five lesson notebooks
 - `check_setup.py`
 
-**⚠️ Preparation before Session 1 — this one is not optional.** The local embedding model
+**⚠️ Preparation before Lesson 1 — this one is not optional.** The local embedding model
 pulls PyTorch (~800 MB) plus the model itself. Sixteen students triggering that at once on
-shared wifi will cost you a session. It must be pre-cached on every machine the day before —
+shared wifi will cost you a lesson. It must be pre-cached on every machine the day before —
 exact command in `TEACHER_NOTES.md`.
 
 **No GPU, no hosted vector database, no server, no deployment.** Embeddings and the vector

@@ -89,7 +89,30 @@ Eight checks, in dependency order, stopping at the first failure with a specific
 |---|---|
 | *(any question)* | Retrieve, ground, answer, cite |
 | `/sources <question>` | Show which chunks would be retrieved and how close each one is — **without** calling the model |
+| `/forget` | Start a fresh conversation (see below) |
 | `/quit` | Stop (Ctrl+C also works) |
+
+### It remembers the conversation
+
+You can ask follow-up questions and they work:
+
+```
+> Why does every flight carry two trackers?
+  ...
+> Which of them is more expensive?
+  ...
+```
+
+Two things make that work, and they are separate on purpose:
+
+- The **model** gets the earlier turns replayed, so it knows what "them" refers to.
+- The **search** gets the last two questions glued onto the current one, because
+  "which of them is more expensive?" on its own is about nothing at all and would
+  retrieve the wrong chunks before the model ever saw them.
+
+Only the last two questions are used for the search. More than that and it drifts toward
+whatever you were talking about five minutes ago. **When you change subject, type
+`/forget`** — otherwise the old conversation keeps dragging the search backwards.
 
 `/sources` is the debugging tool. See below.
 
@@ -158,6 +181,7 @@ All in `config.py`:
 | `CHUNK_OVERLAP` (200) | How much each chunk repeats the previous one, so boundary sentences survive | re-run `ingest.py` |
 | `RETRIEVE_K` (4) | How many chunks per question. Too few misses answers, too many makes them vague | takes effect immediately |
 | `CHAT_MODEL` | Which company's model answers | see below |
+| `EMBEDDING_MODEL` | Which model turns text into vectors. The default is multilingual — it handles Armenian. `all-MiniLM-L6-v2` is sharper on English but **English only** | re-run `ingest.py` |
 
 **Change one at a time, and decide how you'll measure before you start.** Write down five
 questions you know the answers to, score the assistant on them now, then change one thing
@@ -205,7 +229,7 @@ Haiku being the cheapest model is not a compromise here, and it's worth understa
 put it directly in front of it. All the model has to do is read four paragraphs and write
 four sentences without making anything up. That's a job a small model does well.
 
-If you want to test that claim rather than take it on faith, Session 8 has you swap
+If you want to test that claim rather than take it on faith, Lesson 8 has you swap
 `CHAT_MODEL` to `anthropic:claude-sonnet-5` and score both against your own test
 questions. Sometimes it's better. Often it isn't — and finding out which is the point.
 

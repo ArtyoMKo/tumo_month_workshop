@@ -14,5 +14,5 @@ know anything in them. So when you ask a question about Kestrel:
 Real notes can't give you that. If you asked about photosynthesis, the model would know the
 answer anyway and you'd never be able to tell whether your retrieval was doing anything.
 
-**From Session 7, replace these with your own material** — but keep them around. They're
+**From Lesson 7, replace these with your own material** — but keep them around. They're
 useful for checking whether a change you made broke something.

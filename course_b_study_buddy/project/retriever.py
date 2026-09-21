@@ -15,7 +15,8 @@ from langchain_huggingface import HuggingFaceEmbeddings
 import config
 
 # The embedding model must be THE SAME ONE ingest.py used. Vectors made by two different
-# models are not comparable - the search would still run, and would return nonsense.
+# models are not comparable - the search would still run, and would return nonsense, with
+# no error to tell you. Change it in config.py, then always re-run ingest.py.
 #
 # Anthropic doesn't make an embedding model, so this half of the project comes from
 # somewhere else entirely - and that's fine, because the two halves never needed to match.

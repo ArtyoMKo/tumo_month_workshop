@@ -8,7 +8,7 @@ teaching approach of the *LLM Engineering* course.
 | | |
 |---|---|
 | **Topic** | A personalised RAG assistant over the student's own documents |
-| **Format** | 8 sessions x 2 hours = **16 hours exactly** |
+| **Format** | 8 lessons x 2 hours = **16 hours exactly** |
 | **Model** | Claude Haiku 4.5 (`anthropic:claude-haiku-4-5`), under TUMO's Anthropic contract |
 | **Cost** | ~$7 per group of 16 for the whole course; embeddings are free (they run locally) |
 | **Final deliverable** | A runnable local Python project: ask questions about material you chose, get grounded answers with sources |
@@ -25,8 +25,8 @@ tumo_workshops/
 ├── TEACHER_NOTES.md          <- pre-flight checklist, budget, risks  ** read first **
 ├── course_b_study_buddy/     <- THE TRACK BEING TAUGHT
 │   ├── OUTLINE.md            <- TUMO 4-part workshop outline
-│   ├── CURRICULUM.md         <- 8 sessions, agendas, time math
-│   ├── notebooks/            <- sessions 1-5, experimentation phase
+│   ├── CURRICULUM.md         <- 8 lessons, agendas, time math
+│   ├── notebooks/            <- lessons 1-5, experimentation phase
 │   └── project/              <- the finished project students arrive at
 └── course_a_image_studio/    <- not scheduled; reference only, needs a non-Anthropic key
     ├── OUTLINE.md
@@ -39,12 +39,12 @@ tumo_workshops/
 
 The arc is borrowed directly from the reference course:
 
-1. **Sessions 1-5 — Notebook.** New ideas are introduced by *running something small first*,
+1. **Lessons 1-5 — Notebook.** New ideas are introduced by *running something small first*,
    then naming what happened. Cells are tiny. Students inspect objects constantly.
-2. **Session 6 — The move.** Notebook code is refactored into real Python modules in VS Code.
+2. **Lesson 6 — The move.** Notebook code is refactored into real Python modules in VS Code.
    This mirrors `week5/` in the reference course, where `day1-day3.ipynb` become
    `implementation/ingest.py`, `implementation/answer.py` and `app.py`.
-3. **Sessions 7-8 — Project.** Entry point, personal customisation, README, showcase.
+3. **Lessons 7-8 — Project.** Entry point, personal customisation, README, showcase.
 
 ## Provider-agnostic by design
 
@@ -66,5 +66,5 @@ This isn't theoretical tidiness — the course needs it. Anthropic answers the q
 Anthropic makes no embedding model, so the embeddings come from a Hugging Face model
 running on the student's laptop and the vectors live in Chroma. **Three organisations, none
 of which can hold the project hostage**, because each sits behind an interface you can swap
-in one line. Session 4 makes that point explicitly, and Session 5 has students prove it by
+in one line. Lesson 4 makes that point explicitly, and Lesson 5 has students prove it by
 switching the whole thing to a local model with the wifi off.

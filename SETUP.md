@@ -6,7 +6,7 @@ because every step depends on the one before it.
 
 > **Teachers:** please read `TEACHER_NOTES.md` first. If the lab machines are prepared in
 > advance (Steps 1 and 2 done, and for Course B the embedding model pre-downloaded),
-> this drops from ~40 minutes to ~15 and Session 1 gets its hands-on time back.
+> this drops from ~40 minutes to ~15 and Lesson 1 gets its hands-on time back.
 
 ---
 
@@ -105,7 +105,7 @@ The reason for the dot at the start: files beginning with `.` are hidden by defa
 
 ## Step 6 - Open the notebook and pick the kernel
 
-Open your project folder in VS Code (File > Open Folder), then open `session1.ipynb`.
+Open your project folder in VS Code (File > Open Folder), then open `lesson1.ipynb`.
 
 At the **top right** of the notebook you'll see a button saying **Select Kernel**. Click it:
 

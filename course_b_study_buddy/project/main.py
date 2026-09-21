@@ -29,6 +29,7 @@ def welcome():
     print("=" * 64)
     print("\n  Ask a question, or type:")
     print("    /sources <question>   see which chunks would be retrieved, with scores")
+    print("    /forget               start a fresh conversation")
     print("    /quit                 stop")
     print()
 
@@ -67,6 +68,10 @@ def main():
 
     welcome()
 
+    # The conversation so far, as (question, answer) pairs. This is what lets a
+    # follow-up like "which of them is cheaper?" work - see assistant.answer_question.
+    history = []
+
     while True:
         try:
             question = input("> ").strip()
@@ -77,16 +82,25 @@ def main():
             if question.lower() in {"/quit", "/exit", "quit", "exit"}:
                 break
 
+            if question.lower() == "/forget":
+                # Useful when changing subject: old questions in the history drag the
+                # search back toward what you were talking about before.
+                history = []
+                print("\n  Conversation cleared.\n")
+                continue
+
             if question.lower().startswith("/sources"):
                 # Everything after the command word is the question
                 show_sources(question[len("/sources"):].strip())
                 continue
 
             print("\n  Thinking...")
-            answer, sources = assistant.answer_question(question)
+            answer, sources = assistant.answer_question(question, history)
 
             print(f"\n  {answer}")
             print(f"\n  Sources: {', '.join(sources)}\n")
+
+            history.append((question, answer))
 
         # One try/except, in one place, at the edge of the program. Everything underneath
         # is allowed to just fail loudly - it's this loop's job to turn a failure into a

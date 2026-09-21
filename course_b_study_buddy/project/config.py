@@ -60,14 +60,25 @@ TEMPERATURE = 0
 # ---------------------------------------------------------------------------
 # Which model turns text into vectors
 # ---------------------------------------------------------------------------
-# This one runs on your own laptop. It's about 90 MB, it's free, and nothing is sent
-# anywhere. It downloads once, the first time you use it.
+# This one runs on your own laptop. It's free, nothing is sent anywhere, and it downloads
+# once the first time you use it (about 470 MB).
 #
-# Note that this has nothing to do with CHAT_MODEL above. Anthropic does not offer an
-# embedding model at all, so the two halves of this project come from different places -
-# which is a neat illustration of why we kept them separate. To use a paid embedding
-# model instead, see the comment in retriever.py.
-EMBEDDING_MODEL = "all-MiniLM-L6-v2"
+# WHY THE MULTILINGUAL ONE: this model understands Armenian, Russian and about fifty other
+# languages as well as English. The obvious alternative, "all-MiniLM-L6-v2", is smaller and
+# slightly sharper - but it is ENGLISH ONLY, and on Armenian text it is not merely worse,
+# it is useless: it scores a correct answer and a completely unrelated sentence within
+# 0.004 of each other, so retrieval becomes random. Since you choose your own notes, the
+# multilingual model is the safe default.
+#
+#   EMBEDDING_MODEL = "all-MiniLM-L6-v2"   # English only, 90 MB, a little sharper on English
+#
+# Note this has nothing to do with CHAT_MODEL above. Anthropic does not offer an embedding
+# model at all, so the two halves of this project come from different places - which is a
+# neat illustration of why we kept them separate.
+#
+# If you change this, you MUST re-run ingest.py. Vectors made by two different models are
+# not comparable, and searching one with the other returns nonsense without any error.
+EMBEDDING_MODEL = "paraphrase-multilingual-MiniLM-L12-v2"
 
 
 # ---------------------------------------------------------------------------

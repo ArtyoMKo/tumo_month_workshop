@@ -3,13 +3,14 @@
 # Install them with:   pip install -r requirements.txt
 # (Activate your virtual environment first, or they'll go to the wrong place.)
 #
-# This is a bigger download than it looks: langchain-huggingface pulls in PyTorch, which
-# is several hundred megabytes. It only happens once, but leave it time.
+# This is a bigger download than it looks: langchain-huggingface pulls in PyTorch (~1.1 GB)
+# and the embedding model itself is another ~470 MB. It only happens once, but leave it
+# time - and on a shared network, ask your teacher whether it is already cached.
 
 langchain>=1.0.0                 # the provider-agnostic layer: init_chat_model
 langchain-anthropic>=1.0.0       # the Claude part of it - this is what answers questions
 langchain-chroma>=0.2.0          # the local vector store, saved to a folder on disk
-langchain-huggingface>=1.0.0     # the local embedding model - free, runs on your laptop
+langchain-huggingface>=1.0.0     # the local embedding model - free, multilingual, on your laptop
 langchain-text-splitters>=0.3.0  # RecursiveCharacterTextSplitter
 sentence-transformers>=3.0.0     # what langchain-huggingface uses underneath
 python-dotenv>=1.0.0             # reads the .env file so our key stays out of the code
