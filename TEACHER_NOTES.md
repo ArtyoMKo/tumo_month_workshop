@@ -8,7 +8,7 @@ Read this before Lesson 1.
 > reference only; it cannot run on Anthropic, which has no image-generation model.
 >
 > **Python is not taught.** Students arrive with basic Python from other TUMO tracks.
-> They get `PYTHON_CHEATSHEET.md` in Lesson 1 as a lookup reference and it is never
+> They get `PYTHON_CHEATSHEET.ipynb` in Lesson 1 as a lookup reference and it is never
 > lectured from. The hour saved is spent on prompt engineering (Lesson 1) and
 > conversation memory (Lesson 5).
 

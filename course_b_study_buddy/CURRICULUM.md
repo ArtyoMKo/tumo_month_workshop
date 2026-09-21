@@ -17,9 +17,11 @@ Every agenda below sums to 120. The grand total is checked at the bottom.
 | | | **Total** | **960 min = 16 h** |
 
 > **Python is not taught in this course.** Students arrive with basic Python from their
-> other TUMO tracks. They are given `PYTHON_CHEATSHEET.md` in Lesson 1 as a lookup
+> other TUMO tracks. They are given `PYTHON_CHEATSHEET.ipynb` in Lesson 1 as a lookup
 > reference — JavaScript↔Python translation table, the syntax this project actually uses,
-> how to read an error, notebook and terminal survival. It is never lectured from. The
+> how to read an error, notebook and terminal survival. **It is a runnable notebook**: 41
+> code cells students can execute and edit, needing no API key and no internet, so it
+> doubles as something to do while setup finishes. It is never lectured from. The
 > hour this saves is spent on prompt engineering (Lesson 1) and conversation memory
 > (Lesson 5), both of which make the final assistant meaningfully better.
 
@@ -44,7 +46,7 @@ finished assistant trustworthy in Lesson 5.
 |---|---|---|
 | 1 | Meet & greet. Demo of the finished assistant: it answers from my notes with sources, then refuses a question they don't cover. "That refusal is what we're really building" | 10 |
 | 2 | **Presentation:** what a language model actually does — predicts text, has no database, no sense of "I don't know". What an API is, and why the key is a password | 15 |
-| 3 | **Hands-on:** environment setup — Python, VS Code extensions, venv, `pip install`, `.env`, select the kernel. **Hand out `PYTHON_CHEATSHEET.md`** | 25 |
+| 3 | **Hands-on:** environment setup — Python, VS Code extensions, venv, `pip install`, `.env`, select the kernel. **Hand out `PYTHON_CHEATSHEET.ipynb`** | 25 |
 | 4 | **Hands-on:** first call to Claude. Inspect the response object — it is not a string; look at what's actually inside it | 15 |
 | 5 | **Presentation + hands-on:** system vs user messages. The system prompt is written by *you*, the programmer, and the user never sees it. Same question, three system prompts, three completely different assistants | 20 |
 | 6 | **Hands-on:** making a model follow rules. Constrain length, force a specific output format, make it answer in Armenian, make it refuse a topic. Then try to break your own rules from the user message — this is called prompt injection and it is an unsolved problem | 20 |
@@ -282,4 +284,4 @@ The ~50 minutes of JavaScript→Python translation in Lesson 1 became:
 | 10 min | **Provider swap moved up** to L1 activity 7 | It belongs where `init_chat_model` is introduced, and frees L5 |
 | 20 min | **Conversation memory** (L5 activity 7) | The feature students want most; makes the assistant feel finished |
 
-Python is handled by `PYTHON_CHEATSHEET.md`, given out in Lesson 1 and never lectured from.
+Python is handled by `PYTHON_CHEATSHEET.ipynb`, given out in Lesson 1 and never lectured from.

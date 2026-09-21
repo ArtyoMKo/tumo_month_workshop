@@ -38,7 +38,7 @@ make an embedding model at all, so this project already spans three organisation
 (Anthropic, Hugging Face, Chroma) and is beholden to none of them.
 
 Students arrive with basic Python from other TUMO tracks, so Python is **not taught**
-here. They receive `PYTHON_CHEATSHEET.md` in Lesson 1 - a JavaScript↔Python translation
+here. They receive `PYTHON_CHEATSHEET.ipynb` in Lesson 1 - a JavaScript↔Python translation
 table, the syntax this project uses, and how to read an error - for lookup, never
 lectured from. The hour that saves is spent on prompt engineering in Lesson 1 and
 conversation memory in Lesson 5, both of which make the finished assistant better.
@@ -75,7 +75,7 @@ conversation memory in Lesson 5, both of which make the finished assistant bette
 - **8 GB RAM** and ~3 GB free disk — the embedding model runs locally
 - **Python 3.12**
 - **VS Code** with the Microsoft **Python** and **Jupyter** extensions (PyCharm works too)
-- `PYTHON_CHEATSHEET.md`, provided - a lookup reference, not homework
+- `PYTHON_CHEATSHEET.ipynb`, provided - a lookup reference, not homework
 - An **Anthropic API key**, supplied by TUMO (students cannot create their own - see `TEACHER_NOTES.md`)
 - **Their own documents** — 3 to 10 text or markdown files. Students should be told to bring
   these from Lesson 2 onward. Have a backup set ready; some will forget.

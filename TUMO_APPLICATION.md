@@ -478,9 +478,11 @@ https://github.com/ArtyoMKo/tumo_month_workshop):
 
 - Five Jupyter notebooks, one per lesson for Lessons 1-5, with explanations, runnable code
   cells, exercises and extra challenges for faster students
-- A Python cheatsheet handed out in Lesson 1 - JavaScript-to-Python translation table, the
-  syntax this project uses, how to read an error message, notebook and terminal survival.
-  It is a lookup reference and is never lectured from.
+- A Python cheatsheet handed out in Lesson 1, as a runnable Jupyter notebook - a
+  JavaScript-to-Python translation table, the syntax this project uses, how to read an
+  error message, and notebook/terminal survival. Every cell runs and can be edited, and it
+  needs no API key or internet, so students who finish setup early have something useful to
+  do. It is a lookup reference and is never lectured from.
 - The complete final project (five documented Python modules, requirements.txt,
   .env.example, README) that students arrive at by Lesson 6
 - check_setup.py, a diagnostic script that verifies a student's machine in eight steps and
