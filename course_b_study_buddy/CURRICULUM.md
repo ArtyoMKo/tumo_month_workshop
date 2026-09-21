@@ -42,6 +42,8 @@ as *already knowing Python*, so it does happen properly rather than being waved 
 | 7 | Wrap-up. **Homework: bring your own documents from next session** — 3 to 10 text or markdown files on anything you like | 5 |
 | | **Total** | **120** |
 
+**📦 Deliverable by end of session:** A working Python environment, and a notebook where the student has written their own `ask(system_prompt, question)` function and used it to give an AI three different personalities.
+
 > With machines prepared in advance, activity 3 drops to ~15 minutes; move the spare time
 > into activity 5.
 
@@ -74,6 +76,8 @@ rather than arbitrary.
 | 8 | Wrap-up: state the goal for the next three sessions — "find the three paragraphs that matter, and send only those" | 5 |
 | | **Total** | **120** |
 
+**📦 Deliverable by end of session:** A notebook showing the same question answered wrongly without context and correctly with it, plus the student's own cost calculation showing why pasting everything cannot scale. The student can state, in their own words, the problem the rest of the course solves.
+
 ---
 
 ## Session 3 — Cutting Text Into Pieces
@@ -101,6 +105,8 @@ as the fix for the boundary problem they'll have just hit.
 | 7 | **Hands-on:** part C — same split with and without overlap; find a chunk boundary that would have lost an answer | 20 |
 | 8 | **Try it yourself:** pick the chunk settings you'll use for your own material, and write down why | 10 |
 | | **Total** | **120** |
+
+**📦 Deliverable by end of session:** The student's own documents loaded and split, with chosen `chunk_size` and `chunk_overlap` values and a written one-sentence justification. "Because it was the default" is not accepted.
 
 ---
 
@@ -131,6 +137,8 @@ which half of the system is doing what.
 | 9 | Wrap-up | 5 |
 | | **Total** | **120** |
 
+**📦 Deliverable by end of session:** A working search engine over the student's own documents, plus three documented test cases with scores: one answered well, one where the right chunk ranks low, one the documents cannot answer.
+
 ---
 
 ## Session 5 — Closing the Loop
@@ -158,6 +166,8 @@ know") is what turns the confident liar of Session 2 into something trustworthy.
 | 7 | **Demo + hands-on:** swap `CHAT_MODEL` — Haiku → Sonnet, then `ollama:llama3.2` with the wifi off — and watch it keep working either way | 15 |
 | 8 | Wrap-up: **the notebook phase ends here** | 5 |
 | | **Total** | **120** |
+
+**📦 Deliverable by end of session:** A working RAG assistant in a notebook, answering questions about the student's own documents with sources — and one documented question it correctly refuses.
 
 ---
 
@@ -187,6 +197,8 @@ design, and this is the natural place to meet it.
 | 8 | **Hands-on:** `main.py` — the question loop. **Run `python main.py` for the first time** | 10 |
 | | **Total** | **120** |
 
+**📦 Deliverable by end of session:** **A working `python main.py`.** A real program run from the terminal with no notebook involved. The instructor confirms this individually for every student before they leave.
+
 ---
 
 ## Session 7 — Your Own Material
@@ -215,6 +227,8 @@ prompt, because those are two different bugs with two different fixes.
 | 8 | Wrap-up | 5 |
 | | **Total** | **120** |
 
+**📦 Deliverable by end of session:** An assistant running on the student's own real material, answering five known questions correctly, plus one feature the student designed and built themselves. The student can say whether a given wrong answer was a retrieval problem or a generation problem.
+
 ---
 
 ## Session 8 — Tune It and Ship It
@@ -241,6 +255,8 @@ they finish the project properly and present it.
 | 7 | **Showcase:** ~90 seconds each — what your assistant knows about, one good answer, **one question it correctly refuses**, and one thing that broke on the way | 20 |
 | 8 | Wrap-up: where to go next — hosted vector stores, agents, the LangChain docs, Ollama at home | 5 |
 | | **Total** | **120** |
+
+**📦 Deliverable by end of session:** A finished, documented project that a classmate successfully ran from the README alone; a written test set with before-and-after scores; and a live demo including one correct refusal.
 
 ---
 
