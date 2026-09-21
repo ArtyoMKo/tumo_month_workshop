@@ -23,10 +23,19 @@ wrongly. Session 2 then tries the obvious fix, pasting the whole document in, an
 breaks too, for reasons students can measure themselves. Only then does chunking, and
 embedding, and retrieval, arrive — each one as an answer to a problem they already have.
 
-Everything runs through LangChain, so the embedding model and the vector store are
-swappable. Students start with a model running **on their own laptop** — no API key, no
-internet needed for that part — and see that moving to a hosted vector database later
-would be a change of configuration, not a rewrite.
+The assistant answers with **Claude Haiku 4.5**, Anthropic's cheapest current model — and
+that is a deliberate teaching point rather than a budget compromise. In RAG the model isn't
+doing the hard part: retrieval has already found the answer and put it in front of it, so
+the job is to read four paragraphs and write four sentences without inventing anything.
+Session 8 has students test that claim by swapping to a pricier model and scoring both
+against their own questions.
+
+Everything runs through LangChain, so the model, the embeddings and the vector store are
+each swappable on one line. The embedding model runs **on the student's own laptop** — no
+key, no internet, no cost — so moving to a hosted vector database later would be a change
+of configuration, not a rewrite. It also demonstrates something useful: Anthropic doesn't
+make an embedding model at all, so this project already spans three organisations
+(Anthropic, Hugging Face, Chroma) and is beholden to none of them.
 
 Students already know JavaScript from TUMO's permanent Programming workshops. Python is
 introduced by direct comparison in Session 1 and thereafter assumed.
@@ -63,12 +72,12 @@ introduced by direct comparison in Session 1 and thereafter assumed.
 - **8 GB RAM** and ~3 GB free disk — the embedding model runs locally
 - **Python 3.12**
 - **VS Code** with the Microsoft **Python** and **Jupyter** extensions (PyCharm works too)
-- An API key for the answering model, supplied by TUMO
+- An **Anthropic API key**, supplied by TUMO (students cannot create their own - see `TEACHER_NOTES.md`)
 - **Their own documents** — 3 to 10 text or markdown files. Students should be told to bring
   these from Session 2 onward. Have a backup set ready; some will forget.
 
 **Provided by the workshop**
-- `requirements.txt` (LangChain, langchain-chroma, langchain-huggingface, sentence-transformers, chromadb, python-dotenv, jupyter)
+- `requirements.txt` (LangChain, langchain-anthropic, langchain-chroma, langchain-huggingface, sentence-transformers, chromadb, python-dotenv, jupyter)
 - A sample knowledge base, so nobody is blocked on not having material
 - Five session notebooks
 - `check_setup.py`
@@ -79,8 +88,8 @@ shared wifi will cost you a session. It must be pre-cached on every machine the 
 exact command in `TEACHER_NOTES.md`.
 
 **No GPU, no hosted vector database, no server, no deployment.** Embeddings and the vector
-store both run on the student's own laptop; the only network call is the final answering
-model — and even that can be switched to a local model.
+store both run on the student's own laptop; the only network call is the final answer from
+Claude — and even that can be switched to a local model with Ollama.
 
 ## 4. Outcome — the final deliverable
 

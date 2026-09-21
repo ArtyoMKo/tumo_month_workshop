@@ -24,7 +24,7 @@ Every agenda below sums to 120. The grand total is checked at the bottom.
 second language
 
 **Tools & Skills:** Python + VS Code + Jupyter setup · virtual environments · `.env` ·
-Python syntax mapped from JavaScript · first model call
+Python syntax mapped from JavaScript · first call to Claude
 
 A double session in effect: get sixteen machines working, and translate JavaScript into
 Python fast enough that Python never has to be taught again. These students are the faster
@@ -155,7 +155,7 @@ know") is what turns the confident liar of Session 2 into something trustworthy.
 | 4 | Break | 5 |
 | 5 | **Hands-on:** part C — the refusal. Add the "don't guess" sentence, then find a question it correctly refuses. Everyone must produce one | 20 |
 | 6 | **Hands-on:** part D — turn `k` up and down. At k=1 it misses things; at k=20 the answers get vaguer. Why? | 15 |
-| 7 | **Demo + hands-on:** swap `CHAT_MODEL` to a different provider — including `ollama:llama3.2` with the wifi off — and watch it keep working | 15 |
+| 7 | **Demo + hands-on:** swap `CHAT_MODEL` — Haiku → Sonnet, then `ollama:llama3.2` with the wifi off — and watch it keep working either way | 15 |
 | 8 | Wrap-up: **the notebook phase ends here** | 5 |
 | | **Total** | **120** |
 
@@ -219,8 +219,8 @@ prompt, because those are two different bugs with two different fixes.
 
 ## Session 8 — Tune It and Ship It
 
-**Concepts:** evaluation · tuning one parameter at a time · what makes a project *finished* ·
-presenting technical work
+**Concepts:** evaluation · tuning one parameter at a time · paying more vs. getting more ·
+what makes a project *finished* · presenting technical work
 
 **Tools & Skills:** building a tiny test set · changing `k` and chunk size and measuring the
 effect · `requirements.txt` · README · the fresh-machine test · demoing
@@ -235,7 +235,7 @@ they finish the project properly and present it.
 | 1 | Meet & greet + recap | 10 |
 | 2 | **Presentation:** how would you know if you made it better? Write the test set *first*; tune against it; change one thing at a time | 15 |
 | 3 | **Hands-on:** write five questions with known answers. Score your assistant now, before changing anything — that's your baseline | 20 |
-| 4 | **Hands-on:** tune. Change `k`, or chunk size (re-run ingest), or the system prompt. One at a time. Re-score after each | 25 |
+| 4 | **Hands-on:** tune. Change `k`, chunk size (re-run ingest), the system prompt, or the model (Haiku → Sonnet 5). One at a time. Re-score after each — including "does the pricier model actually win?" | 25 |
 | 5 | Break | 5 |
 | 6 | **Hands-on:** finish it — README, `requirements.txt`, check `.env` isn't in what you'd share, then the fresh-machine test: hand your folder to a partner and watch them try to run it from your README alone | 20 |
 | 7 | **Showcase:** ~90 seconds each — what your assistant knows about, one good answer, **one question it correctly refuses**, and one thing that broke on the way | 20 |

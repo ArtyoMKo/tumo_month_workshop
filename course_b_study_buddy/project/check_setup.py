@@ -39,9 +39,9 @@ ok(f"Python {sys.version_info.major}.{sys.version_info.minor}")
 try:
     import dotenv
     import langchain  # noqa: F401
+    import langchain_anthropic  # noqa: F401
     import langchain_chroma  # noqa: F401
     import langchain_huggingface  # noqa: F401
-    import langchain_openai  # noqa: F401
 except ImportError as error:
     fail(
         f"A package is missing: {error.name}",
@@ -54,12 +54,14 @@ ok("All required packages are installed")
 # building one without a key fails in a much uglier way than this does.
 dotenv.load_dotenv(override=True)
 
-key = os.getenv("OPENAI_API_KEY")
+key = os.getenv("ANTHROPIC_API_KEY")
 if not key:
-    fail("No OPENAI_API_KEY found", "Create a file called exactly '.env' - see .env.example")
+    fail("No ANTHROPIC_API_KEY found", "Create a file called exactly '.env' - see .env.example")
 if key.strip() != key:
     fail("Your key has a space or a tab at the start or end", "Edit .env and delete it")
-ok(f"API key found, begins {key[:8]}...")
+if not key.startswith("sk-ant-"):
+    fail("Your key doesn't start with 'sk-ant-'", "Anthropic keys begin sk-ant- - check you pasted the whole thing")
+ok(f"API key found, begins {key[:11]}...")
 
 # --- 4. The embedding model ------------------------------------------------
 # The slow one. On a fresh machine this downloads about 900 MB.

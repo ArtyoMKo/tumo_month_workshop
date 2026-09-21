@@ -17,8 +17,10 @@ import config
 # The embedding model must be THE SAME ONE ingest.py used. Vectors made by two different
 # models are not comparable - the search would still run, and would return nonsense.
 #
-# To swap to a paid, more accurate model: pip install langchain-openai, then replace these
-# two lines with the two commented ones, and re-run ingest.py.
+# Anthropic doesn't make an embedding model, so this half of the project comes from
+# somewhere else entirely - and that's fine, because the two halves never needed to match.
+# To swap to a paid, more accurate model: pip install langchain-openai, replace these two
+# lines with the commented ones, and re-run ingest.py.
 #
 #   from langchain_openai import OpenAIEmbeddings
 #   embeddings = OpenAIEmbeddings(model="text-embedding-3-small")

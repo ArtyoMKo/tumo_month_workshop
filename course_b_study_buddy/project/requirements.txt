@@ -7,7 +7,7 @@
 # is several hundred megabytes. It only happens once, but leave it time.
 
 langchain>=1.0.0                 # the provider-agnostic layer: init_chat_model
-langchain-openai>=1.0.0          # the OpenAI part of it
+langchain-anthropic>=1.0.0       # the Claude part of it - this is what answers questions
 langchain-chroma>=0.2.0          # the local vector store, saved to a folder on disk
 langchain-huggingface>=1.0.0     # the local embedding model - free, runs on your laptop
 langchain-text-splitters>=0.3.0  # RecursiveCharacterTextSplitter
@@ -26,6 +26,6 @@ numpy>=1.26.0                    # for measuring similarity by hand in Session 4
 # --- Optional: other providers ----------------------------------------------
 # Uncomment if you change CHAT_MODEL in config.py to that provider.
 #
-# langchain-anthropic>=1.0.0        # for "anthropic:..."
+# langchain-openai>=1.0.0           # for "openai:..."  (also for paid embeddings)
 # langchain-google-genai>=2.0.0     # for "google-genai:..."
 # langchain-ollama>=1.0.0           # for "ollama:..." - free, runs on this computer

@@ -88,14 +88,14 @@ This downloads a few hundred megabytes. It is the slowest step. Go get a drink.
 
 ## Step 5 - Your API key
 
-You will be given a key that looks like `sk-proj-...`. **This key is a password.
+You will be given a key that looks like `sk-ant-...`. **This key is a password.
 Do not paste it into your code, do not put it on Discord, do not commit it to GitHub.**
 
 Instead, create a file called exactly `.env` (yes, starting with a dot) in your project
 folder, containing one line:
 
 ```
-OPENAI_API_KEY=sk-proj-paste-your-key-here
+ANTHROPIC_API_KEY=sk-ant-paste-your-key-here
 ```
 
 No quotes. No spaces around the `=`. No spaces at the end of the line.

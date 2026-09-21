@@ -1,36 +1,43 @@
 # TUMO AI Workshops
 
-Two 16-hour workshop projects for TUMO students (ages ~13-18), written in the style,
-structure and teaching approach of the *LLM Engineering* course.
+Workshop material for TUMO students (ages ~13-18), written in the style, structure and
+teaching approach of the *LLM Engineering* course.
 
-| | Course A | Course B |
-|---|---|---|
-| **Name** | AI Image Studio | Study Buddy |
-| **Track** | Light (calmer pace) | Complex (stronger/faster students) |
-| **Topic** | Text-to-image AI client | Personalised RAG assistant |
-| **Format** | 8 sessions x 2 hours = 16 hours | 8 sessions x 2 hours = 16 hours |
-| **Final deliverable** | Local Python project: type a prompt, get an image | Local Python project: ask questions about your own notes |
+## The track being taught: Course B — Study Buddy
+
+| | |
+|---|---|
+| **Topic** | A personalised RAG assistant over the student's own documents |
+| **Format** | 8 sessions x 2 hours = **16 hours exactly** |
+| **Model** | Claude Haiku 4.5 (`anthropic:claude-haiku-4-5`), under TUMO's Anthropic contract |
+| **Cost** | ~$7 per group of 16 for the whole course; embeddings are free (they run locally) |
+| **Final deliverable** | A runnable local Python project: ask questions about material you chose, get grounded answers with sources |
+
+> **Course A (AI Image Studio) is not scheduled.** It is kept here for reference only.
+> It cannot run on Anthropic — there is no Claude image-generation model — so it would
+> need a separate vendor contract. Its material is complete and working if it's ever
+> wanted; it is simply not part of the taught programme.
 
 ```
 tumo_workshops/
 ├── README.md                 <- you are here
-├── SETUP.md                  <- shared environment setup (read this first)
-├── TEACHER_NOTES.md          <- pre-flight checklist, risks, time budget honesty
-├── course_a_image_studio/
+├── SETUP.md                  <- student environment setup
+├── TEACHER_NOTES.md          <- pre-flight checklist, budget, risks  ** read first **
+├── course_b_study_buddy/     <- THE TRACK BEING TAUGHT
 │   ├── OUTLINE.md            <- TUMO 4-part workshop outline
 │   ├── CURRICULUM.md         <- 8 sessions, agendas, time math
 │   ├── notebooks/            <- sessions 1-5, experimentation phase
 │   └── project/              <- the finished project students arrive at
-└── course_b_study_buddy/
+└── course_a_image_studio/    <- not scheduled; reference only, needs a non-Anthropic key
     ├── OUTLINE.md
     ├── CURRICULUM.md
     ├── notebooks/
     └── project/
 ```
 
-## The shape of both courses
+## The shape of the course
 
-Both follow the same arc, borrowed directly from the reference course:
+The arc is borrowed directly from the reference course:
 
 1. **Sessions 1-5 — Notebook.** New ideas are introduced by *running something small first*,
    then naming what happened. Cells are tiny. Students inspect objects constantly.
@@ -41,15 +48,23 @@ Both follow the same arc, borrowed directly from the reference course:
 
 ## Provider-agnostic by design
 
-Neither course hardcodes a vendor SDK. Both go through LangChain, and both keep the
-provider choice in exactly one place - a `config.py` with a single model string:
+Nothing hardcodes a vendor SDK. Everything goes through LangChain, and the provider choice
+lives in exactly one place - a `config.py` with a single model string:
 
 ```python
-CHAT_MODEL = "openai:gpt-4.1-mini"     # the default
-# CHAT_MODEL = "ollama:llama3.2"       # free, runs on this laptop, no API key
-# CHAT_MODEL = "anthropic:claude-haiku-4-5-20251001"
+CHAT_MODEL = "anthropic:claude-haiku-4-5"      # the default
+# CHAT_MODEL = "anthropic:claude-sonnet-5"     # smarter, ~2x the price
+# CHAT_MODEL = "openai:gpt-4.1-mini"
 # CHAT_MODEL = "google-genai:gemini-2.5-flash"
+# CHAT_MODEL = "ollama:llama3.2"               # free, runs on this laptop, no API key
 ```
 
-Changing that one line changes the provider. Nothing downstream knows or cares,
-because everything downstream only calls `.invoke()`.
+Changing that one line changes the provider. Nothing downstream knows or cares, because
+everything downstream only calls `.invoke()`.
+
+This isn't theoretical tidiness — the course needs it. Anthropic answers the questions, but
+Anthropic makes no embedding model, so the embeddings come from a Hugging Face model
+running on the student's laptop and the vectors live in Chroma. **Three organisations, none
+of which can hold the project hostage**, because each sits behind an interface you can swap
+in one line. Session 4 makes that point explicitly, and Session 5 has students prove it by
+switching the whole thing to a local model with the wifi off.

@@ -36,13 +36,20 @@ DB_DIR = PROJECT_DIR / "vector_db"            # built by ingest.py - don't edit 
 # "provider:model-name". Change this one string and the whole program follows -
 # no other file mentions any provider by name.
 #
-#   CHAT_MODEL = "anthropic:claude-haiku-4-5-20251001"   # pip install langchain-anthropic
-#   CHAT_MODEL = "google-genai:gemini-2.5-flash"         # pip install langchain-google-genai
-#   CHAT_MODEL = "ollama:llama3.2"                       # runs HERE - no key, no internet
+# We use Claude Haiku 4.5: it is Anthropic's fastest and cheapest current model, and for
+# RAG that is exactly the right trade. The hard thinking in this project is done by the
+# retriever, not the model - by the time the model sees the question, the answer is
+# already sitting in front of it. You are paying it to read four paragraphs and write
+# four sentences, and Haiku does that very well.
+#
+#   CHAT_MODEL = "anthropic:claude-sonnet-5"     # smarter, ~2x the price - try it in Session 8
+#   CHAT_MODEL = "openai:gpt-4.1-mini"           # pip install langchain-openai
+#   CHAT_MODEL = "google-genai:gemini-2.5-flash" # pip install langchain-google-genai
+#   CHAT_MODEL = "ollama:llama3.2"               # runs HERE - no key, no internet
 #
 # Note that embeddings already run locally, so switching this to Ollama makes the entire
 # system offline. Nothing you own ever leaves the laptop.
-CHAT_MODEL = "openai:gpt-4.1-mini"
+CHAT_MODEL = "anthropic:claude-haiku-4-5"
 
 # temperature controls how varied the model's wording is. 0 means "always pick the most
 # likely next word", which is what you want for factual answers - we are not looking for
@@ -56,8 +63,10 @@ TEMPERATURE = 0
 # This one runs on your own laptop. It's about 90 MB, it's free, and nothing is sent
 # anywhere. It downloads once, the first time you use it.
 #
-# To use a paid, more accurate one instead, install langchain-openai and swap the two
-# lines in retriever.py that build this - see the comment there.
+# Note that this has nothing to do with CHAT_MODEL above. Anthropic does not offer an
+# embedding model at all, so the two halves of this project come from different places -
+# which is a neat illustration of why we kept them separate. To use a paid embedding
+# model instead, see the comment in retriever.py.
 EMBEDDING_MODEL = "all-MiniLM-L6-v2"
 
 
@@ -84,14 +93,14 @@ RETRIEVE_K = 4
 # "api_key must be set" - technically true, completely unhelpful.
 
 KEY_FOR_PROVIDER = {
-    "openai": "OPENAI_API_KEY",
     "anthropic": "ANTHROPIC_API_KEY",
+    "openai": "OPENAI_API_KEY",
     "google-genai": "GOOGLE_API_KEY",
     "ollama": None,          # runs on this computer, needs no key
 }
 
 PROVIDER = CHAT_MODEL.split(":")[0]
-REQUIRED_KEY = KEY_FOR_PROVIDER.get(PROVIDER, "OPENAI_API_KEY")
+REQUIRED_KEY = KEY_FOR_PROVIDER.get(PROVIDER, "ANTHROPIC_API_KEY")
 
 if REQUIRED_KEY and not os.getenv(REQUIRED_KEY):
     sys.exit(

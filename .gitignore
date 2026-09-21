@@ -13,3 +13,6 @@ __pycache__/
 
 # OS noise
 .DS_Store
+
+# Serena MCP tool config - local, not course material
+.serena/

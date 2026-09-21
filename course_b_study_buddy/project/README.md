@@ -11,7 +11,7 @@ $ python main.py
 ================================================================
   STUDY BUDDY
 ================================================================
-  Model     : openai:gpt-4.1-mini
+  Model     : anthropic:claude-haiku-4-5
   Documents : documents/
   Index     : 13 chunks, retrieving 4 per question
 ================================================================
@@ -168,10 +168,11 @@ and score it again. Otherwise you're just moving numbers around and hoping.
 Open `config.py`, change **one line**:
 
 ```python
-CHAT_MODEL = "openai:gpt-4.1-mini"                   # the default
-# CHAT_MODEL = "anthropic:claude-haiku-4-5-20251001"
+CHAT_MODEL = "anthropic:claude-haiku-4-5"      # the default
+# CHAT_MODEL = "anthropic:claude-sonnet-5"     # smarter, ~2x the price
+# CHAT_MODEL = "openai:gpt-4.1-mini"
 # CHAT_MODEL = "google-genai:gemini-2.5-flash"
-# CHAT_MODEL = "ollama:llama3.2"                     # runs on this laptop
+# CHAT_MODEL = "ollama:llama3.2"               # runs on this laptop
 ```
 
 Install that provider's package (uncomment the matching line in `requirements.txt`) and add
@@ -189,9 +190,24 @@ bought us.
 
 ## Costs
 
-Text only, cheap tier. Embeddings are **free** — they run on your laptop.
+The assistant runs on **Claude Haiku 4.5** — Anthropic's cheapest current model, at $1.00
+per million input tokens and $5.00 per million output tokens.
 
-Roughly a fraction of a cent per question. A whole session of heavy use is a few cents.
+Embeddings are **free**: they run on your laptop, so searching your notes costs nothing at
+all. You only pay for the final answer.
+
+One question sends roughly 850 tokens in (four retrieved chunks plus the system prompt)
+and gets ~100 tokens back, which works out at about **0.14 cents per question**. You would
+have to ask about 700 questions to spend a single dollar.
+
+Haiku being the cheapest model is not a compromise here, and it's worth understanding why:
+**the hard part of this system isn't the model.** Retrieval already found the answer and
+put it directly in front of it. All the model has to do is read four paragraphs and write
+four sentences without making anything up. That's a job a small model does well.
+
+If you want to test that claim rather than take it on faith, Session 8 has you swap
+`CHAT_MODEL` to `anthropic:claude-sonnet-5` and score both against your own test
+questions. Sometimes it's better. Often it isn't — and finding out which is the point.
 
 ## When it breaks
 
@@ -199,7 +215,7 @@ Roughly a fraction of a cent per question. A whole session of heavy use is a few
 |---|---|---|
 | `❌ No index found` | `ingest.py` hasn't been run | `python ingest.py` |
 | It says "that isn't in your documents" about everything | The index is empty or stale | Check `documents/` has files, re-run `ingest.py` |
-| `❌ No OPENAI_API_KEY found` | `.env` missing, misnamed or in the wrong folder | Must be called exactly `.env`, next to `main.py` |
+| `❌ No ANTHROPIC_API_KEY found` | `.env` missing, misnamed or in the wrong folder | Must be called exactly `.env`, next to `main.py` |
 | `ModuleNotFoundError` | venv not activated, or packages not installed | Re-activate, then `pip install -r requirements.txt` |
 | First run hangs for ages | The embedding model is downloading (~900 MB) | Wait. It only happens once. |
 | Answers cite the right file but are vague | `RETRIEVE_K` too high, or chunks too big | Lower `RETRIEVE_K`; try `CHUNK_SIZE` 500 |

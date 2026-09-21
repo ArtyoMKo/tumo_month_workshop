@@ -1,5 +1,12 @@
 # Workshop Outline — AI Image Studio
 
+> ⚠️ **NOT SCHEDULED — reference material only.**
+>
+> The taught track is **Course B — Study Buddy**. This course is kept for reference and is
+> complete and working, but it **cannot run on Anthropic**: there is no Claude
+> image-generation model, so it needs an OpenAI or Google key and a separate contract.
+> See the top-level `README.md`.
+
 **Track:** Light · **Duration:** 16 hours (8 sessions x 2 hours) · **Ages:** 13-18 · **Group size:** 16
 
 ---

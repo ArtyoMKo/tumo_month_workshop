@@ -1,5 +1,12 @@
 # AI Image Studio
 
+> ⚠️ **NOT SCHEDULED — reference material only.**
+>
+> The taught track is **Course B — Study Buddy**. This course is kept for reference and is
+> complete and working, but it **cannot run on Anthropic**: there is no Claude
+> image-generation model, so it needs an OpenAI or Google key and a separate contract.
+> See the top-level `README.md`.
+
 Type a description. Get a picture that has never existed before.
 
 Built at TUMO over 16 hours, starting from a single API call in a notebook.
