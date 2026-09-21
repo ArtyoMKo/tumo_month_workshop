@@ -42,6 +42,7 @@ try:
     import langchain_anthropic  # noqa: F401
     import langchain_chroma  # noqa: F401
     import langchain_huggingface  # noqa: F401
+    import langchain_text_splitters  # noqa: F401
 except ImportError as error:
     fail(
         f"A package is missing: {error.name}",
@@ -63,21 +64,35 @@ if not key.startswith("sk-ant-"):
     fail("Your key doesn't start with 'sk-ant-'", "Anthropic keys begin sk-ant- - check you pasted the whole thing")
 ok(f"API key found, begins {key[:11]}...")
 
+# --- 3b. The Hugging Face token (optional) ---------------------------------
+# Not required - embeddings work anonymously. But an anonymous request shares a rate
+# limit with everyone else on your network, and 16 students in one room look like one
+# very busy user. A free token gives you your own allowance.
+hf = os.getenv("HF_TOKEN") or os.getenv("HUGGINGFACEHUB_API_TOKEN")
+if hf:
+    ok(f"Hugging Face token found, begins {hf[:6]}...")
+else:
+    print("  ⚠️  No HF_TOKEN - this is fine, but you share a rate limit with the whole room.")
+    print("      Free from huggingface.co/settings/tokens, then add to .env as HF_TOKEN=")
+
 # --- 4. The embedding model ------------------------------------------------
-# The slow one. On a fresh machine this downloads about 900 MB.
-print("\n  Loading the local embedding model (first run downloads ~900 MB)...")
+# It runs on Hugging Face's servers, so this is a network call, not a download.
+print("\n  Asking Hugging Face to turn a sentence into numbers...")
 try:
-    from langchain_huggingface import HuggingFaceEmbeddings
+    from langchain_huggingface import HuggingFaceEndpointEmbeddings
 
     import config
 
-    embeddings = HuggingFaceEmbeddings(model_name=config.EMBEDDING_MODEL)
+    embeddings = HuggingFaceEndpointEmbeddings(model=config.EMBEDDING_MODEL)
     vector = embeddings.embed_query("test")
 except Exception as error:
     fail(
-        f"Could not load the embedding model: {type(error).__name__}: {error}",
-        "Check your internet connection - the model downloads on first use",
+        f"The embedding model failed: {type(error).__name__}: {error}",
+        "Check your internet connection. If it mentions rate limits, add a free\n"
+        "          HF_TOKEN to your .env - see .env.example",
     )
+if len(vector) != 384:
+    fail(f"Got {len(vector)} numbers back, expected 384", "Tell your teacher - this is unusual")
 ok(f"Embedding model works ({len(vector)} numbers per piece of text)")
 
 # --- 5. Documents ----------------------------------------------------------

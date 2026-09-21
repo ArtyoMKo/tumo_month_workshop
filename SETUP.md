@@ -87,12 +87,18 @@ into your code, into a message, or into a screenshot.
 Create a file called exactly `.env` inside `ai_workshop`:
 
 ```bash
-echo "ANTHROPIC_API_KEY=sk-ant-paste-your-key-here" > .env
+echo "ANTHROPIC_API_KEY=sk-ant-paste-your-key-here" >  .env
+echo "HF_TOKEN=hf_paste-your-token-here"            >> .env
 ```
 
-Then open it and replace the placeholder with the real key.
+Then open `.env` and replace both placeholders with the real values.
 
-Rules for that line: **no quotes, no spaces around the `=`, no space at the end.**
+**Two keys, two jobs.** `ANTHROPIC_API_KEY` is the one that answers your questions —
+your teacher gives you this. `HF_TOKEN` is for the model that turns your notes into
+numbers; it's free from huggingface.co/settings/tokens and technically optional, but
+without one the whole room shares a single rate limit.
+
+Rules for both lines: **no quotes, no spaces around the `=`, no space at the end.**
 
 The dot at the start makes it hidden, and it is on every sensible project's ignore-list —
 so it never gets shared by accident.

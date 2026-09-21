@@ -312,7 +312,8 @@ DAY 4 - EMBEDDINGS AND SEMANTIC SEARCH
 - you can't picture 384 dimensions; you only need to measure distance.
 
 > STEP 1: Measure meaning (20mn)
-- HuggingFaceEmbeddings runs ON THE LAPTOP - no key, no internet, free
+- the embedding model runs on Hugging Face's servers - free, nothing to install. Running
+  it locally would mean a 1.2 GB PyTorch install for the same numbers
 - embed "balloon" -> 384 numbers. similarity(a,b): 1.0 identical, 0.0 unrelated
 - students PREDICT before running: balloon/airship, balloon/trombone, car/vehicle,
   king/queen, hot/cold
@@ -574,8 +575,8 @@ test set with before/after scores; a live demo including one correct refusal.
 
 ## What software will you require?
 ```
-All machines are macOS. Everything runs on the laptop - no cloud services, no server,
-no deployment. All software is free except the AI service itself.
+All machines are macOS. Everything runs on the laptop - no cloud platform, no server, no
+deployment. All software is free except the Anthropic API.
 
 TO BE INSTALLED ON ALL 16 MACHINES BEFORE DAY 1:
 
@@ -586,22 +587,24 @@ TO BE INSTALLED ON ALL 16 MACHINES BEFORE DAY 1:
    - "Jupyter" (Microsoft)
    Without the Jupyter extension the lesson notebooks cannot be opened.
 
-3. The Python packages listed in the requirements.txt I provide. These are large
-   (about 2 GB, mostly PyTorch), so please install them in advance rather than having
-   students install them during lesson 1.
+3. The Python packages from the requirements.txt I provide:
+   langchain, langchain-anthropic, langchain-chroma, langchain-huggingface,
+   langchain-text-splitters, chromadb, python-dotenv, jupyter, ipykernel, numpy
 
-4. IMPORTANT - one AI model must be downloaded in advance. The workshop uses an
-   embedding model that runs locally on the laptop rather than in the cloud. It is about
-   470 MB and downloads automatically the first time it is used. If it is not
-   pre-downloaded, all 16 students will trigger the download simultaneously during
-   lesson 4 and the lesson will be lost. I will give IT the exact one-line command.
+   This is a small install, about 50 MB. Both AI models run on their providers'
+   servers, so there is no PyTorch and nothing multi-gigabyte. Please still install it
+   in advance so lesson 1 is not spent waiting.
 
-5. The API key must be available to the students' Python environment as an environment
-   variable named ANTHROPIC_API_KEY. I provide the key; students do not create their
-   own, since API accounts require the holder to be 18+.
+4. Two keys, available to the students' Python environment:
+   - ANTHROPIC_API_KEY - answers the questions. I provide this; students cannot create
+     their own, since API accounts require the holder to be 18+.
+   - HF_TOKEN - a free Hugging Face token for the embedding model. Optional but
+     recommended: without it all 16 students share one anonymous rate limit. Free from
+     huggingface.co/settings/tokens with "Read" access. One shared TUMO token is fine.
 
-NETWORK: outbound HTTPS access to api.anthropic.com is needed in every lesson. If the
-lab uses a proxy or TLS inspection, I need to know in advance.
+NETWORK: outbound HTTPS in every lesson to api.anthropic.com and
+router.huggingface.co / huggingface.co. If the lab uses a proxy or TLS inspection,
+I need to know in advance.
 
 Students do not need administrator rights if the above is done beforehand.
 ```
@@ -609,8 +612,9 @@ Students do not need administrator rights if the above is done beforehand.
 ## What hardware will you require?
 ```
 - 16 macOS laptops
-- 8 GB RAM and about 4 GB free disk space per machine
-- NO GPU REQUIRED. The embedding model runs on the CPU.
+- 8 GB RAM and about 1 GB free disk space per machine
+- NO GPU REQUIRED, and nothing heavy to install - both AI models run on their
+  providers' servers.
 - a projector
 - a whiteboard, used properly rather than decoratively: on Day 4 students physically
   place word cards on a drawn 2-axis space to build intuition for embeddings, and Day 5

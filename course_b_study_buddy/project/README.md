@@ -202,10 +202,13 @@ CHAT_MODEL = "anthropic:claude-haiku-4-5"      # the default
 Install that provider's package (uncomment the matching line in `requirements.txt`) and add
 its key to `.env`. Ollama needs no key.
 
-**Your embeddings and your vector store already run locally.** So switching `CHAT_MODEL` to
-Ollama makes the *entire* system offline — unplug the network and it keeps working, and
-nothing you own ever leaves the laptop. For a hospital, a law firm or a school, that
-property is sometimes the only reason a project like this is allowed to exist.
+**Your vector store already runs locally** — only the two AI models are remote. Swapping
+`CHAT_MODEL` to Ollama makes the answering half local too; swapping `HuggingFaceEndpoint-
+Embeddings` back to `HuggingFaceEmbeddings` (same model, add `sentence-transformers` to
+requirements) makes the search half local as well, and then the whole thing runs with the
+network unplugged. That matters to real organisations: a hospital or a law firm often
+cannot send documents to anyone else's server at any price, and being able to run the
+whole pipeline in-house is sometimes the only reason a project is allowed to exist.
 
 Swapping the vector store (to Pinecone, Qdrant, pgvector) or the embeddings (to a paid,
 more accurate model) is the same kind of change — a couple of lines in `retriever.py` and
@@ -217,8 +220,8 @@ bought us.
 The assistant runs on **Claude Haiku 4.5** — Anthropic's cheapest current model, at $1.00
 per million input tokens and $5.00 per million output tokens.
 
-Embeddings are **free**: they run on your laptop, so searching your notes costs nothing at
-all. You only pay for the final answer.
+Embeddings are **free**: Hugging Face hosts that model at no charge, so searching your
+notes costs nothing. You only pay for the final answer.
 
 One question sends roughly 850 tokens in (four retrieved chunks plus the system prompt)
 and gets ~100 tokens back, which works out at about **0.14 cents per question**. You would

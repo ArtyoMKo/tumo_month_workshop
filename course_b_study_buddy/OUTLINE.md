@@ -31,11 +31,11 @@ Lesson 8 has students test that claim by swapping to a pricier model and scoring
 against their own questions.
 
 Everything runs through LangChain, so the model, the embeddings and the vector store are
-each swappable on one line. The embedding model runs **on the student's own laptop** — no
-key, no internet, no cost — so moving to a hosted vector database later would be a change
-of configuration, not a rewrite. It also demonstrates something useful: Anthropic doesn't
+each swappable on one line — moving to a hosted vector database later is a change of
+configuration, not a rewrite. It also demonstrates something useful: Anthropic doesn't
 make an embedding model at all, so this project already spans three organisations
-(Anthropic, Hugging Face, Chroma) and is beholden to none of them.
+(Anthropic for answers, Hugging Face for embeddings, Chroma for storage) and is beholden
+to none of them.
 
 Students arrive with basic Python from other TUMO tracks, so Python is **not taught**
 here. They receive `PYTHON_CHEATSHEET.ipynb` in Lesson 1 - a JavaScript↔Python translation
@@ -72,7 +72,7 @@ conversation memory in Lesson 5, both of which make the finished assistant bette
 
 **Per student**
 - A macOS laptop (TUMO lab machine)
-- **8 GB RAM** and ~3 GB free disk — the embedding model runs locally
+- **8 GB RAM** and ~1 GB free disk — both AI models run on someone else's servers, so there is nothing large to install
 - **Python 3.12** and **VS Code** + Python/Jupyter extensions — installed by TUMO IT in advance
 - A personal directory on TUMO shared storage — students may change laptops between lessons. Note it is readable by everyone, so students are asked to bring general-subject notes only.
 - `PYTHON_CHEATSHEET.ipynb`, provided - a lookup reference, not homework

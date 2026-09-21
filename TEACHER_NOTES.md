@@ -122,10 +122,16 @@ who finish setup early.
 
 ## 3. Running fully free / offline
 
-Course B runs **end to end with no API key at all**: local HuggingFace embeddings,
-local Chroma, and `ollama:llama3.2` as the chat model. If the lab can run Ollama, this is
-worth doing at least once in Lesson 5 as a live demonstration of why the provider-agnostic
-layer was worth building - one line changes, everything else keeps working.
+Embeddings are free (Hugging Face hosts that model at no charge), Chroma is local, and
+only the answering model costs anything. Switch `CHAT_MODEL` to `ollama:llama3.2` and the
+course runs with **no paid API at all** - worth doing once in Lesson 5 if the lab can run
+Ollama, as a live demonstration that the provider-agnostic layer was worth building.
+
+**Fully offline** needs one more step now that embeddings are hosted: swap
+`HuggingFaceEndpointEmbeddings` back to `HuggingFaceEmbeddings` (the same model, run
+locally) and add `sentence-transformers` to requirements. Good extension for a fast
+student, and a good answer to "could a hospital run this?" - but it costs the ~1.2 GB
+PyTorch install we deliberately avoided, so don't do it lab-wide.
 
 Note that Course B has **two different vendors in it by necessity**: Anthropic answers the
 questions, and the embedding model is a Hugging Face one, because Anthropic doesn't make an

@@ -60,25 +60,24 @@ TEMPERATURE = 0
 # ---------------------------------------------------------------------------
 # Which model turns text into vectors
 # ---------------------------------------------------------------------------
-# This one runs on your own laptop. It's free, nothing is sent anywhere, and it downloads
-# once the first time you use it (about 470 MB).
+# This model runs on Hugging Face's servers, not on your laptop. We send it a piece of
+# text, it sends back the numbers. That means nothing to download and nothing to install:
+# running it locally would need PyTorch, which is well over a gigabyte.
 #
-# WHY THE MULTILINGUAL ONE: this model understands Armenian, Russian and about fifty other
-# languages as well as English. The obvious alternative, "all-MiniLM-L6-v2", is smaller and
-# slightly sharper - but it is ENGLISH ONLY, and on Armenian text it is not merely worse,
-# it is useless: it scores a correct answer and a completely unrelated sentence within
-# 0.004 of each other, so retrieval becomes random. Since you choose your own notes, the
-# multilingual model is the safe default.
+# WHY THE MULTILINGUAL ONE: it understands Armenian, Russian and about fifty other
+# languages as well as English. The obvious alternative, "all-MiniLM-L6-v2", is slightly
+# sharper on English but is ENGLISH ONLY - on Armenian it scores a correct answer and a
+# completely unrelated sentence within 0.004 of each other, so retrieval becomes random
+# and nothing tells you it has. Since you choose your own notes, multilingual is the safe
+# default.
 #
-#   EMBEDDING_MODEL = "all-MiniLM-L6-v2"   # English only, 90 MB, a little sharper on English
-#
-# Note this has nothing to do with CHAT_MODEL above. Anthropic does not offer an embedding
-# model at all, so the two halves of this project come from different places - which is a
-# neat illustration of why we kept them separate.
+# Note this has nothing to do with CHAT_MODEL above. Anthropic does not make an embedding
+# model at all, so the two halves of this project come from different companies - a neat
+# illustration of why we kept them in separate files.
 #
 # If you change this, you MUST re-run ingest.py. Vectors made by two different models are
 # not comparable, and searching one with the other returns nonsense without any error.
-EMBEDDING_MODEL = "paraphrase-multilingual-MiniLM-L12-v2"
+EMBEDDING_MODEL = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
 
 
 # ---------------------------------------------------------------------------
@@ -102,6 +101,18 @@ RETRIEVE_K = 4
 # Every other file imports this one, so this runs before anything else can go wrong.
 # Without it, a missing key produces about forty lines of library traceback ending in
 # "api_key must be set" - technically true, completely unhelpful.
+
+# Hugging Face works without a token, but an anonymous request shares a rate limit with
+# everyone else on your network - and sixteen students in one room look like one very
+# busy user. A free token from huggingface.co/settings/tokens raises that limit and is
+# strongly recommended. Nothing breaks without it; you may just get asked to slow down.
+HF_TOKEN = os.getenv("HF_TOKEN") or os.getenv("HUGGINGFACEHUB_API_TOKEN")
+
+# Hand it to the library under the name it looks for, so the rest of the code doesn't
+# have to think about it.
+if HF_TOKEN:
+    os.environ.setdefault("HUGGINGFACEHUB_API_TOKEN", HF_TOKEN)
+
 
 KEY_FOR_PROVIDER = {
     "anthropic": "ANTHROPIC_API_KEY",

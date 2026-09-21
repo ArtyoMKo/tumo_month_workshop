@@ -19,7 +19,7 @@ from pathlib import Path
 
 from langchain_chroma import Chroma
 from langchain_core.documents import Document
-from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_huggingface import HuggingFaceEndpointEmbeddings
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 import config
@@ -86,7 +86,7 @@ def build_index(chunks):
 
     Returns the vector store, so this function is also usable from a notebook.
     """
-    embeddings = HuggingFaceEmbeddings(model_name=config.EMBEDDING_MODEL)
+    embeddings = HuggingFaceEndpointEmbeddings(model=config.EMBEDDING_MODEL)
 
     # If an index already exists, delete it first. Otherwise we'd add a second copy of
     # every chunk on top of the old one, and searches would return duplicates - or worse,

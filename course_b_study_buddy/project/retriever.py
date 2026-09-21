@@ -10,7 +10,7 @@ It reads the index that ingest.py built. It never builds one.
 """
 
 from langchain_chroma import Chroma
-from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_huggingface import HuggingFaceEndpointEmbeddings
 
 import config
 
@@ -18,14 +18,14 @@ import config
 # models are not comparable - the search would still run, and would return nonsense, with
 # no error to tell you. Change it in config.py, then always re-run ingest.py.
 #
-# Anthropic doesn't make an embedding model, so this half of the project comes from
-# somewhere else entirely - and that's fine, because the two halves never needed to match.
+# Anthropic doesn't make an embedding model, so this half of the project comes from a
+# different company - and that's fine, because the two halves never needed to match.
 # To swap to a paid, more accurate model: pip install langchain-openai, replace these two
 # lines with the commented ones, and re-run ingest.py.
 #
 #   from langchain_openai import OpenAIEmbeddings
 #   embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
-embeddings = HuggingFaceEmbeddings(model_name=config.EMBEDDING_MODEL)
+embeddings = HuggingFaceEndpointEmbeddings(model=config.EMBEDDING_MODEL)
 
 # Open the index that ingest.py saved. Built once, when this file is first imported.
 #
