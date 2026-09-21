@@ -16,14 +16,19 @@ Read this before Lesson 1.
 
 ## 1. Machines, storage, and the time budget
 
-**All 16 machines are macOS**, and TUMO IT prepares them in advance. Everything they must
-do is in `IT_REQUIREMENTS.md` — send them that document, and chase the two replies it
-asks for (the student directory path, and whether students can read each other's folders).
+**All 16 machines are macOS**, and TUMO IT prepares them in advance. The requirements
+list lives in the software section of `TUMO_APPLICATION.md`: Python 3.12, VS Code with
+the Python and Jupyter extensions, the packages from `requirements.txt`, the embedding
+model pre-downloaded, and the API key available as `ANTHROPIC_API_KEY`.
 
 | Scenario | Lesson 1 setup | Consequence |
 |---|---|---|
-| **IT completed `IT_REQUIREMENTS.md`** (expected) | ~15 min | Lesson 1 runs as written |
+| IT prepared the machines (expected) | ~15 min | Lesson 1 runs as written |
 | IT did not | 45+ min | Lesson 1 is lost. `pip install` pulls ~2 GB per machine; the embedding model is another 470 MB × 16 over shared wifi |
+
+Confirm two things with IT beforehand: the **student directory path is identical on every
+machine**, and the **exact command to activate the Python environment** — students need
+it on the board in Lesson 1.
 
 **The critical item is §4 of that document** — pre-downloading the embedding model. It is
 the single most likely way to lose a lesson.
@@ -34,34 +39,36 @@ They may sit at a different Mac each time, so the split matters:
 
 | | Where | Why |
 |---|---|---|
-| Python + packages | laptop, `/opt/tumo/ai-workshop/.venv` | large, machine-specific, identical everywhere |
+| Python + packages | on the laptop | large, machine-specific, identical everywhere |
 | Student's code, documents, index | **their shared folder** | follows them between machines |
 
 So the two lines that start every lesson are:
 
 ```bash
-cd /Volumes/TUMO/students/<name>/ai_workshop
-source /opt/tumo/ai-workshop/.venv/bin/activate
+cd <student's shared folder>/ai_workshop
+source <the environment path>/.venv/bin/activate
 ```
 
-Put them on the board every lesson for the first three lessons. "It worked last time" is
+**Get both exact paths from IT before Lesson 1** and put them on the board for the first
+three lessons. "It worked last time" is
 almost always a forgotten `source`.
 
 **Do not let students create their own venv on shared storage.** A venv hardcodes
 absolute paths and symlinks a specific Python binary; on network storage it is slow and
 fragile, and 16 copies of PyTorch is ~18 GB.
 
-### ⚠️ Privacy — handle this in Lesson 1, before the homework
+### Privacy — mention it in Lesson 1, before the homework
 
-From Lesson 2 students bring their **own documents**, and you can see them. Say so out
-loud in Lesson 1 and make sure the written warning in the lesson 1 notebook is read:
-bring notes about a *subject*, never a diary, personal messages, health, family, or
-anything about another person.
+TUMO's shared storage is readable by everyone: you can see student folders, and so can
+the other students. From Lesson 2 they bring their **own documents** into those folders.
 
-These are 13–18 year olds being told to bring "your own notes" — some will bring exactly
-the wrong thing unless told plainly not to. If IT confirms students can also read *each
-other's* folders, escalate: either get the permissions tightened or tell students very
-explicitly before Lesson 2.
+Say it once, plainly, when you set the homework — bring notes on a **general subject**,
+keep personal material out. The lesson 1 notebook has the same note in writing. It does
+not need to be a big deal; it does need to be said before they choose what to bring,
+rather than after.
+
+Worth knowing: the `.env` file is equally visible, but it holds the same shared workshop
+key everyone already has, so nothing is exposed that isn't already.
 
 ## 2. API keys and ages
 

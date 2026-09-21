@@ -153,17 +153,17 @@ DAY 1 - SETUP AND YOUR FIRST AI CALL
 - what an API is; why the key is a password
 
 > STEP 1: Setup (25mn)
-- everything is pre-installed by IT, so this is connecting pieces, not installing them
+- everything is pre-installed, so this is connecting pieces, not installing them
 - explain the split: Python lives on the laptop, YOUR WORK lives in your shared folder,
   because you may be at a different Mac next lesson
-- cd to your shared folder; mkdir ai_workshop; mkdir documents
-- source /opt/tumo/ai-workshop/.venv/bin/activate   (prompt must show "(.venv)" - this
-  is needed in EVERY new Terminal, every lesson)
-- create ".env" holding ANTHROPIC_API_KEY=sk-ant-...  (no quotes, no spaces)
-- code .   then open lesson1.ipynb > Select Kernel > Python Environments > the
-  /opt/tumo/ai-workshop/.venv one. Needed for EVERY notebook - the #1 error all workshop.
-- SAY OUT LOUD: your workshop folder is visible to me. When you bring documents next
-  lesson, bring notes about a subject - never a diary or anything personal.
+- create the project folder and a documents/ folder inside the shared directory
+- activate the Python environment (needed in EVERY new Terminal, every lesson - the
+  prompt must show "(.venv)")
+- put the API key in a ".env" file: ANTHROPIC_API_KEY=... (no quotes, no spaces)
+- open lesson1.ipynb > Select Kernel > Python Environments > the workshop one.
+  Needed for EVERY notebook - the #1 source of errors all workshop.
+- MENTION: the shared storage is readable by everyone, so bring notes on a general
+  subject next lesson and keep personal material out of the folder
 - hand out PYTHON_CHEATSHEET.ipynb. Runs with no key or internet, so it also occupies
   whoever finishes setup first.
 
@@ -574,52 +574,55 @@ test set with before/after scores; a live demo including one correct refusal.
 
 ## What software will you require?
 ```
-All free except the AI service. Everything runs on the laptop - no cloud, no server.
-All machines are macOS.
+All machines are macOS. Everything runs on the laptop - no cloud services, no server,
+no deployment. All software is free except the AI service itself.
 
-INSTALLED BY TUMO IT BEFORE DAY 1 (full instructions sent separately as
-IT_REQUIREMENTS.md):
-- Python 3.12
-- VS Code + the Microsoft "Python" and "Jupyter" extensions
-- one shared Python environment per machine at /opt/tumo/ai-workshop/.venv, containing:
-  langchain, langchain-anthropic, langchain-chroma, langchain-huggingface,
-  langchain-text-splitters, sentence-transformers, python-dotenv, jupyter, ipykernel,
-  numpy
-- THE CRITICAL ONE: pre-download the local embedding model (~470 MB per machine). It
-  downloads automatically on first use, so if it is not cached, 16 students trigger it
-  at once in lesson 4 and the lesson is lost. A one-line command is in the document.
+TO BE INSTALLED ON ALL 16 MACHINES BEFORE DAY 1:
 
-Students do not run pip and do not need admin rights.
+1. Python 3.12
 
-PROVIDED BY ME:
-- one Anthropic API key (Claude) from TUMO's contract, with a spend limit. Students
-  cannot create their own - API accounts require 18+.
+2. Visual Studio Code, with two extensions:
+   - "Python" (Microsoft)
+   - "Jupyter" (Microsoft)
+   Without the Jupyter extension the lesson notebooks cannot be opened.
 
-NETWORK: outbound HTTPS to api.anthropic.com every lesson. If the lab uses a proxy or
-TLS inspection, I need to know beforehand.
+3. The Python packages listed in the requirements.txt I provide. These are large
+   (about 2 GB, mostly PyTorch), so please install them in advance rather than having
+   students install them during lesson 1.
+
+4. IMPORTANT - one AI model must be downloaded in advance. The workshop uses an
+   embedding model that runs locally on the laptop rather than in the cloud. It is about
+   470 MB and downloads automatically the first time it is used. If it is not
+   pre-downloaded, all 16 students will trigger the download simultaneously during
+   lesson 4 and the lesson will be lost. I will give IT the exact one-line command.
+
+5. The API key must be available to the students' Python environment as an environment
+   variable named ANTHROPIC_API_KEY. I provide the key; students do not create their
+   own, since API accounts require the holder to be 18+.
+
+NETWORK: outbound HTTPS access to api.anthropic.com is needed in every lesson. If the
+lab uses a proxy or TLS inspection, I need to know in advance.
+
+Students do not need administrator rights if the above is done beforehand.
 ```
 
 ## What hardware will you require?
 ```
 - 16 macOS laptops
-- 8 GB RAM, ~4 GB free disk per machine. The embedding model runs on the CPU.
-  NO GPU REQUIRED.
-- a projector, and a whiteboard
+- 8 GB RAM and about 4 GB free disk space per machine
+- NO GPU REQUIRED. The embedding model runs on the CPU.
+- a projector
+- a whiteboard, used properly rather than decoratively: on Day 4 students physically
+  place word cards on a drawn 2-axis space to build intuition for embeddings, and Day 5
+  opens with them rebuilding the whole pipeline on it from memory
 
-The whiteboard is used properly, not decoratively: on Day 4 students physically place
-word cards on a drawn 2-axis space to build intuition for embeddings, and Day 5 opens
-with them rebuilding the whole pipeline on it from memory.
+STORAGE: students may sit at a different laptop each lesson, so each student needs a
+personal directory on TUMO's shared storage with write access and about 2 GB free. Their
+code, their documents and the search index their program builds all live there and
+follow them between machines. The Python installation stays on each laptop.
 
-STORAGE - students may sit at a different laptop each lesson, so:
-- each student needs their personal directory on TUMO's shared storage, with write
-  access and ~2 GB free
-- the directory path must be the SAME on every machine, so one instruction works for
-  everyone
-- their code, documents and search index live there and follow them between machines;
-  the Python environment stays local to each laptop
-
-I need IT to confirm the exact path, and whether students can read each other's
-directories - see the materials section.
+Please confirm that the path to a student's directory is the same on every machine, so
+that one instruction works for the whole group.
 ```
 
 ## What specific tools and materials will you require?
@@ -627,32 +630,29 @@ directories - see the materials section.
 PROVIDED BY ME (public at https://github.com/ArtyoMKo/tumo_month_workshop):
 - 5 Jupyter notebooks (Days 1-5) with explanations, runnable cells and extra challenges
 - 3 student guides (Days 6-8) for when they move into a real project in VS Code
-- a runnable Python cheatsheet notebook - no key or internet needed, so it also occupies
-  whoever finishes setup first
+- a runnable Python cheatsheet notebook - needs no API key or internet, so it also
+  occupies whoever finishes setup first
 - the complete final project: 5 documented modules, requirements.txt, .env.example, README
-- check_setup.py - verifies a machine in 8 steps, printing a specific fix for whichever
-  one fails
+- check_setup.py, which verifies a machine in 8 steps and prints a specific fix for
+  whichever one fails
 - a sample document set describing an INVENTED project, used on Day 2. Fictional on
-  purpose: no AI has seen it, so students can prove a correct answer came from their own
-  retrieval. Doubles as backup material for anyone who forgets their own.
-- IT_REQUIREMENTS.md, a complete install and verification checklist for the IT team
+  purpose: no AI has ever seen it, so students can prove a correct answer came from
+  their own retrieval rather than the model's memory. It also serves as backup material
+  for anyone who forgets to bring their own.
 
 FROM TUMO:
-- one Anthropic API key with a spend limit. Estimated total for 16 students across all
-  16 hours: about $7. Embeddings run locally and cost nothing; only the final answer is
-  paid for, roughly 0.14 cents per question.
-- machines prepared per IT_REQUIREMENTS.md
+- one Anthropic API key with a spend limit set. Estimated total for 16 students across
+  all 16 hours: about $7. Embeddings run locally and cost nothing; only the final answer
+  is paid for, roughly 0.14 cents per question.
+- machines prepared as described in the software section
 - a personal shared-storage directory per student
 
-PRIVACY - one point I want to flag. From Day 2 students bring their own documents into
-their workshop folder, and I can see that folder. I will tell them so explicitly in Day
-1, in writing and out loud, and instruct them to bring notes about a SUBJECT and never
-anything personal. I have asked IT to confirm whether students can also read each
-other's directories; if so I would ask for that to be tightened before the workshop.
-
 FROM STUDENTS:
-- 3-10 of their own .txt/.md files from Day 2 onward, any language. This is what makes
-  every student's project different.
+- 3-10 of their own .txt or .md files from Day 2 onward, in any language. This is what
+  makes every student's final project different from everyone else's.
+- Note: TUMO's shared storage is readable by everyone, so students are told in Day 1 to
+  bring notes on a general subject and keep personal material out of the workshop
+  folder.
 ```
 
 ## Visual references to upload

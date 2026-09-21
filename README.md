@@ -25,7 +25,6 @@ tumo_workshops/
 ├── README.md                 <- you are here
 ├── ANNOUNCEMENT.md           <- the workshop announcement, ready to send
 ├── TUMO_APPLICATION.md       <- paste-ready answers for the TUMO application form
-├── IT_REQUIREMENTS.md        <- ** send this to TUMO IT ** install + verification list
 ├── SETUP.md                  <- student environment setup (macOS, shared storage)
 ├── TEACHER_NOTES.md          <- pre-flight checklist, budget, risks  ** read first **
 ├── course_b_study_buddy/     <- THE TRACK BEING TAUGHT

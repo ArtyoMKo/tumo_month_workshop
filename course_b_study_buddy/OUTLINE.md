@@ -73,8 +73,8 @@ conversation memory in Lesson 5, both of which make the finished assistant bette
 **Per student**
 - A macOS laptop (TUMO lab machine)
 - **8 GB RAM** and ~3 GB free disk — the embedding model runs locally
-- **Python 3.12** and **VS Code** + Python/Jupyter extensions — installed by TUMO IT in advance (see `IT_REQUIREMENTS.md`)
-- A personal directory on TUMO shared storage — students may change laptops between lessons
+- **Python 3.12** and **VS Code** + Python/Jupyter extensions — installed by TUMO IT in advance
+- A personal directory on TUMO shared storage — students may change laptops between lessons. Note it is readable by everyone, so students are asked to bring general-subject notes only.
 - `PYTHON_CHEATSHEET.ipynb`, provided - a lookup reference, not homework
 - An **Anthropic API key**, supplied by TUMO (students cannot create their own - see `TEACHER_NOTES.md`)
 - **Their own documents** — 3 to 10 text or markdown files. Students should be told to bring
