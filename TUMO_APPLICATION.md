@@ -39,6 +39,8 @@ Thursdays 19:30-21:30 | Sundays 14:00-16:00
 - FROM DAY 2, each student must bring 3-10 of their own .txt or .md files (revision
   notes, a subject they study, rules of a game, an exported wiki). Armenian, English or
   mixed - all work. A backup set is provided for students who forget.
+  Note: TUMO's shared storage is visible to everyone, so students are asked in Day 1 to
+  bring notes on a general subject and keep personal material out of the folder.
 ```
 
 ## What are the learning objectives and goals?
@@ -159,7 +161,8 @@ DAY 1 - SETUP AND YOUR FIRST AI CALL
 - create the project folder and a documents/ folder inside the shared directory
 - activate the Python environment (needed in EVERY new Terminal, every lesson - the
   prompt must show "(.venv)")
-- put the API key in a ".env" file: ANTHROPIC_API_KEY=... (no quotes, no spaces)
+- put both keys in a ".env" file (no quotes, no spaces):
+  ANTHROPIC_API_KEY=... (answers questions) and HF_TOKEN=... (searches the notes)
 - open lesson1.ipynb > Select Kernel > Python Environments > the workshop one.
   Needed for EVERY notebook - the #1 source of errors all workshop.
 - MENTION: the shared storage is readable by everyone, so bring notes on a general
@@ -190,7 +193,7 @@ DAY 1 - SETUP AND YOUR FIRST AI CALL
 
 > STEP 5: Changing AI company in one line (10mn)
 - the only place a company is named is CHAT_MODEL. Swap to claude-sonnet-5 /
-  openai:gpt-4.1-mini / ollama:llama3.2 (this laptop, no key, no internet) and run the
+  openai:gpt-4.1-mini / ollama:llama3.2 (runs on this laptop, no key needed) and run the
   same function on both.
 
 > Wrap-up (5mn) - HOMEWORK: bring 3-10 of your own .txt/.md files, any language
@@ -563,8 +566,10 @@ templates to fill in.
   5. one thing that broke, and what it turned out to be
 
 > Wrap-up (5mn)
-- the key stops working after the workshop: switch CHAT_MODEL to ollama:llama3.2 and it
-  runs free and offline forever - embeddings and the vector store are already local
+- the key stops working after the workshop: switch CHAT_MODEL to ollama:llama3.2 and the
+  answering half runs free on your own laptop forever. The search half stays hosted (and
+  is free anyway), so it still needs internet - going fully offline means swapping the
+  embeddings back to the local version too, which is a good extension project
 - next: a bigger knowledge base, a hosted vector store, the LangChain docs
 
 DELIVERABLE: a finished documented project a classmate ran from the README alone; a

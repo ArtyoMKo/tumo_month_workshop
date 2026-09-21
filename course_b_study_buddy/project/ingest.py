@@ -127,8 +127,31 @@ def main():
     average = sum(len(c.page_content) for c in chunks) / len(chunks)
     print(f"    {len(documents)} documents → {len(chunks)} chunks, average {average:.0f} characters")
 
-    print("\n  Creating embeddings... (the first run downloads the model - be patient)")
-    build_index(chunks)
+    print("\n  Creating embeddings... (this needs the internet - it runs on Hugging Face)")
+
+    # The one step here that can fail for reasons outside this program: it is a network
+    # call. Without this, losing wifi halfway through prints thirty lines of library
+    # internals ending in something like "Name or service not known", which tells a
+    # student nothing about what to do.
+    try:
+        build_index(chunks)
+    except Exception as error:
+        message = str(error).lower()
+        print(f"\n  ❌ Could not create the embeddings: {type(error).__name__}")
+
+        if "401" in message or "unauthorized" in message:
+            print("\n     Your HF_TOKEN looks wrong. Check it in .env, or remove the line")
+            print("     entirely - it works without one.")
+        elif "429" in message or "rate" in message or "too many" in message:
+            print("\n     Too many requests. Everyone on this wifi shares one allowance")
+            print("     unless you have your own HF_TOKEN - get a free one at")
+            print("     huggingface.co/settings/tokens and add it to .env.")
+            print("     Otherwise wait a minute and run this again.")
+        else:
+            print("\n     This step needs the internet. Check your connection, then run")
+            print("     python ingest.py again.")
+        print()
+        return
 
     print(f"\n  ✅ Index built and saved to {config.DB_DIR}")
     print("\n  Now run:  python main.py\n")

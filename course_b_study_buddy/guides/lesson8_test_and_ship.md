@@ -171,9 +171,15 @@ Have it running **before** you start talking.
 ## Where to go next
 
 - **Keep it running.** Your key stops working after the workshop — switch `CHAT_MODEL`
-  to `ollama:llama3.2` and it runs free and offline on your own laptop, forever. Your
-  embeddings and vector store already run locally.
+  to `ollama:llama3.2` and the answering half runs free on your own laptop, forever.
+  Searching stays hosted by Hugging Face, which is free anyway, so you still need
+  internet for that part.
 - **Feed it something bigger.** A whole textbook, a wiki export, every note you've ever taken.
+- **Go fully offline.** Swap `HuggingFaceEndpointEmbeddings` back to
+  `HuggingFaceEmbeddings` (the same model, run on your machine — add
+  `sentence-transformers` to requirements), pair it with Ollama, and the whole thing runs
+  with the network unplugged. It costs a ~1.2 GB install, which is exactly why we didn't
+  do it in class.
 - **Try a hosted vector store** (Pinecone, Qdrant) — in this architecture it's a few lines
   in `retriever.py` and `ingest.py`.
 - **Read the LangChain docs.** You now know what the words mean, which is most of the battle.
