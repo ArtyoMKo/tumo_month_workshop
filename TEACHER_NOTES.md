@@ -83,6 +83,25 @@ some students will switch to Sonnet 5 to compare. Set the cap anyway — a stude
 a model call inside a `for` loop with the wrong range is learning, not misbehaving, but
 the bill is real.
 
+## 2b. Student materials, lesson by lesson
+
+Every lesson has something the student opens. The **format changes at Lesson 6**, and that
+is deliberate rather than an omission:
+
+| Lessons | Student material | Why |
+|---|---|---|
+| 1-5 | `notebooks/lesson1-5.ipynb` | Exploration — a notebook is the right tool |
+| 6-8 | `guides/lesson6-8_*.md` | They are editing `.py` files in VS Code; open the guide in the preview pane beside the code |
+
+Lesson 6 has no notebook **on purpose** — the whole lesson is about leaving the notebook.
+Its guide is step-by-step with a ✅ check after each file, so students who fall behind can
+catch up without stopping the room, and it points at `project/` for anyone who falls badly
+behind (with an explicit "read it, then write your own" instruction).
+
+`notebooks/PYTHON_CHEATSHEET.ipynb` is handed out in Lesson 1 and used for lookup all
+course. It runs with no API key and no internet, so it is also the thing to give students
+who finish setup early.
+
 ## 3. Running fully free / offline
 
 Course B runs **end to end with no API key at all**: local HuggingFace embeddings,

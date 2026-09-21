@@ -478,6 +478,10 @@ https://github.com/ArtyoMKo/tumo_month_workshop):
 
 - Five Jupyter notebooks, one per lesson for Lessons 1-5, with explanations, runnable code
   cells, exercises and extra challenges for faster students
+- Three student guides for Lessons 6-8, when students move out of notebooks and into a
+  real Python project in VS Code. Step-by-step build instructions with a check after each
+  file, a decision tree for diagnosing wrong answers, and fill-in templates for the test
+  set, the tuning log and the README
 - A Python cheatsheet handed out in Lesson 1, as a runnable Jupyter notebook - a
   JavaScript-to-Python translation table, the syntax this project uses, how to read an
   error message, and notebook/terminal survival. Every cell runs and can be edited, and it

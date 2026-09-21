@@ -4,17 +4,25 @@
 
 Every agenda below sums to 120. The grand total is checked at the bottom.
 
-| # | Lesson | Phase | Minutes |
-|---|---|---|---|
-| 1 | Setup and Your First AI Call | Notebook | 120 |
-| 2 | Why AI Makes Things Up | Notebook | 120 |
-| 3 | Preparing Documents: Chunking | Notebook | 120 |
-| 4 | Embeddings and Semantic Search | Notebook | 120 |
-| 5 | Building the RAG Assistant | Notebook | 120 |
-| 6 | From Notebook to Python Project | **Transition** | 120 |
-| 7 | Your Own Knowledge Base | Project | 120 |
-| 8 | Testing, Tuning and Final Demo | Project | 120 |
-| | | **Total** | **960 min = 16 h** |
+| # | Lesson | Phase | What the student opens | Minutes |
+|---|---|---|---|---|
+| 1 | Setup and Your First AI Call | Notebook | `notebooks/lesson1.ipynb` | 120 |
+| 2 | Why AI Makes Things Up | Notebook | `notebooks/lesson2.ipynb` | 120 |
+| 3 | Preparing Documents: Chunking | Notebook | `notebooks/lesson3.ipynb` | 120 |
+| 4 | Embeddings and Semantic Search | Notebook | `notebooks/lesson4.ipynb` | 120 |
+| 5 | Building the RAG Assistant | Notebook | `notebooks/lesson5.ipynb` | 120 |
+| 6 | From Notebook to Python Project | **Transition** | `guides/lesson6_build_the_project.md` | 120 |
+| 7 | Your Own Knowledge Base | Project | `guides/lesson7_your_own_documents.md` | 120 |
+| 8 | Testing, Tuning and Final Demo | Project | `guides/lesson8_test_and_ship.md` | 120 |
+| | | | **Total** | **960 min = 16 h** |
+
+> **Why five notebooks and not eight.** The course deliberately changes tools halfway.
+> Lessons 1-5 are exploration, and a notebook is the right tool. Lesson 6 *is* leaving the
+> notebook — handing students a notebook to do that in would contradict the lesson — and by
+> Lessons 7-8 they are editing `.py` files and running a terminal, which a notebook cannot
+> host. So lessons 6-8 get **markdown student guides** instead, designed to sit in VS Code's
+> preview pane beside their code. Every lesson has student-facing material; only the format
+> changes, and the change is the point.
 
 > **Python is not taught in this course.** Students arrive with basic Python from their
 > other TUMO tracks. They are given `PYTHON_CHEATSHEET.ipynb` in Lesson 1 as a lookup

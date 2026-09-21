@@ -83,7 +83,7 @@ conversation memory in Lesson 5, both of which make the finished assistant bette
 **Provided by the workshop**
 - `requirements.txt` (LangChain, langchain-anthropic, langchain-chroma, langchain-huggingface, sentence-transformers, chromadb, python-dotenv, jupyter)
 - A sample knowledge base, so nobody is blocked on not having material
-- Five lesson notebooks
+- Five lesson notebooks (Lessons 1-5) and three student guides (Lessons 6-8)
 - `check_setup.py`
 
 **⚠️ Preparation before Lesson 1 — this one is not optional.** The local embedding model
