@@ -2,6 +2,9 @@
 
 Repo: https://github.com/ArtyoMKo/tumo_month_workshop
 
+Every field below is kept short enough for Google Forms. Fuller detail lives in the repo
+(`course_b_study_buddy/CURRICULUM.md` and the student guides) if TUMO wants it.
+
 ---
 
 ## Lab Title
@@ -33,11 +36,10 @@ Thursdays 19:30-21:30 | Sundays 14:00-16:00
 ```
 - Basic Python: variables, lists, dictionaries, loops, functions. Python is not taught
   here; students get a cheatsheet to look things up in.
-- No AI, machine learning or maths background needed.
-- Age 13-18.
-- From Day 2, each student brings 3-10 of their own .txt or .md files - revision notes,
-  a subject they study, rules of a game. Armenian, English or mixed. Shared storage is
-  visible to everyone, so: general subjects, nothing personal. Backup set provided.
+- No AI, machine learning or maths background needed. Age 13-18.
+- From Day 2 each student brings 3-10 of their own .txt/.md files - revision notes, a
+  subject they study, rules of a game. Armenian, English or mixed. Shared storage is
+  visible to everyone, so general subjects only, nothing personal. Backups provided.
 ```
 
 ## What are the learning objectives and goals?
@@ -85,45 +87,39 @@ Thursdays 19:30 - 21:30 | Sundays 14:00 - 16:00
 Description
 
 Ask a chatbot about your homework and it answers confidently - and sometimes invents the
-answer completely. It has never seen your notes; it is producing text that looks like an
-answer. In this workshop students build the fix: an assistant that reads documents they
-choose themselves - revision notes, a subject they study, the rules of a game - and
-answers only from that material, naming the file each answer came from. Asked something
-its documents do not cover, it says so instead of guessing. Getting a computer to admit
-what it does not know is the hard part, and it is what this workshop is about.
+answer completely. It has never seen your notes. In this workshop students build the fix:
+an assistant that reads documents they choose themselves - revision notes, a subject they
+study, the rules of a game - and answers only from that material, naming the file each
+answer came from. Asked something its documents do not cover, it says so instead of
+guessing. Getting a computer to admit what it does not know is the hard part, and it is
+what this workshop is about.
 
-Students begin in a notebook, writing instructions that control how an AI behaves. They
-learn how text is split into pieces, how those pieces become numbers that capture meaning
-rather than spelling - so a question in Armenian can find an answer written in English -
-and how to search those numbers. Halfway through, the code leaves the notebook and becomes
-a real Python project in VS Code. The final lessons cover loading their own material,
-diagnosing wrong answers, measuring quality against a test set they write, and presenting
-the result.
+Students start in a notebook, learning to control how an AI behaves and how text becomes
+numbers that capture meaning rather than spelling, so that an Armenian question can find
+an English answer. Halfway through, the code leaves the notebook and becomes a real
+Python project in VS Code. The last lessons cover loading their own material, diagnosing
+wrong answers, and measuring quality against a test set they write themselves.
 
 
 To apply
 
-Send a short list of the documents you would want your assistant to know about - notes
-for a subject, a topic you are interested in, a game or a book you know well - and say
-why you chose them. Armenian, English or both.
+Send a short list of the documents you would want your assistant to know about, and why
+you chose them - Armenian, English or both. Tell us what programming you have done,
+including any Python. No AI experience required.
 
-Also tell us what programming you have done, including any Python, and what you would
-most like to understand about how AI tools work. No AI experience required.
-
-Note: your documents are stored in your TUMO workshop folder, which is visible to others.
-Choose material about a subject, not anything personal.
+Your documents go in your TUMO workshop folder, which others can see, so choose material
+about a subject rather than anything personal.
 
 
 Bio.
 
-Artyom Kosakyan is an AI Engineer at Async Armenia, where he specialises in Voice AI. He
-studied Applied Mathematics and Informatics at Yerevan State University, and has spent
-the last three years teaching Python with the FAST Foundation - experience that shapes
-how this workshop runs: students write and execute everything themselves from the first
-lesson, and every idea is made to work before it is named. His engineering work is in
-getting language and speech models to behave reliably in real products, which is the
-problem at the centre of this course: not making an AI talk, but making it answer from
-something you can check.
+Artyom Kosakyan is an AI Engineer at Async Armenia, specialising in Voice AI. He studied
+Applied Mathematics and Informatics at Yerevan State University and has spent three years
+teaching Python with the FAST Foundation - experience that shapes how this workshop runs:
+students write and execute everything themselves from the first lesson, and every idea is
+made to work before it is named. His engineering work is in getting language and speech
+models to behave reliably in real products, which is exactly the problem at the centre of
+this course.
 ```
 
 ---
@@ -132,43 +128,29 @@ something you can check.
 ```
 DAY 1 - SETUP AND YOUR FIRST AI CALL
 
-> Getting to know each other (10mn)
-- introductions; demo the finished assistant, including one question it refuses
-
-> Presentation: how this works (15mn)
-- a model predicts text; no database, no inner difference between remembering and
-  inventing -> confident fiction
-- what an API is; why the key is a password
+> Introductions, and a demo of the finished assistant (10mn)
+> Presentation: what a model does; APIs; why the key is a password (15mn)
 
 > STEP 1: Setup (25mn)
-- everything pre-installed; this is connecting pieces
-- Python on the laptop, YOUR WORK in your shared folder (you may be at a different Mac
-  next lesson)
-- create the project folder; activate the environment (every Terminal, every lesson)
-- .env with ANTHROPIC_API_KEY (answers) and HF_TOKEN (searches)
-- Select Kernel in the notebook - needed every time, the #1 source of errors
-- mention: shared storage is visible to everyone; next lesson bring general-subject notes
-- hand out PYTHON_CHEATSHEET.ipynb
+- everything pre-installed; Python on the laptop, work in the shared folder
+- .env with two keys: ANTHROPIC_API_KEY and HF_TOKEN
+- Select Kernel - needed in every notebook, the #1 source of errors
+- shared storage is visible to everyone: next lesson, general-subject notes only
+- hand out the Python cheatsheet
 
 > STEP 2: First call to Claude (15mn)
-- CHAT_MODEL = "anthropic:claude-haiku-4-5"; init_chat_model(...).invoke(...)
-- inspect the whole response, not just .text
-- usage_metadata -> tokens; $1/M in, $5/M out
+- init_chat_model("anthropic:claude-haiku-4-5").invoke(...)
+- inspect the whole response, and the token counts that price everything
 
 > STEP 3: System prompts (20mn)
 - System (written by the programmer, invisible) vs Human
-- same question with and without a system prompt
-- write ask(system_prompt, question); one question, three different jobs
+- write ask(system_prompt, question); one question through three different jobs
 
 > STEP 4: Making it follow rules (20mn)
-- length, format (JSON only), language (Armenian)
-- refusal: "You only answer weather questions. Otherwise reply exactly: ..." Test with
-  3 questions, 2 off-topic.
+- length, JSON format, Armenian, and a forced refusal
 - students try to break their own rule from the user message -> prompt injection
 
 > STEP 5: Changing AI company in one line (10mn)
-- only CHAT_MODEL names a company; swap to sonnet-5 / openai / ollama and rerun
-
 > Wrap-up (5mn) - homework: bring 3-10 of your own .txt/.md files
 
 DELIVERABLE: working environment, their own ask() function, three system prompts with
@@ -179,38 +161,31 @@ different behaviour, one forcing a refusal.
 ```
 DAY 2 - WHY AI MAKES THINGS UP
 
-> Recap (10mn) - check documents; hand out backups
-
-> Presentation: why models invent (20mn)
-- it predicts plausible text; recalling and composing are the same operation inside
-- real cases: invented court citations, invented refund policies
-- the failure is fluency, not stupidity
+> Recap; check everyone brought documents (10mn)
+> Presentation: why models invent - they predict plausible text, and recalling and
+  composing are the same operation inside (20mn)
 
 > STEP 1: Watch it make things up (20mn)
-- documents/ describes an invented project no AI has seen, so any answer is provably made up
+- our sample documents describe an invented project no AI has ever seen, so any answer
+  is provably fabricated
 - ask, compare with the file, collect the best inventions on the board
 - repeat on the student's own notes
 
 > STEP 2: The brute-force fix (20mn)
-- read the file (encoding="utf-8" or Windows mangles Armenian)
-- put the text in the system prompt via {context} and .format() -> correct answer
-- this is GROUNDING
-- ask from a different file -> wrong again -> load all files
-- students repeat on their own notes
+- read the file, put the text in the system prompt, ask again -> correct. This is
+  GROUNDING.
+- ask from a different file -> wrong again -> load everything
 
 > Break (5mn)
-
-> Presentation: tokens, context, cost (15mn)
-- models read tokens (~4 chars); Haiku's window is 200,000
-- too much context makes answers worse
+> Presentation: tokens, context windows, cost per question (15mn)
 
 > STEP 3: Measure why it cannot scale (25mn)
-- window: 4 files 2,070 tokens; a textbook 125,000 (fits); a year of notes 750,000 (no)
-- cost, charged every question: a textbook $12.50 per 100; a year of notes $75.00
-- the answer is buried in text you did not want
+- a textbook fits in the window but costs $12.50 per 100 questions; a year of notes is
+  $75 and does not fit
+- too much context also makes answers worse
 - "it fits" and "it's a good idea" are different questions
 
-> Wrap-up (5mn) - the goal for the next 3 days: find the three paragraphs that matter
+> Wrap-up (5mn) - the goal for the next 3 days: find the paragraphs that matter
 
 DELIVERABLE: a notebook showing the same question answered wrongly without context and
 correctly with it, plus their own cost calculation.
@@ -221,33 +196,29 @@ correctly with it, plus their own cost calculation.
 DAY 3 - PREPARING DOCUMENTS: CHUNKING
 
 > Recap (10mn)
-
-> Presentation: what a chunk should be (15mn)
-- one idea: big enough to stand alone, small enough to be mostly relevant
-- too small: "The two-tracker rule was added after" ... after what?
+> Presentation: a chunk should be one idea - big enough to stand alone, small enough to
+  be mostly relevant (15mn)
 
 > STEP 1: Load documents (20mn)
-- build Document(page_content, metadata) per file; sorted() on every glob
-- the filename in metadata reaches the final answer; lose it and you cannot cite a source
+- build a Document per file, with the filename in its metadata
+- that filename reaches the final answer; lose it and you cannot cite a source
 
 > STEP 2: Compare chunk sizes (25mn)
-- split at 200 / 500 / 1000 / 4000; print counts, averages, and the same passage cut
-  four ways
+- split at 200 / 500 / 1000 / 4000; print the same passage cut four ways and read them
 - the test: "handed only this chunk, could you answer?"
 
 > Break (5mn)
-
-> Presentation: the boundary problem (10mn)
-- wherever you cut, you sometimes cut through the answer; overlap 10-20% fixes it
+> Presentation: the boundary problem - wherever you cut, you sometimes cut through the
+  answer. Overlap of 10-20% fixes it. (10mn)
 
 > STEP 3: Overlap (15mn)
-- print the seam between two chunks with overlap 0, then with overlap 100
-- settle on CHUNK_SIZE 1000, CHUNK_OVERLAP 200
+- print the seam between two chunks with and without it
+- settle on chunk size 1000, overlap 200
 
-> STEP 4: Split on structure (15mn)
-- MarkdownHeaderTextSplitter keeps sections whole; compare on their own notes
+> STEP 4: Split on structure instead of length (15mn)
+- a markdown-header splitter keeps each section whole; compare on their own notes
 
-> Choose your settings (5mn) - written down, with one sentence of justification
+> Choose your settings, with one sentence of justification (5mn)
 
 DELIVERABLE: their own documents split, with chosen settings and a written reason.
 ```
@@ -257,124 +228,97 @@ DELIVERABLE: their own documents split, with chosen settings and a written reaso
 DAY 4 - EMBEDDINGS AND SEMANTIC SEARCH
 
 > Recap (10mn)
-
-> Presentation: embeddings without maths (20mn)
-- meaning as a position; students place word cards on a drawn 2-axis space
-- the real model uses 384 axes it worked out itself; you only need to measure distance
+> Presentation: embeddings without maths. Meaning as a position - students place word
+  cards on a drawn 2-axis space; the real model uses 384 axes it worked out itself (20mn)
 
 > STEP 1: Measure meaning (20mn)
-- embed a word -> 384 numbers; similarity 1.0 identical, 0.0 unrelated
-- students predict before running: balloon/airship, balloon/trombone, car/vehicle,
-  king/queen, hot/cold
-- hot/cold scores HIGH - embeddings capture topic, not agreement
+- students predict each similarity score before running it
+- "hot" and "cold" score HIGH: embeddings capture topic, not agreement
 - each student finds a pair where the model disagrees with them
 
 > STEP 2: The result that makes this work (15mn)
-- a question and its answer sharing no content word still score close (+0.28); a word
-  search scores zero
-- an Armenian question finds the English answer (+0.35) - no shared characters at all
-- hence the multilingual model: the English-only one scores a correct Armenian answer and
-  an unrelated sentence 0.004 apart, so retrieval goes random with no error
+- a question and its answer sharing no word still score close; a word search scores zero
+- an Armenian question finds the English answer - no shared characters at all
+- hence the multilingual model; the English-only one makes Armenian retrieval random
 
 > Break (5mn)
-
-> Presentation: vector stores (10mn)
-- a database of vectors searched by closeness; Chroma locally, a hosted one at scale
+> Presentation: what a vector store is (10mn)
 
 > STEP 3: Build and search your index (25mn)
-- Chroma.from_documents(...), similarity_search(question, k=3)
 - no language model involved - pure search, so it is obvious which half does what
-- for Chroma the score is a distance: lower is closer
 - each student builds a store over their own documents
 
 > STEP 4: The question with no answer (15mn)
-- search something absent -> it still returns 3 chunks. A vector store always returns k.
+- search something absent -> it still returns results. A vector store always returns k.
 - therefore retrieval alone does not prevent hallucination -> Day 5
-- then metadata filtering: search one file only
 
 DELIVERABLE: a working search engine over their own documents, and three documented
-cases with scores: answered well / right chunk ranks low / not in the documents.
+cases: answered well / right chunk ranks low / not in the documents.
 ```
 
 ## Lesson 5: Day 5
 ```
 DAY 5 - BUILDING THE RAG ASSISTANT
 
-> Recap (10mn) - whiteboard the pipeline from memory before opening anything
+> Recap: whiteboard the pipeline from memory before opening anything (10mn)
 
 > STEP 1: Assemble the prompt, then read it (25mn)
-- retrieve with k=4; join with "\n\n---\n\n" (without a clear break the model reads two
-  chunks as one sentence and invents a connection)
-- fill the template, print the whole prompt, read it aloud. That is RAG, nothing hidden.
-- send with model.invoke([SystemMessage, HumanMessage])
+- retrieve, join the chunks, fill the template
+- print the whole prompt and read it aloud. That is RAG, with nothing hidden.
 
 > STEP 2: answer_question() with sources (20mn)
-- return (answer, sources); sources make an answer checkable
+- return the answer and the files it used; sources are what make it checkable
 - test a question whose answer spans two files
 
 > Break (5mn)
 
 > STEP 3: The refusal (20mn)
-- ask something absent -> it answers anyway from 4 irrelevant chunks
-- add: 'If the notes do not contain the answer, say exactly: "That isn't in your
-  documents." Do not guess.'
-- ask again -> refuses; check a question it should answer still works
-- every student finds one question theirs refuses, and one where the refusal fails
+- ask something absent -> it answers anyway from irrelevant chunks
+- add one sentence to the prompt: if the notes do not contain the answer, say so
+- every student finds a question theirs refuses, and one where the refusal fails
 
 > STEP 4: Tune k (15mn)
-- k = 1, 4, 12. k=1 misses answers; k=12 buries the right chunk. Start at 4-6.
+- k=1 misses answers; k=12 buries the right chunk. Start at 4-6.
 
 > STEP 5: Conversation memory (20mn)
-- "Why two trackers?" then "Which is more expensive?" -> the second fails
-- two problems: the model does not know what "them" means (replay earlier turns), and
-  the search does not either (glue the last 2 questions onto the query)
-- implement both; students run a 4-turn conversation on their own notes
+- a follow-up question fails for two separate reasons: the model does not know what
+  "them" means, and neither does the search
+- fix both; students run a 4-turn conversation on their own notes
 
 > Wrap-up (5mn) - the notebook phase ends here
 
-DELIVERABLE: a working RAG assistant with sources, handling a follow-up question, and
-correctly refusing one documented question.
+DELIVERABLE: a working RAG assistant with sources, handling a follow-up, and correctly
+refusing one documented question.
 ```
 
 ## Lesson 6: Day 6
 ```
 DAY 6 - FROM NOTEBOOK TO PYTHON PROJECT
 
-Hand out guides/lesson6_build_the_project.md - per-file instructions with a check after
-each, so anyone falling behind catches up without stopping the room.
+Students work from a written guide with a check after every file, so anyone falling
+behind catches up without stopping the room.
 
-> Presentation: why we leave the notebook (10mn)
-- a notebook is a lab bench; you hand someone the thing you built, not the bench
+> Presentation: a notebook is a lab bench; you hand someone the thing you built (10mn)
+> Presentation: the two-program design. ingest.py is slow and runs when documents
+  change; main.py is fast and runs constantly; the index is saved between them. (20mn)
 
-> Presentation: the two-program design (20mn)
-- reopening the notebook recomputes every embedding before you can ask one question
-- ingest.py is slow and runs when documents change; main.py is fast and runs constantly
-- today's rule: each file explainable in one sentence
+> STEP 1: config.py - every constant in one place (15mn)
+- CHECK: it prints nothing and exits cleanly
 
-> STEP 1: config.py (15mn)
-- all constants move here; paths use Path(__file__).parent
-- CHECK: python config.py prints nothing and exits cleanly
-
-> STEP 2: ingest.py (25mn)
-- load / split / embed / persist; delete the old index before rebuilding
-- CHECK: python ingest.py -> chunk count, and a vector_db/ folder appears
+> STEP 2: ingest.py - load, split, embed, save (25mn)
+- CHECK: run it; a vector_db/ folder appears
 
 > Break (5mn)
 
-> STEP 3: retriever.py (20mn)
-- opens the saved index, never builds one; same embedding model as ingest.py, or vectors
-  are incompatible and search returns nonsense with no error
-- must not import assistant.py or mention a language model
-- CHECK: a scratch file printing 3 retrieved chunks
+> STEP 3: retriever.py - open the saved index and find chunks (20mn)
+- must use the same embedding model as ingest.py, or search returns nonsense with no error
+- knows nothing about language models, so it can be tested for free
 
-> STEP 4: assistant.py (15mn)
-- system prompt, build_context(), build_search_query(), answer_question(q, history=None)
-- history=None, not history=[] - a list default is shared by every call, so the assistant
-  would silently remember every conversation it ever had
+> STEP 4: assistant.py - the system prompt and the answering function (15mn)
+- history=None, not history=[]: a list default is shared by every call
 
-> STEP 5: main.py and run it (10mn)
-- welcome(), index check, the loop with /quit, /forget, /sources; one try/except
-- python main.py - a real program, from a terminal, no notebook
+> STEP 5: main.py, and run it (10mn)
+- the question loop, one try/except, then: python main.py
 
 DELIVERABLE: every student leaves with a working "python main.py", confirmed individually.
 ```
@@ -383,37 +327,28 @@ DELIVERABLE: every student leaves with a working "python main.py", confirmed ind
 ```
 DAY 7 - YOUR OWN KNOWLEDGE BASE
 
-Hand out guides/lesson7_your_own_documents.md.
-
-> Recap (10mn) - everyone runs python main.py before changing anything
-
-> Presentation: garbage in, garbage out (15mn)
-- good: headings, short paragraphs, one topic per file, explicit sentences
-- bad: an unbroken wall of text, everything in one file
-- notes saying "this is the important one" are unfindable - "this" carries the meaning
+> Recap: everyone runs the project before changing anything (10mn)
+> Presentation: garbage in, garbage out. Headings, short paragraphs, one topic per file.
+  Notes saying "this is the important one" are unfindable. (15mn)
 
 > STEP 1: Load your own documents (30mn)
-- copy files in, re-ingest, ask five questions you know the answers to, record right/wrong
+- re-ingest, then ask five questions you know the answers to and record right/wrong
 - the same five are reused on Day 8
 
 > Presentation: splitting the blame (15mn)
-- always in this order: did the right chunk come back? (/sources, costs nothing) then,
-  did the model use it?
-- chunk missing -> documents / chunk size / k. Chunk ignored -> the system prompt.
+- always in this order: did the right chunk come back? then, did the model use it?
+- the /sources command answers the first, without calling the AI at all
 - debugging the prompt when the problem is retrieval loses an afternoon
 
 > Break (5mn)
 
 > STEP 2: Improve the documents, then measure (25mn)
-- fix the document, not the code; re-ingest; re-ask the same five; record before vs after
-- chunk size, overlap and document changes need a re-ingest; k and the prompt do not
-- most students find fixing documents beats every available code change
+- fix the document, not the code; re-ingest; re-ask the same five
+- most students find this beats every code change available to them
 
 > STEP 3: Build one feature (15mn)
 - the skill is deciding which file it belongs in
-- easier: show scores, /help, cap answer length
-- medium: /stats, search one file only, save the conversation
-- harder: quote the evidence, /why, longer memory
+- from showing retrieval scores up to making it quote its evidence
 
 > Wrap-up (5mn)
 
@@ -425,42 +360,31 @@ feature. They can classify any wrong answer as retrieval or generation.
 ```
 DAY 8 - TESTING, TUNING AND FINAL DEMO
 
-Hand out guides/lesson8_test_and_ship.md - test-set, tuning-log and README templates.
-
 > Recap (10mn)
-
-> Presentation: how would you know if you made it better? (15mn)
-- the trap: change k, ask one question, think "that's better", keep it. You measured
-  nothing - the model words things differently every time and you asked once.
-- decide how to measure first; change one thing; re-measure
+> Presentation: how would you know if you made it better? The trap is changing something,
+  asking one question and deciding it improved. Decide how to measure first, change one
+  thing, re-measure. (15mn)
 
 > STEP 1: Test set and baseline (20mn)
-- five questions with known answers: a plain fact / needs two files / worded differently
-  / an easy-to-miss detail / something the notes do not cover (must refuse)
+- five questions with known answers, one of which the notes do NOT cover, so it must refuse
 - score all five before changing anything
 
 > STEP 2: Tune, one thing at a time (25mn)
-- RETRIEVE_K 2/4/8 (no re-ingest); CHUNK_SIZE 500/1000/2000 (re-ingest); the system
-  prompt; CHAT_MODEL haiku-4-5 -> sonnet-5 at twice the price
-- re-score after each single change
-- Sonnet often does not win - the retriever did the hard part. "I tested it and the
-  expensive one wasn't better" is a strong finding.
+- how many chunks to retrieve; chunk size; the system prompt; the model itself
+- swapping Haiku for Sonnet doubles the price and often does not win - the retriever did
+  the hard part. That is a real finding, not a failure.
 
 > Break (5mn)
 
 > STEP 3: Finish the project (20mn)
-- requirements.txt; .env not shareable, .env.example present
-- README: what it is / install / run / what I added + one thing that broke
-- fresh-machine test: swap folders with your neighbour, follow their README literally,
-  note where you got stuck, swap back and fix
+- requirements.txt, a README, and the key file kept out of anything shared
+- fresh-machine test: swap folders with your neighbour and run theirs from their README
 
 > STEP 4: Showcase (20mn)
-- ~90 seconds each, already running: what it knows, one good answer, one correct
-  refusal, what they added, one thing that broke
+- ~90 seconds each: what it knows, one good answer, one correct refusal, what they added,
+  one thing that broke
 
 > Wrap-up (5mn)
-- after the workshop the key stops working: switch to ollama:llama3.2 and the answering
-  half runs free on your own laptop
 
 DELIVERABLE: a finished documented project a classmate ran from the README alone; a test
 set with before/after scores; a live demo including one correct refusal.
@@ -471,66 +395,61 @@ set with before/after scores; a live demo including one correct refusal.
 ## What software will you require?
 ```
 All machines macOS. Everything runs on the laptop - no cloud platform, no server. All
-free except the Anthropic API.
-
-To install on all 16 machines before Day 1:
+free except the Anthropic API. To install on all 16 machines before Day 1:
 
 1. Python 3.12
 
-2. VS Code with two Microsoft extensions: "Python" and "Jupyter".
-   Without Jupyter the lesson notebooks cannot be opened.
+2. VS Code with two Microsoft extensions: "Python" and "Jupyter". Without Jupyter the
+   lesson notebooks cannot be opened.
 
-3. The packages from the requirements.txt I provide: langchain, langchain-anthropic,
+3. The packages from the requirements.txt I provide (langchain, langchain-anthropic,
    langchain-chroma, langchain-huggingface, langchain-text-splitters, chromadb,
-   python-dotenv, jupyter, ipykernel, numpy.
-   About 50 MB - both AI models run on their providers' servers, so there is no PyTorch.
-   Please still install in advance so lesson 1 is not spent waiting.
+   python-dotenv, jupyter, ipykernel, numpy). About 50 MB - both AI models run on their
+   providers' servers, so there is no PyTorch. Please still install it in advance.
 
-4. Two keys available to the students' Python environment:
+4. Two keys in the students' Python environment:
    - ANTHROPIC_API_KEY - answers questions. I provide it; students cannot create their
-     own (API accounts require 18+).
+     own, as API accounts require 18+.
    - HF_TOKEN - free Hugging Face token for the embedding model. Optional but
-     recommended: without it all 16 students share one anonymous rate limit. Free at
-     huggingface.co/settings/tokens, "Read" access. One shared TUMO token is fine.
+     recommended: without it all 16 students share one anonymous rate limit. One shared
+     TUMO token is fine.
 
 Network: outbound HTTPS every lesson to api.anthropic.com, huggingface.co and
-router.huggingface.co. Tell me in advance if the lab uses a proxy or TLS inspection.
+router.huggingface.co. Tell me in advance about any proxy or TLS inspection.
 
 Students do not need administrator rights.
 ```
 
 ## What hardware will you require?
 ```
-- 16 macOS laptops, 8 GB RAM, ~1 GB free disk. No GPU; nothing heavy to install.
-- projector
-- whiteboard - used properly: on Day 4 students place word cards on a drawn 2-axis space
-  to build intuition for embeddings, and Day 5 opens with them rebuilding the pipeline
-  from memory
+- 16 macOS laptops, 8 GB RAM, ~1 GB free disk. No GPU, nothing heavy to install.
+- projector and a whiteboard. The whiteboard is used properly: on Day 4 students place
+  word cards on a drawn 2-axis space to build intuition for embeddings, and Day 5 opens
+  with them rebuilding the pipeline on it from memory.
 
 Storage: students may sit at a different laptop each lesson, so each needs a personal
-directory on shared storage, write access, ~2 GB free. Their code, documents and search
-index live there; Python stays on each laptop.
+directory on shared storage with write access and ~2 GB free. Their code, documents and
+search index live there; Python stays on each laptop.
 
 Please confirm the student directory path is identical on every machine.
 ```
 
 ## What specific tools and materials will you require?
 ```
-Provided by me (public at https://github.com/ArtyoMKo/tumo_month_workshop):
-- 5 Jupyter notebooks (Days 1-5), with exercises and extra challenges
+Provided by me, public at https://github.com/ArtyoMKo/tumo_month_workshop:
+- 5 Jupyter notebooks (Days 1-5) with exercises and extra challenges
 - 3 student guides (Days 6-8) for the project phase in VS Code
-- a runnable Python cheatsheet notebook - no key or internet needed, so it also occupies
+- a runnable Python cheatsheet notebook, needing no key or internet, which also occupies
   whoever finishes setup first
 - the final project: 5 documented modules, requirements.txt, .env.example, README
-- check_setup.py - verifies a machine in 8 steps with a specific fix for each failure
+- check_setup.py, which verifies a machine in 8 steps with a specific fix for each failure
 - a sample document set describing an invented project, used on Day 2. Fictional on
-  purpose: no AI has seen it, so a correct answer proves retrieval worked. Also backup
-  material for anyone who forgets their own.
+  purpose: no AI has seen it, so a correct answer proves retrieval worked.
 
 From TUMO:
-- one Anthropic API key with a spend limit. About $7 total for 16 students over 16 hours;
-  embeddings are free, so only the final answer is paid for (~0.14 cents per question).
-- machines prepared as above; a shared-storage directory per student
+- one Anthropic API key with a spend limit. About $7 total for 16 students over 16 hours:
+  embeddings are free, so only the final answer is paid for, ~0.14 cents per question.
+- machines prepared as above, and a shared-storage directory per student
 
 From students:
 - 3-10 of their own .txt/.md files from Day 2, any language. Shared storage is visible to
@@ -543,5 +462,3 @@ From students:
 3. A follow-up exchange showing it remembers context
 4. The finished VS Code project tree
 5. Day 4: an Armenian question matching an English note
-
-Capture 1–3 in one run once you have the workshop key.
