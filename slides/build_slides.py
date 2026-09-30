@@ -83,10 +83,11 @@ def text(slide, left, top, width, height, lines, size, font=BODY, colour=GREY,
 # ---------------------------------------------------------------------------
 # Slide types - each mirrors a slide shape used in TUMO's existing decks
 # ---------------------------------------------------------------------------
-def slide_cover(prs, workshop, level="Level 3"):
+def slide_cover(prs, workshop, strapline=None):
     s = blank_slide(prs)
-    text(s, 3.0, 3.8, 11.0, 2.4, [workshop, "Workshop:"], 60, BOLD, BLUE)
-    text(s, 3.0, 6.6, 11.0, 0.7, level, 40, MEDIUM, GREY)
+    text(s, 3.0, 4.1, 12.0, 2.4, [workshop, "Workshop:"], 60, BOLD, BLUE)
+    if strapline:
+        text(s, 3.0, 6.9, 12.0, 0.8, strapline, 28, MEDIUM, GREY)
     return s
 
 
@@ -259,7 +260,7 @@ def slide_roadmap(prs, title="Where we are going", highlight=None):
              detail, 12, BODY, GREY, PP_ALIGN.CENTER)
 
     text(s, 1.17, 9.3, 17.0, 0.6,
-         "8 lessons · 2 hours each · you finish with a program that knows what you know",
+         "8 lessons · 2 hours each · you leave with a program that knows what you know",
          20, MEDIUM, GREY, PP_ALIGN.CENTER)
     return s
 
@@ -330,7 +331,7 @@ def build():
     prs = Presentation(str(TEMPLATE))
     strip_slides(prs)
 
-    slide_cover(prs, "AI")
+    slide_cover(prs, "AI", "8 lessons \u00b7 October 2026")
 
     slide_title(prs, "Build an AI That Reads Your Notes",
                 "Lesson 1 of 8  ·  Setup and Your First AI Call")
@@ -339,48 +340,45 @@ def build():
     slide_progress(prs, today=1)
 
     slide_overview(prs, "Workshop Overview", [
-        "Ask a chatbot about your homework and it answers confidently - and sometimes "
-        "invents the answer completely. It has never seen your notes.",
-        "Over 8 lessons you will build an assistant that reads documents YOU choose, "
-        "answers only from them, and names the file each answer came from.",
-        "And when you ask something your notes do not cover, it will say so instead of "
-        "guessing. Getting a computer to admit what it does not know is the hard part.",
+        "A chatbot has never seen your notes. Ask it about your homework and it will "
+        "invent an answer - confidently.",
+        "Over 8 lessons you build an assistant that reads documents you choose, answers "
+        "only from them, and names its source.",
+        "And says \u201cthat isn\u2019t in your documents\u201d when it isn\u2019t. "
+        "That refusal is the hard part, and the whole point.",
     ])
 
     slide_cards(prs, "Today", [
-        ("Set up", "Python, VS Code and your keys. Your work lives in your shared folder."),
-        ("First AI call", "Send a message to Claude, and look at what actually comes back."),
-        ("System prompts", "Give the model a job. One question, three different assistants."),
-        ("Make it obey", "Control length, format and language - then make it refuse."),
-        ("Swap the company", "Change one line and run the same code on a different AI."),
+        ("Set up", "Python, VS Code, your keys. Work lives in your shared folder."),
+        ("First AI call", "Send a message to Claude. Look at what comes back."),
+        ("System prompts", "Give the model a job. One question, three assistants."),
+        ("Make it obey", "Length, format, language - then make it refuse."),
+        ("Swap the company", "Change one line. Same code, different AI."),
     ])
 
     slide_content(prs, "Step 1", "Setup", [
-        "Everything is already installed - you are connecting pieces, not installing them.",
-        "Python lives on the laptop. YOUR WORK lives in your shared folder, because you "
-        "may be at a different Mac next lesson.",
-        "Two keys go in your .env file: one answers questions, one searches your notes.",
-        "Pick the kernel in every notebook you open. This is the #1 source of errors all "
-        "workshop.",
+        "Everything is installed. You are connecting pieces, not installing them.",
+        "Python lives on the laptop. Your work lives in your shared folder - you may be "
+        "at a different Mac next lesson.",
+        "Two keys in .env: one answers, one searches.",
+        "Pick the kernel in every notebook. The #1 source of errors all workshop.",
     ])
 
     slide_content(prs, "Step 3", "System prompts", [
-        "Every message has a role. SYSTEM is written by you, the programmer, and the user "
-        "never sees it. HUMAN is what the user typed.",
-        "That separation is why a chatbot stays polite no matter what you type at it.",
-        "Same model, same question, three different system prompts - three completely "
-        "different assistants.",
+        "SYSTEM - written by you, the programmer. The user never sees it.",
+        "HUMAN - what the user actually typed.",
+        "That split is why a chatbot stays polite whatever you type at it.",
+        "Same model, same question, three system prompts \u2192 three different assistants.",
     ], panel_side="left")
 
     slide_big(prs, "“I only answer questions about weather.”",
-              "One paragraph of English turned a confident liar into something you can trust.")
+              "One paragraph of English. No Python. "
+              "In Lesson 5, this is what makes your assistant trustworthy.")
 
     slide_content(prs, "Homework", "Bring your own notes", [
         "3 to 10 of your own .txt or .md files.",
-        "Revision notes, a subject you study, the rules of a game you play, a wiki you "
-        "exported. Armenian, English or both.",
-        "Shared storage is visible to everyone - bring notes on a general subject, and "
-        "keep personal things out of the workshop folder.",
+        "Revision notes, a subject you study, the rules of a game. Armenian, English or both.",
+        "Shared storage is visible to everyone \u2014 general subjects only, nothing personal.",
     ])
 
     prs.save(str(OUTPUT))
@@ -395,10 +393,10 @@ def build_midcourse_sample():
     slide_progress(prs, today=5)
     slide_roadmap(prs, title="Where we are", highlight=5)
     slide_cards(prs, "Today", [
-        ("Assemble", "Retrieve the chunks, join them, and read the prompt you just built."),
-        ("Sources", "Return the files each answer came from, so it can be checked."),
-        ("The refusal", "One sentence that stops it inventing answers."),
-        ("Tune k", "How many chunks? Too few misses answers, too many makes them vague."),
+        ("Assemble", "Retrieve, join, and read the prompt you just built."),
+        ("Sources", "Name the files each answer came from."),
+        ("The refusal", "One sentence that stops it inventing."),
+        ("Tune k", "Too few misses answers. Too many makes them vague."),
         ("Memory", "Make follow-up questions work."),
     ])
 
