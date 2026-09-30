@@ -108,17 +108,42 @@ def slide_overview(prs, title, paragraphs):
 
 
 def slide_cards(prs, heading, cards):
-    """A 2x2 grid of offset cards - green block behind, white card in front."""
+    """
+    A grid of offset cards - a green block behind a white card.
+
+    Two columns for up to four cards, three for five or six, so a lesson with five
+    hands-on steps shows five cards rather than quietly losing one. A short final row
+    is centred, so it reads as deliberate rather than broken.
+    """
     s = blank_slide(prs)
     rect(s, 0.0, 0.06, W, 2.28, PANEL)
     text(s, 3.76, 0.73, 12.49, 0.9, heading, 52, BOLD, BLUE, PP_ALIGN.CENTER)
 
-    positions = [(1.03, 3.29), (10.25, 3.29), (1.03, 7.03), (10.25, 7.03)]
-    for (left, top), (card_title, card_body) in zip(positions, cards):
-        rect(s, left, top, 8.84, 3.3, GREEN)               # the shadow
-        rect(s, left - 0.12, top - 0.11, 8.84, 3.3, WHITE)  # the card
-        text(s, left + 1.4, top + 0.7, 6.6, 0.7, card_title, 32, BOLD, DARK)
-        text(s, left + 1.4, top + 1.6, 6.0, 1.4, card_body, 18, BODY, DARK)
+    count = len(cards)
+    if count > 6:
+        raise ValueError(f"{count} cards will not fit - split the slide")
+
+    columns = 2 if count <= 4 else 3
+    margin, gap = 1.03, 0.38
+    card_w = (W - 2 * margin - gap * (columns - 1)) / columns
+    card_h, rows_y = 3.3, [3.29, 7.03]
+
+    title_size = 32 if columns == 2 else 25
+    body_size = 18 if columns == 2 else 15
+    pad = 1.4 if columns == 2 else 0.6
+
+    for i, (card_title, card_body) in enumerate(cards):
+        row, col = divmod(i, columns)
+        in_row = min(columns, count - row * columns)
+        # centre a short final row
+        row_w = in_row * card_w + (in_row - 1) * gap
+        left = (W - row_w) / 2 + col * (card_w + gap)
+        top = rows_y[row]
+
+        rect(s, left, top, card_w, card_h, GREEN)                  # the shadow
+        rect(s, left - 0.12, top - 0.11, card_w, card_h, WHITE)    # the card
+        text(s, left + pad, top + 0.6, card_w - 2 * pad, 0.8, card_title, title_size, BOLD, DARK)
+        text(s, left + pad, top + 1.5, card_w - 2 * pad, 1.6, card_body, body_size, BODY, DARK)
     return s
 
 
@@ -155,7 +180,7 @@ def slide_big(prs, statement, footnote=None):
 # ---------------------------------------------------------------------------
 LESSONS = [
     (1, "Setup",       "Your first AI call, and system prompts"),
-    (2, "Why AI lies", "Hallucination, and why pasting everything fails"),
+    (2, "Why AI invents", "Why it makes things up, and why pasting everything fails"),
     (3, "Chunking",    "Splitting documents so they can be searched"),
     (4, "Embeddings",  "Turning meaning into numbers you can compare"),
     (5, "The assistant", "Retrieval + prompt = grounded answers"),
@@ -324,9 +349,10 @@ def build():
 
     slide_cards(prs, "Today", [
         ("Set up", "Python, VS Code and your keys. Your work lives in your shared folder."),
-        ("First AI call", "Send a message to Claude and look at what actually comes back."),
+        ("First AI call", "Send a message to Claude, and look at what actually comes back."),
         ("System prompts", "Give the model a job. One question, three different assistants."),
         ("Make it obey", "Control length, format and language - then make it refuse."),
+        ("Swap the company", "Change one line and run the same code on a different AI."),
     ])
 
     slide_content(prs, "Step 1", "Setup", [
@@ -372,6 +398,7 @@ def build_midcourse_sample():
         ("Assemble", "Retrieve the chunks, join them, and read the prompt you just built."),
         ("Sources", "Return the files each answer came from, so it can be checked."),
         ("The refusal", "One sentence that stops it inventing answers."),
+        ("Tune k", "How many chunks? Too few misses answers, too many makes them vague."),
         ("Memory", "Make follow-up questions work."),
     ])
 

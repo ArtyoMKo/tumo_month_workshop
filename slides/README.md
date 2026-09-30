@@ -28,7 +28,7 @@ Lifted by inspecting the existing *AI Music Workshop* decks, not invented:
 | `slide_cover()` | "AI / Workshop:" + Level 3 |
 | `slide_title()` | Big title + subtitle |
 | `slide_overview()` | Title left, body on a full-height grey panel right |
-| `slide_cards()` | 2×2 offset cards (green block behind a white card) |
+| `slide_cards()` | Offset cards (green block behind a white card). 2 columns up to 4 cards, 3 for 5–6; a short last row is centred |
 | `slide_content()` | Small label + big title one side, bullets on a panel the other |
 | `slide_big()` | One sentence, large — the point to remember |
 | `slide_roadmap()` | All 8 milestones on a track, grouped into phases |
@@ -57,6 +57,12 @@ PHASES = [("Explore", 1, 5), ("Build", 6, 6), ("Finish", 7, 8)]
   from earlier lessons), **Today** (blue, given the most room), **Still ahead** (grey).
 
 States are colour-coded consistently: green = done, blue = today, white outline = ahead.
+
+## Unverified
+
+**"Level 3" on the cover is a guess.** It was copied from the template filename and the
+AI Music Workshop deck. Nobody has confirmed what level this workshop is — check with
+TUMO and change `slide_cover(prs, "AI", level=...)` if it is wrong.
 
 ## Known gaps
 
