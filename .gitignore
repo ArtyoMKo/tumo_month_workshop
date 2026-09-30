@@ -16,3 +16,8 @@ __pycache__/
 
 # Serena MCP tool config - local, not course material
 .serena/
+
+# TUMO's own template and reference decks. Not committed: the repo is public, and these
+# are TUMO's branded material. build_slides.py expects the template at:
+#     tmp/Workshop Level 3_3D Modeling.pptx
+tmp/

@@ -4,7 +4,15 @@
 and slide size come from TUMO rather than from us.
 
 ```bash
-python build_slides.py          # needs: pip install python-pptx
+pip install python-pptx
+python build_slides.py
+```
+
+**The template is not in this repo.** It is TUMO's branded material and this repo is
+public, so `tmp/` is gitignored. Put TUMO's template here before running:
+
+```
+tmp/Workshop Level 3_3D Modeling.pptx
 ```
 
 ## The visual language
@@ -57,12 +65,6 @@ PHASES = [("Explore", 1, 5), ("Build", 6, 6), ("Finish", 7, 8)]
   from earlier lessons), **Today** (blue, given the most room), **Still ahead** (grey).
 
 States are colour-coded consistently: green = done, blue = today, white outline = ahead.
-
-## Unverified
-
-**"Level 3" on the cover is a guess.** It was copied from the template filename and the
-AI Music Workshop deck. Nobody has confirmed what level this workshop is — check with
-TUMO and change `slide_cover(prs, "AI", level=...)` if it is wrong.
 
 ## Known gaps
 
