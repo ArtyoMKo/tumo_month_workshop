@@ -325,17 +325,41 @@ def strip_slides(prs):
 
 
 # ---------------------------------------------------------------------------
-# Lesson 1
+# The eight lesson decks
+#
+# One function per lesson, deliberately explicit rather than a data table - these are
+# what you will actually edit, and a function you can read top to bottom beats a nested
+# dict you have to decode.
+#
+# Shape of every deck:
+#     title -> progress -> today's cards -> a few content slides -> the point -> next
+# Lesson 1 additionally opens with the cover and the full roadmap.
 # ---------------------------------------------------------------------------
-def build():
-    prs = Presentation(str(TEMPLATE))
-    strip_slides(prs)
+COURSE_TITLE = "Build an AI That Reads Your Notes"
 
-    slide_cover(prs, "AI", "8 lessons \u00b7 October 2026")
 
-    slide_title(prs, "Build an AI That Reads Your Notes",
-                "Lesson 1 of 8  ·  Setup and Your First AI Call")
+def deck(prs, number):
+    """The opening every lesson shares: name the lesson, then show where we are."""
+    name = LESSONS[number - 1][1]
+    slide_title(prs, COURSE_TITLE, f"Lesson {number} of 8  ·  {LESSON_FULL[number]}")
+    slide_progress(prs, today=number)
 
+
+LESSON_FULL = {
+    1: "Setup and Your First AI Call",
+    2: "Why AI Makes Things Up",
+    3: "Preparing Documents: Chunking",
+    4: "Embeddings and Semantic Search",
+    5: "Building the RAG Assistant",
+    6: "From Notebook to Python Project",
+    7: "Your Own Knowledge Base",
+    8: "Testing, Tuning and Final Demo",
+}
+
+
+def lesson_1(prs):
+    slide_cover(prs, "AI", "8 lessons · October 2026")
+    slide_title(prs, COURSE_TITLE, f"Lesson 1 of 8  ·  {LESSON_FULL[1]}")
     slide_roadmap(prs)
     slide_progress(prs, today=1)
 
@@ -344,10 +368,9 @@ def build():
         "invent an answer - confidently.",
         "Over 8 lessons you build an assistant that reads documents you choose, answers "
         "only from them, and names its source.",
-        "And says \u201cthat isn\u2019t in your documents\u201d when it isn\u2019t. "
+        "And says “that isn’t in your documents” when it isn’t. "
         "That refusal is the hard part, and the whole point.",
     ])
-
     slide_cards(prs, "Today", [
         ("Set up", "Python, VS Code, your keys. Work lives in your shared folder."),
         ("First AI call", "Send a message to Claude. Look at what comes back."),
@@ -355,7 +378,6 @@ def build():
         ("Make it obey", "Length, format, language - then make it refuse."),
         ("Swap the company", "Change one line. Same code, different AI."),
     ])
-
     slide_content(prs, "Step 1", "Setup", [
         "Everything is installed. You are connecting pieces, not installing them.",
         "Python lives on the laptop. Your work lives in your shared folder - you may be "
@@ -363,35 +385,113 @@ def build():
         "Two keys in .env: one answers, one searches.",
         "Pick the kernel in every notebook. The #1 source of errors all workshop.",
     ])
-
     slide_content(prs, "Step 3", "System prompts", [
         "SYSTEM - written by you, the programmer. The user never sees it.",
         "HUMAN - what the user actually typed.",
         "That split is why a chatbot stays polite whatever you type at it.",
-        "Same model, same question, three system prompts \u2192 three different assistants.",
+        "Same model, same question, three system prompts → three different assistants.",
     ], panel_side="left")
-
     slide_big(prs, "“I only answer questions about weather.”",
               "One paragraph of English. No Python. "
               "In Lesson 5, this is what makes your assistant trustworthy.")
-
     slide_content(prs, "Homework", "Bring your own notes", [
         "3 to 10 of your own .txt or .md files.",
         "Revision notes, a subject you study, the rules of a game. Armenian, English or both.",
-        "Shared storage is visible to everyone \u2014 general subjects only, nothing personal.",
+        "Shared storage is visible to everyone — general subjects only, nothing personal.",
     ])
 
-    prs.save(str(OUTPUT))
-    print(f"✅ {OUTPUT.name}  ({len(prs.slides)} slides)")
+
+def lesson_2(prs):
+    deck(prs, 2)
+    slide_cards(prs, "Today", [
+        ("Watch it invent", "Ask about documents no AI has ever seen."),
+        ("Paste it all in", "The obvious fix. It works."),
+        ("Measure the cost", "Then find out why it cannot scale."),
+    ])
+    slide_content(prs, "Why", "It is not remembering", [
+        "A model predicts what text comes next. It has no database.",
+        "Inside it, recalling and composing are the same operation.",
+        "So it cannot tell you which one it just did - and neither can you.",
+        "Real cases: invented court citations, invented refund policies.",
+    ])
+    slide_big(prs, "The Kestrel Project does not exist.",
+              "We invented it for this workshop. No AI has ever seen it — so every "
+              "detail it gives you is provably made up.")
+    slide_content(prs, "The fix", "Grounding", [
+        "Read the file. Put the text in the system prompt. Ask again.",
+        "Now it is right - because the answer was in front of it.",
+        "Ask about a different file and it fails again. So load everything?",
+    ], panel_side="left")
+    slide_cards(prs, "Why “paste everything” fails", [
+        ("The window", "200,000 tokens. A textbook fits. A year of notes does not."),
+        ("The cost", "$12.50 per 100 questions for a textbook. $75 for a year of notes."),
+        ("The quality", "Too much context buries the answer. Replies get worse."),
+    ])
+    slide_big(prs, "“It fits” and “it’s a good idea” are different questions.",
+              "Next three lessons: find the three paragraphs that matter, and send only those.")
 
 
-def build_midcourse_sample():
-    """A second deck, so the progress slide can be seen with lessons behind and ahead."""
-    prs = Presentation(str(TEMPLATE))
-    strip_slides(prs)
+def lesson_3(prs):
+    deck(prs, 3)
+    slide_cards(prs, "Today", [
+        ("Load", "Read a folder of documents, keeping track of where each came from."),
+        ("Compare sizes", "Split at 200, 500, 1000, 4000 - and read the results."),
+        ("Overlap", "Fix the sentence that got cut in half."),
+        ("Split on structure", "Keep each heading's section whole."),
+        ("Choose yours", "Pick the settings for your own notes, and say why."),
+    ])
+    slide_content(prs, "The idea", "One chunk, one idea", [
+        "Big enough to stand alone. Small enough to be mostly relevant.",
+        "Too small: “The two-tracker rule was added after” … after what?",
+        "Too large: you are back to Lesson 2's problem in miniature.",
+    ])
+    slide_big(prs, "Handed only this chunk, could you answer the question?",
+              "That is the only test. It is a judgement, not a formula — and it is yours to make.")
+    slide_content(prs, "The catch", "Wherever you cut, you cut somewhere", [
+        "Sometimes straight through the sentence that held the answer.",
+        "Overlap: each chunk repeats the end of the one before it.",
+        "10-20% of the chunk size. Costs a little space, saves whole answers.",
+    ], panel_side="left")
+    slide_content(prs, "Your settings", "Write them down", [
+        "Chunk size and overlap, chosen by you, for your own notes.",
+        "Plus one sentence saying why you chose them.",
+        "“Because it was the default” is not accepted.",
+    ])
 
-    slide_progress(prs, today=5)
-    slide_roadmap(prs, title="Where we are", highlight=5)
+
+def lesson_4(prs):
+    deck(prs, 4)
+    slide_cards(prs, "Today", [
+        ("Measure meaning", "Turn words into numbers and compare them."),
+        ("The surprise", "Find answers that share no words with the question."),
+        ("Build the index", "Search your own documents - no AI involved yet."),
+        ("The gap", "Search for something that is not there."),
+    ])
+    slide_content(prs, "The idea", "Meaning as a position", [
+        "Two words that mean similar things end up near each other.",
+        "Not similar spelling. Similar meaning.",
+        "Your model uses 384 numbers per piece of text - 384 axes it worked out itself.",
+        "You cannot picture that. You only need to measure the distance.",
+    ])
+    slide_big(prs, "“hot” and “cold” score high.",
+              "Embeddings capture what something is about, not whether it agrees \u2014\n"
+              "a search can hand you the exact opposite of the truth.")
+    slide_cards(prs, "The result that makes this work", [
+        ("No shared words", "“when the radio cannot get through” finds “valleys where "
+                            "the signal does not reach”. A word search scores zero."),
+        ("No shared alphabet", "An Armenian question finds the English answer. "
+                               "Not one character in common."),
+    ])
+    slide_content(prs, "Read this twice", "It always returns something", [
+        "Search for “Who won the 2018 World Cup?” and you still get 3 chunks back.",
+        "A vector store has no idea what “irrelevant” means. It returns the nearest "
+        "things it has, however far away.",
+        "So retrieval alone does not stop it inventing. That is Lesson 5.",
+    ], panel_side="left")
+
+
+def lesson_5(prs):
+    deck(prs, 5)
     slide_cards(prs, "Today", [
         ("Assemble", "Retrieve, join, and read the prompt you just built."),
         ("Sources", "Name the files each answer came from."),
@@ -399,12 +499,132 @@ def build_midcourse_sample():
         ("Tune k", "Too few misses answers. Too many makes them vague."),
         ("Memory", "Make follow-up questions work."),
     ])
+    slide_content(prs, "The whole thing", "Four steps", [
+        "1.  Find the chunks closest in meaning to the question.",
+        "2.  Join them into one block of text.",
+        "3.  Paste that into the system prompt.",
+        "4.  Ask the model.",
+        "No model was retrained. We just decided well what to paste.",
+    ])
+    slide_big(prs, "Print the prompt. Read it out loud.",
+              "That is RAG, in full, with nothing hidden.")
+    slide_content(prs, "The sentence", "What makes it trustworthy", [
+        "“If the notes do not contain the answer, say exactly: that isn’t in your "
+        "documents. Do not guess.”",
+        "That is it. One paragraph of English, no Python.",
+        "Find a question yours refuses — and one where the refusal fails. The second is "
+        "more interesting.",
+    ], panel_side="left")
+    slide_cards(prs, "Why follow-ups break", [
+        ("The model", "“Which of them is cheaper?” - it does not know what “them” "
+                      "means. Replay the earlier turns."),
+        ("The search", "Neither does the search. Glue the last two questions onto the query."),
+    ])
 
-    out = HERE / "Lesson 5 - Building the RAG Assistant.pptx"
-    prs.save(str(out))
-    print(f"✅ {out.name}  ({len(prs.slides)} slides)")
+
+def lesson_6(prs):
+    deck(prs, 6)
+    slide_cards(prs, "Today", [
+        ("config.py", "Every setting in one place. It does no work."),
+        ("ingest.py", "Documents → chunks → an index saved to disk."),
+        ("retriever.py", "Find the chunks. Knows nothing about AI."),
+        ("assistant.py", "The system prompt, and the answer."),
+        ("main.py", "Talk to the human. Then run it."),
+    ])
+    slide_big(prs, "A notebook is a lab bench.",
+              "You hand someone the thing you built on it, not the bench.")
+    slide_content(prs, "The design", "Two programs, not one", [
+        "Reopening the notebook recomputes every embedding before you can ask anything.",
+        "ingest.py is slow. You run it when your documents change.",
+        "main.py is fast. You run it constantly.",
+        "The index on disk is what sits between them.",
+    ])
+    slide_content(prs, "The rule", "One sentence per file", [
+        "If you cannot say what a file is for in one sentence, it is doing two jobs.",
+        "retriever.py must not import assistant.py. That is what lets you test searching "
+        "for free.",
+        "Check after every file. Do not write all five and hope.",
+    ], panel_side="left")
+    slide_big(prs, "python main.py",
+              "A real program, from a terminal, with no notebook anywhere. "
+              "Nobody leaves today until this runs.")
+
+
+def lesson_7(prs):
+    deck(prs, 7)
+    slide_cards(prs, "Today", [
+        ("Your documents", "Load your own material and ask five questions you know."),
+        ("Improve them", "Fix the documents, not the code. Then measure again."),
+        ("Build a feature", "One of your own. Decide which file it belongs in."),
+    ])
+    slide_content(prs, "The hard truth", "Garbage in, garbage out", [
+        "Good: headings, short paragraphs, one topic per file.",
+        "Bad: one unbroken wall of text, everything in notes.md.",
+        "The killer: notes that say “this is the important one”. “This” carries the "
+        "meaning, and a search cannot see it.",
+    ])
+    slide_big(prs, "Did the right chunk come back?",
+              "Ask that before you blame the prompt. /sources answers it, and costs nothing.")
+    slide_cards(prs, "Two failures, two fixes", [
+        ("Retrieval failed", "The right chunk never came back. Fix your documents, "
+                             "the chunk size, or k."),
+        ("Generation failed", "It came back and the model ignored it. Fix the system prompt."),
+    ])
+    slide_content(prs, "Remember", "Re-run ingest", [
+        "Chunk size, overlap, or the documents themselves → re-run ingest.py.",
+        "How many chunks, or the system prompt → takes effect immediately.",
+        "“I changed it and nothing happened” is almost always a forgotten ingest.",
+    ], panel_side="left")
+
+
+def lesson_8(prs):
+    deck(prs, 8)
+    slide_cards(prs, "Today", [
+        ("Test set", "Five questions you know the answers to. Score them now."),
+        ("Tune", "One change at a time. Re-score after each."),
+        ("Finish", "README, requirements, and keep your key out of it."),
+        ("Show it", "90 seconds each."),
+    ])
+    slide_content(prs, "The trap", "How would you know?", [
+        "Change something, ask one question, decide it is better, keep it.",
+        "You measured nothing. The model words things differently every time, and you "
+        "asked once.",
+        "Decide how you will measure before you change anything.",
+    ])
+    slide_big(prs, "Write the test set first.",
+              "Then change one thing, and score it again. This is the most useful habit "
+              "in the whole workshop.")
+    slide_content(prs, "Worth testing", "Does the pricier model win?", [
+        "Swapping Haiku for Sonnet roughly doubles the price.",
+        "It often does not win. The retriever already did the hard part \u2014 the model\n"
+        "only has to read four paragraphs and not invent anything.",
+        "“I tested it and the expensive one was not better” is a real finding.",
+    ], panel_side="left")
+    slide_cards(prs, "Your demo", [
+        ("What it knows", "The documents you chose, and why."),
+        ("One good answer", "Ask it live. Point at the sources."),
+        ("One correct refusal", "The thing you actually built."),
+        ("One thing that broke", "And what it turned out to be."),
+    ])
+    slide_big(prs, "You leave with a program that knows what you know.",
+              "Switch the model to Ollama and the answering half runs free on your own "
+              "laptop, forever.")
+
+
+BUILDERS = {1: lesson_1, 2: lesson_2, 3: lesson_3, 4: lesson_4,
+            5: lesson_5, 6: lesson_6, 7: lesson_7, 8: lesson_8}
+
+
+def build_all():
+    for number, builder in BUILDERS.items():
+        prs = Presentation(str(TEMPLATE))
+        strip_slides(prs)
+        builder(prs)
+        out = HERE / f"Lesson {number} - {LESSON_FULL[number]}.pptx".replace(":", " -")
+        prs.save(str(out))
+        print(f"  ✅ {out.name:52} {len(prs.slides)} slides")
 
 
 if __name__ == "__main__":
-    build()
-    build_midcourse_sample()
+    print("Building all 8 lesson decks\n")
+    build_all()

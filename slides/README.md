@@ -15,6 +15,20 @@ public, so `tmp/` is gitignored. Put TUMO's template here before running:
 tmp/Workshop Level 3_3D Modeling.pptx
 ```
 
+## The decks
+
+Eight files, one per lesson, 61 slides total. Every deck follows the same shape:
+
+```
+title  ->  progress  ->  today's cards  ->  content slides  ->  the point  ->  next
+```
+
+Lesson 1 additionally opens with the cover and the full roadmap.
+
+Each lesson is its own function (`lesson_1` … `lesson_8`) rather than a data table —
+these are what you will actually edit, and a function you can read top to bottom beats a
+nested dict you have to decode.
+
 ## The visual language
 
 Lifted by inspecting the existing *AI Music Workshop* decks, not invented:
