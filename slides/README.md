@@ -31,8 +31,32 @@ Lifted by inspecting the existing *AI Music Workshop* decks, not invented:
 | `slide_cards()` | 2×2 offset cards (green block behind a white card) |
 | `slide_content()` | Small label + big title one side, bullets on a panel the other |
 | `slide_big()` | One sentence, large — the point to remember |
+| `slide_roadmap()` | All 8 milestones on a track, grouped into phases |
+| `slide_progress()` | Opens a lesson: done / today / still ahead |
 
 `panel_side="left"` flips `slide_content`, so consecutive slides can alternate.
+
+## The roadmap and progress slides
+
+Both read one list, `LESSONS`, at the top of the script — so they cannot drift apart, and
+renaming a lesson updates every deck on the next run.
+
+```python
+LESSONS = [
+    (1, "Setup",         "Your first AI call, and system prompts"),
+    (2, "Why AI lies",   "Hallucination, and why pasting everything fails"),
+    ...
+]
+PHASES = [("Explore", 1, 5), ("Build", 6, 6), ("Finish", 7, 8)]
+```
+
+- `slide_roadmap()` — the whole course. Labels alternate above and below the track so
+  eight of them fit. Pass `highlight=5` to mark "you are here".
+- `slide_progress(today=5)` — put this second in every lesson's deck. Same track in
+  miniature along the top, then three columns: **You already know** (green, the topics
+  from earlier lessons), **Today** (blue, given the most room), **Still ahead** (grey).
+
+States are colour-coded consistently: green = done, blue = today, white outline = ahead.
 
 ## Known gaps
 
