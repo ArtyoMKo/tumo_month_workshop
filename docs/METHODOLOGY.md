@@ -145,10 +145,10 @@ Produce all of these. Each has one job.
 | `notebooks/PYTHON_CHEATSHEET.ipynb` | student | Runnable language reference; **no API key, no internet** |
 | `guides/lessonN_*.md` | student | Lessons 6–8, read in VS Code's preview pane |
 | `project/` | student | The finished thing they build toward |
-| `SETUP.md` | student | Environment, first lesson only |
-| `TEACHER_NOTES.md` | instructor | Pre-flight, budget, risks, what to cut if short |
-| `TUMO_APPLICATION.md` | the form | Paste-ready answers, **every field under ~1,400 chars** |
-| `ANNOUNCEMENT.md` | public | Title / dates / Description / To apply / Bio |
+| `docs/SETUP.md` | student | Environment, first lesson only |
+| `docs/TEACHER_NOTES.md` | instructor | Pre-flight, budget, risks, what to cut if short |
+| `docs/TUMO_APPLICATION.md` | the form | Paste-ready answers, **every field under ~1,400 chars** |
+| `docs/ANNOUNCEMENT.md` | public | Title / dates / Description / To apply / Bio |
 
 **Format follows phase.** Notebooks for the notebook phase; markdown guides for the
 project phase, because students are editing `.py` files and running a terminal.

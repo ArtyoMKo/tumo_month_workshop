@@ -23,10 +23,13 @@ teaching approach of the *LLM Engineering* course.
 ```
 tumo_workshops/
 ├── README.md                 <- you are here
-├── ANNOUNCEMENT.md           <- the workshop announcement, ready to send
-├── TUMO_APPLICATION.md       <- paste-ready answers for the TUMO application form
-├── SETUP.md                  <- student environment setup (macOS, shared storage)
-├── TEACHER_NOTES.md          <- pre-flight checklist, budget, risks  ** read first **
+├── docs/
+│   ├── TEACHER_NOTES.md      <- pre-flight checklist, budget, risks  ** read first **
+│   ├── SETUP.md              <- student environment setup (macOS, shared storage)
+│   ├── ANNOUNCEMENT.md       <- the workshop announcement, ready to send
+│   ├── TUMO_APPLICATION.md   <- paste-ready answers for the TUMO application form
+│   └── METHODOLOGY.md        <- how the material is written and structured
+├── slides/                   <- lesson decks (.pptx) and build_slides.py
 ├── course_b_study_buddy/     <- THE TRACK BEING TAUGHT
 │   ├── OUTLINE.md            <- TUMO 4-part workshop outline
 │   ├── CURRICULUM.md         <- 8 lessons, agendas, time math

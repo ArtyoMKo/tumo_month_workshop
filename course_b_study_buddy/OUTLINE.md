@@ -76,7 +76,7 @@ conversation memory in Lesson 5, both of which make the finished assistant bette
 - **Python 3.12** and **VS Code** + Python/Jupyter extensions — installed by TUMO IT in advance
 - A personal directory on TUMO shared storage — students may change laptops between lessons. Note it is readable by everyone, so students are asked to bring general-subject notes only.
 - `PYTHON_CHEATSHEET.ipynb`, provided - a lookup reference, not homework
-- An **Anthropic API key**, supplied by TUMO (students cannot create their own - see `TEACHER_NOTES.md`)
+- An **Anthropic API key**, supplied by TUMO (students cannot create their own - see `docs/TEACHER_NOTES.md`)
 - **Their own documents** — 3 to 10 text or markdown files. Students should be told to bring
   these from Lesson 2 onward. Have a backup set ready; some will forget.
 
@@ -89,7 +89,7 @@ conversation memory in Lesson 5, both of which make the finished assistant bette
 **⚠️ Preparation before Lesson 1 — this one is not optional.** The local embedding model
 pulls PyTorch (~800 MB) plus the model itself. Sixteen students triggering that at once on
 shared wifi will cost you a lesson. It must be pre-cached on every machine the day before —
-exact command in `TEACHER_NOTES.md`.
+exact command in `docs/TEACHER_NOTES.md`.
 
 **No GPU, no hosted vector database, no server, no deployment.** Embeddings and the vector
 store both run on the student's own laptop; the only network call is the final answer from

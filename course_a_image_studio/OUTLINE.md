@@ -64,7 +64,7 @@ onto something they already have in their head, so no session is spent on a Pyth
 - **Python 3.12**
 - **VS Code** with the Microsoft **Python** and **Jupyter** extensions (PyCharm works too)
 - Internet access
-- An API key, supplied by TUMO (see `TEACHER_NOTES.md` — students cannot create their own)
+- An API key, supplied by TUMO (see `docs/TEACHER_NOTES.md` — students cannot create their own)
 
 **Provided by the workshop**
 - `requirements.txt` (LangChain, langchain-openai, python-dotenv, Pillow, jupyter)
@@ -72,7 +72,7 @@ onto something they already have in their head, so no session is spent on a Pyth
 - Five session notebooks
 - `check_setup.py`
 
-**Preparation before Session 1** — see `TEACHER_NOTES.md`. If machines are prepared in
+**Preparation before Session 1** — see `docs/TEACHER_NOTES.md`. If machines are prepared in
 advance, setup takes 15 minutes. From scratch it takes 40-50 and eats into the first
 hands-on block.
 
