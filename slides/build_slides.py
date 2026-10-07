@@ -373,7 +373,7 @@ def lesson_1(prs):
     ])
     slide_cards(prs, "Today", [
         ("Set up", "Python, VS Code, your keys. Work lives in your shared folder."),
-        ("First AI call", "Send a message to Claude. Look at what comes back."),
+        ("First AI call", "Send a message to the AI. Look at what comes back."),
         ("System prompts", "Give the model a job. One question, three assistants."),
         ("Make it obey", "Length, format, language - then make it refuse."),
         ("Swap the company", "Change one line. Same code, different AI."),
@@ -396,7 +396,7 @@ def lesson_1(prs):
               "In Lesson 5, this is what makes your assistant trustworthy.")
     slide_content(prs, "Homework", "Bring your own notes", [
         "3 to 10 of your own .txt or .md files.",
-        "Revision notes, a subject you study, the rules of a game. Armenian, English or both.",
+        "Revision notes, a subject you study, the rules of a game. English works best.",
         "Shared storage is visible to everyone — general subjects only, nothing personal.",
     ])
 
@@ -423,8 +423,8 @@ def lesson_2(prs):
         "Ask about a different file and it fails again. So load everything?",
     ], panel_side="left")
     slide_cards(prs, "Why “paste everything” fails", [
-        ("The window", "200,000 tokens. A textbook fits. A year of notes does not."),
-        ("The cost", "$12.50 per 100 questions for a textbook. $75 for a year of notes."),
+        ("The window", "400,000 tokens. A textbook fits. A year of notes does not."),
+        ("The cost", "$9.38 per 100 questions for a textbook. $56.25 for a year of notes."),
         ("The quality", "Too much context buries the answer. Replies get worse."),
     ])
     slide_big(prs, "“It fits” and “it’s a good idea” are different questions.",
@@ -470,7 +470,7 @@ def lesson_4(prs):
     slide_content(prs, "The idea", "Meaning as a position", [
         "Two words that mean similar things end up near each other.",
         "Not similar spelling. Similar meaning.",
-        "Your model uses 384 numbers per piece of text - 384 axes it worked out itself.",
+        "Your model uses 1,536 numbers per piece of text - 1,536 axes it worked out itself.",
         "You cannot picture that. You only need to measure the distance.",
     ])
     slide_big(prs, "“hot” and “cold” score high.",
@@ -479,8 +479,8 @@ def lesson_4(prs):
     slide_cards(prs, "The result that makes this work", [
         ("No shared words", "“when the radio cannot get through” finds “valleys where "
                             "the signal does not reach”. A word search scores zero."),
-        ("No shared alphabet", "An Armenian question finds the English answer. "
-                               "Not one character in common."),
+        ("Not across languages", "An Armenian question scores an unrelated English "
+                                 "line above its answer. Measure, never assume."),
     ])
     slide_content(prs, "Read this twice", "It always returns something", [
         "Search for “Who won the 2018 World Cup?” and you still get 3 chunks back.",
@@ -542,7 +542,7 @@ def lesson_6(prs):
     slide_content(prs, "The rule", "One sentence per file", [
         "If you cannot say what a file is for in one sentence, it is doing two jobs.",
         "retriever.py must not import assistant.py. That is what lets you test searching "
-        "for free.",
+        "almost for free.",
         "Check after every file. Do not write all five and hope.",
     ], panel_side="left")
     slide_big(prs, "python main.py",
@@ -564,7 +564,7 @@ def lesson_7(prs):
         "meaning, and a search cannot see it.",
     ])
     slide_big(prs, "Did the right chunk come back?",
-              "Ask that before you blame the prompt. /sources answers it, and costs nothing.")
+              "Ask that before you blame the prompt. /sources answers it, and costs next to nothing.")
     slide_cards(prs, "Two failures, two fixes", [
         ("Retrieval failed", "The right chunk never came back. Fix your documents, "
                              "the chunk size, or k."),
@@ -595,7 +595,7 @@ def lesson_8(prs):
               "Then change one thing, and score it again. This is the most useful habit "
               "in the whole workshop.")
     slide_content(prs, "Worth testing", "Does the pricier model win?", [
-        "Swapping Haiku for Sonnet roughly doubles the price.",
+        "Swapping gpt-5.4-mini for gpt-5.4 roughly triples the price.",
         "It often does not win. The retriever already did the hard part \u2014 the model\n"
         "only has to read four paragraphs and not invent anything.",
         "“I tested it and the expensive one was not better” is a real finding.",

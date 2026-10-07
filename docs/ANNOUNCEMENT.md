@@ -32,8 +32,8 @@ part this workshop is really about.
 The course moves from experiment to finished program. Students begin in a notebook,
 writing instructions that control how an AI behaves and finding the limits of those
 instructions. They then learn how text is split into pieces, how those pieces are turned
-into numbers that capture meaning rather than spelling - so that a question in Armenian
-can find an answer written in English - and how to search those numbers to retrieve
+into numbers that capture meaning rather than spelling - so that a question can find its
+answer even when the two share no words - and how to search those numbers to retrieve
 exactly the paragraphs a question needs. Halfway through, the working code leaves the
 notebook: students move into VS Code and assemble a real, organised Python project with
 its own modules, a requirements file and a README. The final lessons are spent loading
@@ -47,8 +47,8 @@ To apply
 
 To apply for this workshop, please send a short list of the documents you would want
 your AI assistant to know about - your notes for a subject, a topic you are interested
-in, a game or a book you know well - and say why you chose them. Armenian, English or
-both are equally fine.
+in, a game or a book you know well - and say why you chose them. Notes in English work
+best.
 
 Please also tell us what programming you have done so far, including any Python, and
 what you would most like to understand about how AI tools actually work. No experience

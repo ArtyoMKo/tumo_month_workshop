@@ -61,7 +61,7 @@ and you can't undo the two that might have made it worse.
 | `CHUNK_OVERLAP` | `config.py` | **Yes** |
 | `SYSTEM_PROMPT` wording | `assistant.py` | No |
 | The documents themselves | `documents/` | **Yes** |
-| `CHAT_MODEL` → `anthropic:claude-sonnet-5` | `config.py` | No |
+| `CHAT_MODEL` → `openai:gpt-5.4` | `config.py` | No |
 
 ### Your tuning log
 
@@ -75,18 +75,18 @@ and you can't undo the two that might have made it worse.
 
 ### The interesting one: does a pricier model actually win?
 
-`claude-haiku-4-5` is Anthropic's cheapest. `claude-sonnet-5` is roughly **twice the
+`gpt-5.4-mini` is OpenAI's fast, cheap model. `gpt-5.4` is roughly **three times the
 price**. Swap it in `config.py`, re-score all five, and find out.
 
 Think about why the answer is often **no**. In RAG the model isn't doing the hard part —
 the retriever already found the answer and put it in front of it. The job is to read four
 paragraphs and not invent anything. That's a job a small model does well.
 
-If Sonnet doesn't beat Haiku on your test set, **that is a real finding and worth saying
+If `gpt-5.4` doesn't beat the mini on your test set, **that is a real finding and worth saying
 in your demo.** "I tested it and the expensive one wasn't better" is a much stronger
 statement than guessing either way.
 
-> Put it back to Haiku afterwards unless Sonnet genuinely won.
+> Put it back to `gpt-5.4-mini` afterwards unless `gpt-5.4` genuinely won.
 
 ---
 
@@ -170,16 +170,14 @@ Have it running **before** you start talking.
 
 ## Where to go next
 
-- **Keep it running.** Your key stops working after the workshop — switch `CHAT_MODEL`
-  to `ollama:llama3.2` and the answering half runs free on your own laptop, forever.
-  Searching stays hosted by Hugging Face, which is free anyway, so you still need
-  internet for that part.
+- **Keep it running.** Your key stops working after the workshop — and it powers both
+  halves. Switch `CHAT_MODEL` to `ollama:llama3.2` and the embeddings to
+  `OllamaEmbeddings` (the comment in `retriever.py` shows how; re-run `ingest.py`), and
+  the whole thing runs free on your own laptop, forever.
 - **Feed it something bigger.** A whole textbook, a wiki export, every note you've ever taken.
-- **Go fully offline.** Swap `HuggingFaceEndpointEmbeddings` back to
-  `HuggingFaceEmbeddings` (the same model, run on your machine — add
-  `sentence-transformers` to requirements), pair it with Ollama, and the whole thing runs
-  with the network unplugged. It costs a ~1.2 GB install, which is exactly why we didn't
-  do it in class.
+- **Go fully offline.** That same Ollama setup needs no internet at all once the models
+  are downloaded — pull the plug and it still answers. It's a few-gigabyte download,
+  which is exactly why we didn't do it in class.
 - **Try a hosted vector store** (Pinecone, Qdrant) — in this architecture it's a few lines
   in `retriever.py` and `ingest.py`.
 - **Read the LangChain docs.** You now know what the words mean, which is most of the battle.

@@ -7,13 +7,12 @@
 # give you the command to switch the environment on.
 #
 # This file is for running the project on your own computer after the workshop. It is a
-# small install (~50 MB): both AI models run on someone else's servers, so there is no
+# small install (~50 MB): both AI models run on OpenAI's servers, so there is no
 # PyTorch and nothing multi-gigabyte here.
 
 langchain>=1.0.0                 # the provider-agnostic layer: init_chat_model
-langchain-anthropic>=1.0.0       # the Claude part of it - this is what answers questions
+langchain-openai>=1.0.0          # OpenAI - answers questions AND turns text into vectors
 langchain-chroma>=0.2.0          # the local vector store, saved to a folder on disk
-langchain-huggingface>=1.0.0     # the embedding model - free, multilingual, hosted
 langchain-text-splitters>=0.3.0  # RecursiveCharacterTextSplitter
 python-dotenv>=1.0.0             # reads the .env file so our key stays out of the code
 
@@ -29,6 +28,6 @@ numpy>=1.26.0                    # for measuring similarity by hand in Session 4
 # --- Optional: other providers ----------------------------------------------
 # Uncomment if you change CHAT_MODEL in config.py to that provider.
 #
-# langchain-openai>=1.0.0           # for "openai:..."  (also for paid embeddings)
+# langchain-anthropic>=1.0.0        # for "anthropic:..."
 # langchain-google-genai>=2.0.0     # for "google-genai:..."
 # langchain-ollama>=1.0.0           # for "ollama:..." - free, runs on this computer

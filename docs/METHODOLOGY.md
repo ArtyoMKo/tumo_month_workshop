@@ -103,8 +103,9 @@ because embeddings capture topic, not agreement.
 ### 2.5 Measure, never assert
 
 Any claim about behaviour must be produced by code the student runs. Don't say "this is
-expensive" — have them compute `$75.00 per 100 questions`. Don't say "the multilingual
-model is better for Armenian" — have them see `0.004` versus `0.145`.
+expensive" — have them compute `$56.25 per 100 questions`. Don't say "this model is weak
+in Armenian" — have them see an Armenian question score an unrelated line `0.079` and its
+real answer `0.028`.
 
 ### 2.6 Teach the limits of what you teach
 
@@ -184,8 +185,10 @@ if not api_key:
     print("❌ No API key found. Is there a file called exactly '.env' next to this notebook?")
 elif api_key.strip() != api_key:
     print("❌ A key was found, but it has a space or tab at the start or end. Delete it.")
-elif not api_key.startswith("sk-ant-"):
-    print("❌ A key was found, but Anthropic keys start with 'sk-ant-'. Check you pasted it all.")
+elif api_key.startswith("sk-ant-"):
+    print("❌ That is an Anthropic key, not an OpenAI one. Ask your teacher for the OpenAI key.")
+elif not api_key.startswith("sk-"):
+    print("❌ A key was found, but OpenAI keys start with 'sk-'. Check you pasted it all.")
 else:
     print(f"✅ API key found, begins {api_key[:11]}... - looks good.")
 ```
@@ -289,7 +292,7 @@ main.py        Talk to the human.                   (no work of its own)
 ```
 
 **Dependency arrows point one way.** `retriever.py` must not import `assistant.py`. State
-why: it lets students test retrieval for free, which is the whole of the Lesson 7
+why: it lets students test retrieval almost for free, which is the whole of the Lesson 7
 debugging method.
 
 ### Comment density, measured
@@ -346,10 +349,10 @@ if history is None:
 except Exception as error:
     message = str(error).lower()
     if "401" in message or "unauthorized" in message:
-        print("Your HF_TOKEN looks wrong. Check it in .env, or remove the line entirely.")
+        print("Your OPENAI_API_KEY looks wrong. Check it in .env - see .env.example.")
     elif "429" in message or "rate" in message:
-        print("Too many requests. Everyone on this wifi shares one allowance unless you")
-        print("have your own HF_TOKEN. Otherwise wait a minute and run this again.")
+        print("Too many requests. The whole room shares one key - wait a minute and")
+        print("run this again.")
     else:
         print("This step needs the internet. Check your connection, then run it again.")
 ```
@@ -371,9 +374,9 @@ This is the architectural spine. Adapt it to whatever external service your cour
 
 ```python
 # config.py
-CHAT_MODEL = "anthropic:claude-haiku-4-5"
-#   CHAT_MODEL = "anthropic:claude-sonnet-5"     # smarter, ~2x the price
-#   CHAT_MODEL = "openai:gpt-4.1-mini"           # pip install langchain-openai
+CHAT_MODEL = "openai:gpt-5.4-mini"
+#   CHAT_MODEL = "openai:gpt-5.4"                # smarter, ~3x the price
+#   CHAT_MODEL = "anthropic:claude-haiku-4-5"    # pip install langchain-anthropic
 #   CHAT_MODEL = "ollama:llama3.2"               # runs HERE - no key, no internet
 ```
 
@@ -392,9 +395,10 @@ result; it's that nothing else changed.
 
 ### Say what the abstraction costs
 
-If a course uses more than one vendor, say so and make it a lesson. Here: Anthropic
-answers, Hugging Face embeds, Chroma stores — *"three organisations, none of which can
-hold the project hostage, because each sits behind an interface you can swap in a line."*
+Say what each piece costs you, and make it a lesson. Here: OpenAI answers and embeds,
+Chroma stores — and OpenAI's embeddings are weak in Armenian, so swapping the embedding
+model is a real option rather than a theoretical one. *"No single company can hold the
+project hostage, because each piece sits behind an interface you can swap in a line."*
 
 ---
 
@@ -402,9 +406,9 @@ hold the project hostage, because each sits behind an interface you can swap in 
 
 | Rule | Example |
 |---|---|
-| Numbers, not adjectives | "$75.00 per 100 questions", not "expensive" |
+| Numbers, not adjectives | "$56.25 per 100 questions", not "expensive" |
 | Concrete, not abstract | "the sentence that answers the question got cut in half" |
-| Name the failure | "It scores a correct answer and an unrelated sentence 0.004 apart" |
+| Name the failure | "It scores an unrelated sentence above the right answer: 0.079 vs 0.028" |
 | Second person, plain | "You have to do this for every notebook you open." |
 | Admit the awkward | "Sometimes the improver makes it worse. When that happens, say so." |
 | No hype | Never "amazing", "powerful", "revolutionary" |
@@ -482,6 +486,8 @@ Re-run after *every* edit to a curriculum or application file.
 Before asserting a model behaves a certain way, run it. This workshop's Lesson 4 numbers
 (`+0.279`, `+0.350`, `0.004`) are all measured. When the embedding model changed, the
 measurement was re-run — and one demo had collapsed to `+0.013` and had to be replaced.
+When it changed again, to OpenAI's `text-embedding-3-small`, the cross-language demo
+failed outright (`0.028` vs `0.079`) and was rewritten as a measured failure.
 
 ### 9.7 Sweep for claims invalidated by later changes
 
@@ -499,8 +505,9 @@ constraint with evidence.
 | Decision | Reasoning |
 |---|---|
 | **Multilingual embeddings** over the standard English-only model | Students bring Armenian notes. Measured: English-only scores a correct Armenian answer and an unrelated sentence **0.004** apart — retrieval is random and *fails silently*. Multilingual scores **0.145**. Cost: one English miss in five and 370 MB. Taken. |
+| **OpenAI embeddings** over Hugging Face's hosted model *(supersedes the two rows below)* | Hugging Face's free hosted inference stopped being free: `401` without a token, `402` once the account's monthly credits ran out. `text-embedding-3-small` uses the same key and costs under a cent per course. Measured on the Kestrel files: English top-4 retrieval 6/8 → 7/8, Armenian 3/4 → 1/4. Accepted; students are steered to English notes and Lesson 4's cross-language demo became a measured failure. |
 | **Hosted embeddings** over local | Measured identical vectors (cosine 1.0). Removes 1.2 GB PyTorch + 470 MB model per machine, and deletes the pre-cache step — the single largest risk of losing a lesson. Cost: network dependency, and the "unplug the wifi" demo. Accepted, and the lost demo rewritten as an extension project. |
-| **Cheapest model** (Haiku) | In RAG the retriever does the hard part and hands the model the answer. Made into a lesson: students A/B it against Sonnet in Lesson 8, and *"the expensive one wasn't better"* is framed as a valid finding. |
+| **Cheap model** (GPT-5.4 mini) | In RAG the retriever does the hard part and hands the model the answer. Made into a lesson: students A/B it against GPT-5.4 in Lesson 8, and *"the expensive one wasn't better"* is framed as a valid finding. |
 | **Drop the Python lesson** | Students already had Python. The hour bought prompt engineering (L1) and conversation memory (L5). Python became a runnable cheatsheet that needs no key or internet — so it also occupies whoever finishes setup first. |
 | **Markdown guides, not notebooks, for lessons 6–8** | Lesson 6's entire message is that you stop working in notebooks. A notebook would contradict the lesson. |
 | **Fictional sample documents** | The Kestrel Project does not exist, so no model has seen it. A correct answer *proves* retrieval worked. With real notes about photosynthesis, students could never tell. |

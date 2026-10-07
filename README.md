@@ -11,14 +11,13 @@ teaching approach of the *LLM Engineering* course.
 | **Format** | 8 lessons x 2 hours = **16 hours exactly** |
 | **Dates** | 1–25 October 2026 · Thu 19:30–21:30, Sun 14:00–16:00 |
 | **Machines** | 16 × macOS, prepared by TUMO IT; students' work on shared storage |
-| **Model** | Claude Haiku 4.5 (`anthropic:claude-haiku-4-5`), under TUMO's Anthropic contract |
-| **Cost** | ~$7 per group of 16 for the whole course; embeddings are free (they run locally) |
+| **Model** | GPT-5.4 mini (`openai:gpt-5.4-mini`), on TUMO's OpenAI API key |
+| **Cost** | ~$6 per group of 16 for the whole course; embeddings add well under a cent |
 | **Final deliverable** | A runnable local Python project: ask questions about material you chose, get grounded answers with sources |
 
 > **Course A (AI Image Studio) is not scheduled.** It is kept here for reference only.
-> It cannot run on Anthropic — there is no Claude image-generation model — so it would
-> need a separate vendor contract. Its material is complete and working if it's ever
-> wanted; it is simply not part of the taught programme.
+> Its material is complete and working if it's ever wanted; it is simply not part of the
+> taught programme.
 
 ```
 tumo_workshops/
@@ -35,7 +34,7 @@ tumo_workshops/
 │   ├── CURRICULUM.md         <- 8 lessons, agendas, time math
 │   ├── notebooks/            <- lessons 1-5, experimentation phase
 │   └── project/              <- the finished project students arrive at
-└── course_a_image_studio/    <- not scheduled; reference only, needs a non-Anthropic key
+└── course_a_image_studio/    <- not scheduled; reference only
     ├── OUTLINE.md
     ├── CURRICULUM.md
     ├── notebooks/
@@ -59,9 +58,9 @@ Nothing hardcodes a vendor SDK. Everything goes through LangChain, and the provi
 lives in exactly one place - a `config.py` with a single model string:
 
 ```python
-CHAT_MODEL = "anthropic:claude-haiku-4-5"      # the default
-# CHAT_MODEL = "anthropic:claude-sonnet-5"     # smarter, ~2x the price
-# CHAT_MODEL = "openai:gpt-4.1-mini"
+CHAT_MODEL = "openai:gpt-5.4-mini"             # the default
+# CHAT_MODEL = "openai:gpt-5.4"                # smarter, ~3x the price
+# CHAT_MODEL = "anthropic:claude-haiku-4-5"
 # CHAT_MODEL = "google-genai:gemini-2.5-flash"
 # CHAT_MODEL = "ollama:llama3.2"               # free, runs on this laptop, no API key
 ```
@@ -69,9 +68,9 @@ CHAT_MODEL = "anthropic:claude-haiku-4-5"      # the default
 Changing that one line changes the provider. Nothing downstream knows or cares, because
 everything downstream only calls `.invoke()`.
 
-This isn't theoretical tidiness — the course needs it. Anthropic answers the questions, but
-Anthropic makes no embedding model, so the embeddings come from a Hugging Face model
-running on the student's laptop and the vectors live in Chroma. **Three organisations, none
-of which can hold the project hostage**, because each sits behind an interface you can swap
-in one line. Lesson 4 makes that point explicitly, and Lesson 5 has students prove it by
+This isn't theoretical tidiness — the course needs it. OpenAI answers the questions and
+makes the embeddings, and the vectors live in Chroma on the student's laptop. **No single
+company can hold the project hostage**, because each piece sits behind an interface you can
+swap in one line — and OpenAI's embeddings are weak in Armenian, which is exactly the kind
+of reason you might want to. Lesson 4 makes that point explicitly, and Lesson 5 has students prove it by
 switching the whole thing to a local model with the wifi off.

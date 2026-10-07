@@ -19,7 +19,7 @@ from pathlib import Path
 
 from langchain_chroma import Chroma
 from langchain_core.documents import Document
-from langchain_huggingface import HuggingFaceEndpointEmbeddings
+from langchain_openai import OpenAIEmbeddings
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 import config
@@ -86,7 +86,7 @@ def build_index(chunks):
 
     Returns the vector store, so this function is also usable from a notebook.
     """
-    embeddings = HuggingFaceEndpointEmbeddings(model=config.EMBEDDING_MODEL)
+    embeddings = OpenAIEmbeddings(model=config.EMBEDDING_MODEL)
 
     # If an index already exists, delete it first. Otherwise we'd add a second copy of
     # every chunk on top of the old one, and searches would return duplicates - or worse,
@@ -127,7 +127,7 @@ def main():
     average = sum(len(c.page_content) for c in chunks) / len(chunks)
     print(f"    {len(documents)} documents → {len(chunks)} chunks, average {average:.0f} characters")
 
-    print("\n  Creating embeddings... (this needs the internet - it runs on Hugging Face)")
+    print("\n  Creating embeddings... (this needs the internet - it runs on OpenAI)")
 
     # The one step here that can fail for reasons outside this program: it is a network
     # call. Without this, losing wifi halfway through prints thirty lines of library
@@ -139,14 +139,12 @@ def main():
         message = str(error).lower()
         print(f"\n  ❌ Could not create the embeddings: {type(error).__name__}")
 
-        if "401" in message or "unauthorized" in message:
-            print("\n     Your HF_TOKEN looks wrong. Check it in .env, or remove the line")
-            print("     entirely - it works without one.")
-        elif "429" in message or "rate" in message or "too many" in message:
-            print("\n     Too many requests. Everyone on this wifi shares one allowance")
-            print("     unless you have your own HF_TOKEN - get a free one at")
-            print("     huggingface.co/settings/tokens and add it to .env.")
-            print("     Otherwise wait a minute and run this again.")
+        if "401" in message or "unauthorized" in message or "api key" in message:
+            print("\n     Your OPENAI_API_KEY looks wrong. Check it in .env - see .env.example.")
+        elif "429" in message or "rate" in message or "too many" in message or "quota" in message:
+            print("\n     Too many requests, or the key has run out of credit. The whole room")
+            print("     shares one key - wait a minute and run this again. If it keeps")
+            print("     happening, tell your teacher.")
         else:
             print("\n     This step needs the internet. Check your connection, then run")
             print("     python ingest.py again.")

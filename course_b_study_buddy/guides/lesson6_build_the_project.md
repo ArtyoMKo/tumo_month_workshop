@@ -103,7 +103,8 @@ Create `config.py` and write it. The things it must hold:
 
 - `load_dotenv(override=True)` — so the API key gets loaded
 - `PROJECT_DIR`, `DOCUMENTS_DIR`, `DB_DIR` — built with `Path(__file__).parent`
-- `CHAT_MODEL`, `TEMPERATURE`
+- `CHAT_MODEL`, `TEMPERATURE`, and `MODEL_SETTINGS` (copy that one from `project/config.py` - it
+  switches off OpenAI's "reasoning" so `TEMPERATURE` actually takes effect)
 - `EMBEDDING_MODEL`
 - `CHUNK_SIZE`, `CHUNK_OVERLAP`, `RETRIEVE_K`
 
@@ -161,7 +162,7 @@ your program just created something that outlives it.**
 ## Step 4 — `retriever.py` (20 min)
 
 The search half. **It must not import `assistant.py` and must never mention a language
-model.** That isn't fussiness — it's what lets you test search on its own, for free, which
+model.** That isn't fussiness — it's what lets you test search on its own, almost for free, which
 is exactly what Lesson 7 is about.
 
 It needs:
@@ -185,7 +186,7 @@ for doc in retriever.find_relevant_chunks("a question about your notes", k=3):
 ```bash
 python try_it.py
 ```
-**This costs nothing** — no model is involved. Delete `try_it.py` when it works.
+**This costs next to nothing** — no chat model is involved, only one tiny embedding call. Delete `try_it.py` when it works.
 
 ---
 
@@ -193,7 +194,7 @@ python try_it.py
 
 The answering half. It holds:
 
-- `model = init_chat_model(config.CHAT_MODEL, temperature=config.TEMPERATURE)`
+- `model = init_chat_model(config.CHAT_MODEL, **config.MODEL_SETTINGS)`
 - `SYSTEM_PROMPT` — including the refusal sentence from Lesson 5
 - `build_context(chunks)` — join with `"\n\n---\n\n"`
 - `build_search_query(question, history)` — glue the last two questions on
@@ -257,7 +258,7 @@ notebook anywhere.**
 | `No index found` | You haven't run `python ingest.py` yet. |
 | It refuses everything | Index is empty or stale. Check `documents/` has files, re-run ingest. |
 | Answers are nonsense | `EMBEDDING_MODEL` differs between `ingest.py` and `retriever.py`. Make them match, re-ingest. |
-| `No ANTHROPIC_API_KEY` | `.env` isn't in this folder, or isn't named exactly `.env`. |
+| `No OPENAI_API_KEY` | `.env` isn't in this folder, or isn't named exactly `.env`. |
 
 Fallen behind? The finished version of every file is in the workshop repo under
 `course_b_study_buddy/project/`. **Read it, understand the file, then write your own** —

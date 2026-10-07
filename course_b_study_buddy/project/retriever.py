@@ -2,7 +2,7 @@
 retriever.py - finding the pieces of your documents that are relevant to a question.
 
 This file is the search half of the assistant, and it deliberately knows nothing about
-language models. You can test everything in here without spending a penny, which is
+language models. You can test everything in here for a tiny fraction of a cent, which is
 exactly why it's separate: when an answer comes out wrong, the first question is always
 "did the right chunk come back?" - and this file is where you find out.
 
@@ -10,7 +10,7 @@ It reads the index that ingest.py built. It never builds one.
 """
 
 from langchain_chroma import Chroma
-from langchain_huggingface import HuggingFaceEndpointEmbeddings
+from langchain_openai import OpenAIEmbeddings
 
 import config
 
@@ -18,14 +18,14 @@ import config
 # models are not comparable - the search would still run, and would return nonsense, with
 # no error to tell you. Change it in config.py, then always re-run ingest.py.
 #
-# Anthropic doesn't make an embedding model, so this half of the project comes from a
-# different company - and that's fine, because the two halves never needed to match.
-# To swap to a paid, more accurate model: pip install langchain-openai, replace these two
-# lines with the commented ones, and re-run ingest.py.
+# This half of the project happens to come from the same company as the chat model, but
+# it doesn't have to - the two halves never needed to match. To use a different
+# company's embeddings - or a free one on your own laptop - replace these two lines (and
+# the matching line in ingest.py), then re-run ingest.py. For example, with Ollama:
 #
-#   from langchain_openai import OpenAIEmbeddings
-#   embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
-embeddings = HuggingFaceEndpointEmbeddings(model=config.EMBEDDING_MODEL)
+#   from langchain_ollama import OllamaEmbeddings     # pip install langchain-ollama
+#   embeddings = OllamaEmbeddings(model="nomic-embed-text")
+embeddings = OpenAIEmbeddings(model=config.EMBEDDING_MODEL)
 
 # Open the index that ingest.py saved. Built once, when this file is first imported.
 #

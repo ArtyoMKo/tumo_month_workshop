@@ -81,22 +81,19 @@ Your prompt now starts with `(.venv)`. That is how you know it worked.
 
 ## Step 4 — Your API key
 
-Your teacher will give you a key starting `sk-ant-`. **It is a password.** Do not paste it
+Your teacher will give you a key starting `sk-proj-`. **It is a password.** Do not paste it
 into your code, into a message, or into a screenshot.
 
 Create a file called exactly `.env` inside `ai_workshop`:
 
 ```bash
-echo "ANTHROPIC_API_KEY=sk-ant-paste-your-key-here" >  .env
-echo "HF_TOKEN=hf_paste-your-token-here"            >> .env
+echo "OPENAI_API_KEY=sk-proj-paste-your-key-here" > .env
 ```
 
-Then open `.env` and replace both placeholders with the real values.
+Then open `.env` and replace the placeholder with the real key.
 
-**Two keys, two jobs.** `ANTHROPIC_API_KEY` is the one that answers your questions —
-your teacher gives you this. `HF_TOKEN` is for the model that turns your notes into
-numbers; it's free from huggingface.co/settings/tokens and technically optional, but
-without one the whole room shares a single rate limit.
+**One key, two jobs.** `OPENAI_API_KEY` powers both the model that answers your questions
+and the model that turns your notes into numbers so they can be searched.
 
 Rules for both lines: **no quotes, no spaces around the `=`, no space at the end.**
 
@@ -156,7 +153,7 @@ Three lines. Then pick the kernel in whichever notebook you open.
 |---|---|---|
 | `ModuleNotFoundError` | Wrong kernel, or you forgot Step 3 in this Terminal | Re-pick the kernel (Step 6), or re-run Step 3 |
 | `NameError: name 'x' is not defined` | You skipped a cell, or restarted the kernel | Run every cell from the top, in order |
-| `No ANTHROPIC_API_KEY found` | `.env` is missing, misnamed, or in the wrong folder | It must be exactly `.env`, inside `ai_workshop` |
+| `No OPENAI_API_KEY found` | `.env` is missing, misnamed, or in the wrong folder | It must be exactly `.env`, inside `ai_workshop` |
 | `No such file or directory` | You're in the wrong folder | `pwd` shows where you are; `cd` to your `ai_workshop` |
 
 Three of those four have nothing to do with the code you wrote. That's normal. Most of

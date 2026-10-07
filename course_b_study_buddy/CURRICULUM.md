@@ -55,10 +55,10 @@ finished assistant trustworthy in Lesson 5.
 | 1 | Meet & greet. Demo of the finished assistant: it answers from my notes with sources, then refuses a question they don't cover. "That refusal is what we're really building" | 10 |
 | 2 | **Presentation:** what a language model actually does — predicts text, has no database, no sense of "I don't know". What an API is, and why the key is a password | 15 |
 | 3 | **Hands-on:** environment setup — Python, VS Code extensions, venv, `pip install`, `.env`, select the kernel. **Hand out `PYTHON_CHEATSHEET.ipynb`** | 25 |
-| 4 | **Hands-on:** first call to Claude. Inspect the response object — it is not a string; look at what's actually inside it | 15 |
+| 4 | **Hands-on:** first call to the model. Inspect the response object — it is not a string; look at what's actually inside it | 15 |
 | 5 | **Presentation + hands-on:** system vs user messages. The system prompt is written by *you*, the programmer, and the user never sees it. Same question, three system prompts, three completely different assistants | 20 |
 | 6 | **Hands-on:** making a model follow rules. Constrain length, force a specific output format, make it answer in Armenian, make it refuse a topic. Then try to break your own rules from the user message — this is called prompt injection and it is an unsolved problem | 20 |
-| 7 | **Hands-on:** the one-line provider swap. `init_chat_model("anthropic:claude-haiku-4-5")` names no company anywhere else in the code — change the string, everything else keeps working | 10 |
+| 7 | **Hands-on:** the one-line provider swap. `init_chat_model("openai:gpt-5.4-mini")` names no company anywhere else in the code — change the string, everything else keeps working | 10 |
 | 8 | Wrap-up. **Homework: bring 3-10 of your own documents next time** | 5 |
 | | **Total** | **120** |
 
@@ -87,7 +87,7 @@ measure what it costs and discover the wall.
 | 4 | **Hands-on:** the brute-force fix — read the file, paste it into the system prompt, ask again. It works | 20 |
 | 5 | Break | 5 |
 | 6 | **Presentation:** why that doesn't scale — tokens, context windows, price per token, and the fact that too much context makes answers *worse* | 15 |
-| 7 | **Hands-on:** measure it. Token counts and real cost for a chapter, a textbook, a year of notes. Discover a textbook now *fits* — and still costs $75 per 100 questions and still degrades. "It fits" and "it's a good idea" are different questions | 25 |
+| 7 | **Hands-on:** measure it. Token counts and real cost for a chapter, a textbook, a year of notes. Discover a textbook now *fits* — and still costs $9.38 per 100 questions and still degrades. "It fits" and "it's a good idea" are different questions | 25 |
 | 8 | Wrap-up: state the goal of the next three lessons — "find the three paragraphs that matter, send only those" | 5 |
 | | **Total** | **120** |
 
@@ -130,19 +130,19 @@ have just hit.
 **Concepts:** embeddings · vectors and similarity · topical vs semantic closeness ·
 multilingual models · vector stores · metadata filtering
 
-**Tools & Skills:** `HuggingFaceEmbeddings` running locally · cosine similarity ·
+**Tools & Skills:** `OpenAIEmbeddings` · cosine similarity ·
 `Chroma` · `similarity_search` and scores · filtering by metadata
 
 The conceptual centre, and the lesson that feels like magic until it doesn't. Students
 measure the distance between meanings, find a question and its answer that share no words
-at all — and then ask a question in Armenian and watch it find an English note.
+at all — and then ask a question in Armenian and watch cross-language search fail, measured.
 
 | # | Activity | Min |
 |---|---|---|
 | 1 | Recap | 10 |
-| 2 | **Presentation:** embeddings without mathematics. Meaning as a position. Students physically place words on a drawn 2-axis space, then learn the real model uses 384 axes it invented itself | 20 |
+| 2 | **Presentation:** embeddings without mathematics. Meaning as a position. Students physically place words on a drawn 2-axis space, then learn the real model uses 1,536 axes it invented itself | 20 |
 | 3 | **Hands-on:** embed single words; predict each similarity score before running it. Discover `hot`/`cold` scores *high* — embeddings capture topic, not agreement | 20 |
-| 4 | **Hands-on:** the key result — a question and its answer sharing not one content word still score close, while an on-topic distractor scores far. Then the same across languages: an Armenian question finding an English answer | 15 |
+| 4 | **Hands-on:** the key result — a question and its answer sharing not one content word still score close, while an on-topic distractor scores far. Then the same across languages: an Armenian question scores an unrelated sentence *above* its English answer — a model weakness measured, not guessed | 15 |
 | 5 | Break | 5 |
 | 6 | **Presentation:** what a vector store is. Chroma on your laptop today; a hosted database at company scale; through LangChain that's a config change | 10 |
 | 7 | **Hands-on:** build a Chroma store over your own documents and search it. **No language model involved yet** — so it's obvious which half does what | 25 |
@@ -256,7 +256,7 @@ most professionally valuable habit in the course.
 | 1 | Recap | 10 |
 | 2 | **Presentation:** how would you know if you made it better? Write the test set *first*, tune against it, change one thing at a time | 15 |
 | 3 | **Hands-on:** write five questions with known answers. Score your assistant *before* changing anything — that's your baseline | 20 |
-| 4 | **Hands-on:** tune. `k`, chunk size (re-ingest), the system prompt, or the model — Haiku → Sonnet 5. One at a time, re-scoring after each. Does the pricier model actually win? | 25 |
+| 4 | **Hands-on:** tune. `k`, chunk size (re-ingest), the system prompt, or the model — `gpt-5.4-mini` → `gpt-5.4`. One at a time, re-scoring after each. Does the pricier model actually win? | 25 |
 | 5 | Break | 5 |
 | 6 | **Hands-on:** finish it — README, `requirements.txt`, confirm `.env` isn't in what you'd share. Then the fresh-machine test: swap folders with a partner and run theirs from their README alone | 20 |
 | 7 | **Showcase:** ~90 seconds each — what your assistant knows, one good answer, **one correct refusal**, one thing that broke on the way | 20 |

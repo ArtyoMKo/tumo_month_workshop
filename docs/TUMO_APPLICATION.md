@@ -38,7 +38,7 @@ Thursdays 19:30-21:30 | Sundays 14:00-16:00
   here; students get a cheatsheet to look things up in.
 - No AI, machine learning or maths background needed. Age 13-18.
 - From Day 2 each student brings 3-10 of their own .txt/.md files - revision notes, a
-  subject they study, rules of a game. Armenian, English or mixed. Shared storage is
+  subject they study, rules of a game. English works best for search. Shared storage is
   visible to everyone, so general subjects only, nothing personal. Backups provided.
 ```
 
@@ -95,8 +95,8 @@ guessing. Getting a computer to admit what it does not know is the hard part, an
 what this workshop is about.
 
 Students start in a notebook, learning to control how an AI behaves and how text becomes
-numbers that capture meaning rather than spelling, so that an Armenian question can find
-an English answer. Halfway through, the code leaves the notebook and becomes a real
+numbers that capture meaning rather than spelling, so that a question can find its
+answer even when they share no words. Halfway through, the code leaves the notebook and becomes a real
 Python project in VS Code. The last lessons cover loading their own material, diagnosing
 wrong answers, and measuring quality against a test set they write themselves.
 
@@ -104,7 +104,7 @@ wrong answers, and measuring quality against a test set they write themselves.
 To apply
 
 Send a short list of the documents you would want your assistant to know about, and why
-you chose them - Armenian, English or both. Tell us what programming you have done,
+you chose them. English notes work best. Tell us what programming you have done,
 including any Python. No AI experience required.
 
 Your documents go in your TUMO workshop folder, which others can see, so choose material
@@ -133,13 +133,13 @@ DAY 1 - SETUP AND YOUR FIRST AI CALL
 
 > STEP 1: Setup (25mn)
 - everything pre-installed; Python on the laptop, work in the shared folder
-- .env with two keys: ANTHROPIC_API_KEY and HF_TOKEN
+- .env with one key: OPENAI_API_KEY
 - Select Kernel - needed in every notebook, the #1 source of errors
 - shared storage is visible to everyone: next lesson, general-subject notes only
 - hand out the Python cheatsheet
 
-> STEP 2: First call to Claude (15mn)
-- init_chat_model("anthropic:claude-haiku-4-5").invoke(...)
+> STEP 2: First call to the model (15mn)
+- init_chat_model("openai:gpt-5.4-mini").invoke(...)
 - inspect the whole response, and the token counts that price everything
 
 > STEP 3: System prompts (20mn)
@@ -180,8 +180,8 @@ DAY 2 - WHY AI MAKES THINGS UP
 > Presentation: tokens, context windows, cost per question (15mn)
 
 > STEP 3: Measure why it cannot scale (25mn)
-- a textbook fits in the window but costs $12.50 per 100 questions; a year of notes is
-  $75 and does not fit
+- a textbook fits in the window but costs $9.38 per 100 questions; a year of notes is
+  $56.25 and does not fit
 - too much context also makes answers worse
 - "it fits" and "it's a good idea" are different questions
 
@@ -229,7 +229,7 @@ DAY 4 - EMBEDDINGS AND SEMANTIC SEARCH
 
 > Recap (10mn)
 > Presentation: embeddings without maths. Meaning as a position - students place word
-  cards on a drawn 2-axis space; the real model uses 384 axes it worked out itself (20mn)
+  cards on a drawn 2-axis space; the real model uses 1,536 axes it worked out itself (20mn)
 
 > STEP 1: Measure meaning (20mn)
 - students predict each similarity score before running it
@@ -238,8 +238,8 @@ DAY 4 - EMBEDDINGS AND SEMANTIC SEARCH
 
 > STEP 2: The result that makes this work (15mn)
 - a question and its answer sharing no word still score close; a word search scores zero
-- an Armenian question finds the English answer - no shared characters at all
-- hence the multilingual model; the English-only one makes Armenian retrieval random
+- across languages it breaks: an Armenian question scores an unrelated English line above
+  its answer. A real model limit, measured rather than hidden
 
 > Break (5mn)
 > Presentation: what a vector store is (10mn)
@@ -312,7 +312,7 @@ behind catches up without stopping the room.
 
 > STEP 3: retriever.py - open the saved index and find chunks (20mn)
 - must use the same embedding model as ingest.py, or search returns nonsense with no error
-- knows nothing about language models, so it can be tested for free
+- knows nothing about language models, so it can be tested almost for free
 
 > STEP 4: assistant.py - the system prompt and the answering function (15mn)
 - history=None, not history=[]: a list default is shared by every call
@@ -371,7 +371,7 @@ DAY 8 - TESTING, TUNING AND FINAL DEMO
 
 > STEP 2: Tune, one thing at a time (25mn)
 - how many chunks to retrieve; chunk size; the system prompt; the model itself
-- swapping Haiku for Sonnet doubles the price and often does not win - the retriever did
+- swapping gpt-5.4-mini for gpt-5.4 triples the price and often does not win - the retriever did
   the hard part. That is a real finding, not a failure.
 
 > Break (5mn)
@@ -395,27 +395,24 @@ set with before/after scores; a live demo including one correct refusal.
 ## What software will you require?
 ```
 All machines macOS. Everything runs on the laptop - no cloud platform, no server. All
-free except the Anthropic API. To install on all 16 machines before Day 1:
+free except the OpenAI API. To install on all 16 machines before Day 1:
 
 1. Python 3.12
 
 2. VS Code with two Microsoft extensions: "Python" and "Jupyter". Without Jupyter the
    lesson notebooks cannot be opened.
 
-3. The packages from the requirements.txt I provide (langchain, langchain-anthropic,
-   langchain-chroma, langchain-huggingface, langchain-text-splitters, chromadb,
-   python-dotenv, jupyter, ipykernel, numpy). About 50 MB - both AI models run on their
-   providers' servers, so there is no PyTorch. Please still install it in advance.
+3. The packages from the requirements.txt I provide (langchain, langchain-openai,
+   langchain-chroma, langchain-text-splitters, chromadb, python-dotenv, jupyter,
+   ipykernel, numpy). About 50 MB - both AI models run on OpenAI's servers, so there is
+   no PyTorch. Please still install it in advance.
 
-4. Two keys in the students' Python environment:
-   - ANTHROPIC_API_KEY - answers questions. I provide it; students cannot create their
-     own, as API accounts require 18+.
-   - HF_TOKEN - free Hugging Face token for the embedding model. Optional but
-     recommended: without it all 16 students share one anonymous rate limit. One shared
-     TUMO token is fine.
+4. One key in the students' Python environment:
+   - OPENAI_API_KEY - answers questions and creates embeddings. I provide it; students
+     cannot create their own, as API accounts require 18+.
 
-Network: outbound HTTPS every lesson to api.anthropic.com, huggingface.co and
-router.huggingface.co. Tell me in advance about any proxy or TLS inspection.
+Network: outbound HTTPS every lesson to api.openai.com. Tell me in advance about any
+proxy or TLS inspection.
 
 Students do not need administrator rights.
 ```
@@ -447,12 +444,13 @@ Provided by me, public at https://github.com/ArtyoMKo/tumo_month_workshop:
   purpose: no AI has seen it, so a correct answer proves retrieval worked.
 
 From TUMO:
-- one Anthropic API key with a spend limit. About $7 total for 16 students over 16 hours:
-  embeddings are free, so only the final answer is paid for, ~0.14 cents per question.
+- one OpenAI API key with a spend limit. About $6 total for 16 students over 16 hours:
+  embeddings cost well under a cent in total, so nearly all of it is the answers,
+  ~0.11 cents per question.
 - machines prepared as above, and a shared-storage directory per student
 
 From students:
-- 3-10 of their own .txt/.md files from Day 2, any language. Shared storage is visible to
+- 3-10 of their own .txt/.md files from Day 2, ideally in English. Shared storage is visible to
   everyone, so they are asked on Day 1 for general-subject notes only.
 ```
 
@@ -461,4 +459,4 @@ From students:
 2. Terminal: the assistant refusing — "That isn't in your documents."
 3. A follow-up exchange showing it remembers context
 4. The finished VS Code project tree
-5. Day 4: an Armenian question matching an English note
+5. Day 4: the similarity scores for a question and an answer sharing no words

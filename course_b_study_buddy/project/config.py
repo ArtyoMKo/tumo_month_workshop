@@ -36,48 +36,59 @@ DB_DIR = PROJECT_DIR / "vector_db"            # built by ingest.py - don't edit 
 # "provider:model-name". Change this one string and the whole program follows -
 # no other file mentions any provider by name.
 #
-# We use Claude Haiku 4.5: it is Anthropic's fastest and cheapest current model, and for
-# RAG that is exactly the right trade. The hard thinking in this project is done by the
-# retriever, not the model - by the time the model sees the question, the answer is
-# already sitting in front of it. You are paying it to read four paragraphs and write
-# four sentences, and Haiku does that very well.
+# We use GPT-5.4 mini: it is OpenAI's fast, cheap current model, and for RAG that is
+# exactly the right trade. The hard thinking in this project is done by the retriever,
+# not the model - by the time the model sees the question, the answer is already sitting
+# in front of it. You are paying it to read four paragraphs and write four sentences,
+# and the mini model does that very well.
 #
-#   CHAT_MODEL = "anthropic:claude-sonnet-5"     # smarter, ~2x the price - try it in Session 8
-#   CHAT_MODEL = "openai:gpt-4.1-mini"           # pip install langchain-openai
+#   CHAT_MODEL = "openai:gpt-5.4"                # smarter, ~3x the price - try it in Lesson 8
+#   CHAT_MODEL = "anthropic:claude-haiku-4-5"    # pip install langchain-anthropic
 #   CHAT_MODEL = "google-genai:gemini-2.5-flash" # pip install langchain-google-genai
 #   CHAT_MODEL = "ollama:llama3.2"               # runs HERE - no key, no internet
 #
-# Note that embeddings already run locally, so switching this to Ollama makes the entire
-# system offline. Nothing you own ever leaves the laptop.
-CHAT_MODEL = "anthropic:claude-haiku-4-5"
+# Switch this to Ollama AND the embeddings to a local model (see retriever.py), and the
+# entire system runs offline. Nothing you own ever leaves the laptop.
+CHAT_MODEL = "openai:gpt-5.4-mini"
 
 # temperature controls how varied the model's wording is. 0 means "always pick the most
 # likely next word", which is what you want for factual answers - we are not looking for
 # creativity here, we're looking for the same answer to the same question.
 TEMPERATURE = 0
 
+# Everything the model is built with, gathered in one dictionary for assistant.py.
+#
+# OpenAI's GPT-5 models can "reason" - think privately before answering. We don't need
+# that here (the answer is already in the retrieved chunks), and while it's switched on,
+# LangChain quietly ignores TEMPERATURE. So for OpenAI we switch it off. Other providers
+# don't have this setting, which is why it's only added for "openai:".
+MODEL_SETTINGS = {"temperature": TEMPERATURE}
+if CHAT_MODEL.startswith("openai:"):
+    MODEL_SETTINGS["reasoning_effort"] = "none"
+
 
 # ---------------------------------------------------------------------------
 # Which model turns text into vectors
 # ---------------------------------------------------------------------------
-# This model runs on Hugging Face's servers, not on your laptop. We send it a piece of
-# text, it sends back the numbers. That means nothing to download and nothing to install:
-# running it locally would need PyTorch, which is well over a gigabyte.
+# This model runs on OpenAI's servers, not on your laptop, and uses the same key as
+# CHAT_MODEL. We send it a piece of text, it sends back the numbers. That means nothing
+# to download and nothing to install.
 #
-# WHY THE MULTILINGUAL ONE: it understands Armenian, Russian and about fifty other
-# languages as well as English. The obvious alternative, "all-MiniLM-L6-v2", is slightly
-# sharper on English but is ENGLISH ONLY - on Armenian it scores a correct answer and a
-# completely unrelated sentence within 0.004 of each other, so retrieval becomes random
-# and nothing tells you it has. Since you choose your own notes, multilingual is the safe
-# default.
+# It costs $0.02 per million tokens - fifty times cheaper than the chat model. Embedding
+# every note you own and every question you ask all workshop costs less than a cent.
 #
-# Note this has nothing to do with CHAT_MODEL above. Anthropic does not make an embedding
-# model at all, so the two halves of this project come from different companies - a neat
-# illustration of why we kept them in separate files.
+# KNOW ITS LIMIT: it is very good in English and much weaker in Armenian. On our test
+# questions it found the right English chunk 7 times out of 8, but the right Armenian one
+# only 1 time in 4. If your notes are in Armenian, test retrieval before trusting answers.
+#
+#   EMBEDDING_MODEL = "text-embedding-3-large"   # slightly sharper, ~6x the price
+#
+# Note this has nothing to do with CHAT_MODEL above - the two are set separately, and
+# could even come from different companies. That's why they live in separate files.
 #
 # If you change this, you MUST re-run ingest.py. Vectors made by two different models are
 # not comparable, and searching one with the other returns nonsense without any error.
-EMBEDDING_MODEL = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
+EMBEDDING_MODEL = "text-embedding-3-small"
 
 
 # ---------------------------------------------------------------------------
@@ -102,17 +113,6 @@ RETRIEVE_K = 4
 # Without it, a missing key produces about forty lines of library traceback ending in
 # "api_key must be set" - technically true, completely unhelpful.
 
-# Hugging Face works without a token, but an anonymous request shares a rate limit with
-# everyone else on your network - and sixteen students in one room look like one very
-# busy user. A free token from huggingface.co/settings/tokens raises that limit and is
-# strongly recommended. Nothing breaks without it; you may just get asked to slow down.
-HF_TOKEN = os.getenv("HF_TOKEN") or os.getenv("HUGGINGFACEHUB_API_TOKEN")
-
-# Hand it to the library under the name it looks for, so the rest of the code doesn't
-# have to think about it.
-if HF_TOKEN:
-    os.environ.setdefault("HUGGINGFACEHUB_API_TOKEN", HF_TOKEN)
-
 
 KEY_FOR_PROVIDER = {
     "anthropic": "ANTHROPIC_API_KEY",
@@ -122,7 +122,7 @@ KEY_FOR_PROVIDER = {
 }
 
 PROVIDER = CHAT_MODEL.split(":")[0]
-REQUIRED_KEY = KEY_FOR_PROVIDER.get(PROVIDER, "ANTHROPIC_API_KEY")
+REQUIRED_KEY = KEY_FOR_PROVIDER.get(PROVIDER, "OPENAI_API_KEY")
 
 if REQUIRED_KEY and not os.getenv(REQUIRED_KEY):
     sys.exit(

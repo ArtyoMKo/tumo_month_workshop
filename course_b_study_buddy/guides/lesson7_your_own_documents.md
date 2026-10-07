@@ -82,7 +82,7 @@ waste an afternoon on this technique — you'll rewrite the prompt six times and
 will improve, because the model never had the information in the first place.
 
 `/sources` shows you exactly what was retrieved, with scores, **without calling the model
-at all**. It costs nothing. Use it constantly.
+at all**. It costs next to nothing. Use it constantly.
 
 ```
 > /sources why do plant cells have a cell wall?

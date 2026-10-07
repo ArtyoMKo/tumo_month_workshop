@@ -18,7 +18,10 @@ import retriever
 #
 # Note that this line names no company. It only knows the string from config.py - which
 # is exactly why changing providers is a one-line change and not a rewrite.
-model = init_chat_model(config.CHAT_MODEL, temperature=config.TEMPERATURE)
+#
+# The ** hands over everything in the MODEL_SETTINGS dictionary as if you had typed it
+# here - temperature=0, and so on.
+model = init_chat_model(config.CHAT_MODEL, **config.MODEL_SETTINGS)
 
 
 # ---------------------------------------------------------------------------

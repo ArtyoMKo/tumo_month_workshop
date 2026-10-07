@@ -3,9 +3,9 @@
 Read this before Lesson 1.
 
 > **Scope:** the track being taught is **AI Study Buddy** (RAG over the student's own
-> documents), 8 lessons × 2 hours, running on Anthropic's Claude Haiku 4.5 under TUMO's
-> contract. **Course A (AI Image Studio) is not scheduled** and is kept in this repo for
-> reference only; it cannot run on Anthropic, which has no image-generation model.
+> documents), 8 lessons × 2 hours, running on OpenAI's GPT-5.4 mini on TUMO's
+> OpenAI API key. **Course A (AI Image Studio) is not scheduled** and is kept in this repo
+> for reference only.
 >
 > **Python is not taught.** Students arrive with basic Python from other TUMO tracks.
 > They get `PYTHON_CHEATSHEET.ipynb` in Lesson 1 as a lookup reference and it is never
@@ -18,20 +18,21 @@ Read this before Lesson 1.
 
 **All 16 machines are macOS**, and TUMO IT prepares them in advance. The requirements
 list lives in the software section of `TUMO_APPLICATION.md`: Python 3.12, VS Code with
-the Python and Jupyter extensions, the packages from `requirements.txt`, the embedding
-model pre-downloaded, and the API key available as `ANTHROPIC_API_KEY`.
+the Python and Jupyter extensions, the packages from `requirements.txt`, and the API key
+available as `OPENAI_API_KEY`.
 
 | Scenario | Lesson 1 setup | Consequence |
 |---|---|---|
 | IT prepared the machines (expected) | ~15 min | Lesson 1 runs as written |
-| IT did not | 45+ min | Lesson 1 is lost. `pip install` pulls ~2 GB per machine; the embedding model is another 470 MB × 16 over shared wifi |
+| IT did not | 45+ min | Lesson 1 is lost to `pip install` × 16 over shared wifi |
 
 Confirm two things with IT beforehand: the **student directory path is identical on every
 machine**, and the **exact command to activate the Python environment** — students need
 it on the board in Lesson 1.
 
-**The critical item is §4 of that document** — pre-downloading the embedding model. It is
-the single most likely way to lose a lesson.
+**The critical items are §3 and §4 of that document** — the packages and the key. Run
+`check_setup.py` on one lab machine the day before (see §4 below); it is the single best
+way not to lose a lesson.
 
 ### Students change laptops between lessons
 
@@ -55,7 +56,7 @@ almost always a forgotten `source`.
 
 **Do not let students create their own venv on shared storage.** A venv hardcodes
 absolute paths and symlinks a specific Python binary; on network storage it is slow and
-fragile, and 16 copies of PyTorch is ~18 GB.
+fragile, and 16 copies of the same packages is pure waste.
 
 ### Privacy — mention it in Lesson 1, before the homework
 
@@ -72,34 +73,36 @@ key everyone already has, so nothing is exposed that isn't already.
 
 ## 2. API keys and ages
 
-**The workshop runs on Anthropic**, under TUMO's existing contract. The model is
-**Claude Haiku 4.5** (`claude-haiku-4-5`) — the cheapest current Claude model.
+**The workshop runs on OpenAI**, on TUMO's organisation API key. The model is
+**GPT-5.4 mini** (`gpt-5.4-mini`) — OpenAI's fast, cheap current model.
 
 API accounts require the account holder to be 18+, so students aged 13-18 **cannot** be
 asked to create their own. Use a **TUMO-owned key** distributed to students, and set a
-spend limit on it in the Anthropic Console.
+budget limit on its project in the OpenAI dashboard (platform.openai.com).
 
-Keys begin `sk-ant-`. `check_setup.py` checks that prefix, because a student who pastes
-an OpenAI-shaped key from some other tutorial gets a clear message instead of a 401.
+Keys begin `sk-proj-`. `check_setup.py` checks the `sk-` prefix and rejects Anthropic
+`sk-ant-` keys, so a student who pastes a key from some other tutorial gets a clear
+message instead of a 401.
 
 ### Budget
 
-Haiku 4.5 is $1.00 per million input tokens and $5.00 per million output tokens.
-Embeddings cost **nothing** — they run on the laptop.
+GPT-5.4 mini is $0.75 per million input tokens and $4.50 per million output tokens.
+Embeddings (`text-embedding-3-small`, $0.02 per million tokens) cost **well under a cent**
+for the whole group and course.
 
 One question ≈ 850 input tokens (four retrieved chunks plus the system prompt) and
-~100 output tokens ≈ **0.14 cents**.
+~100 output tokens ≈ **0.11 cents**.
 
 | | |
 |---|---|
-| Per student, per 2-hour lesson (~40 questions) | ~6 cents |
-| Per student, whole 16-hour course | ~45 cents |
-| **Per group of 16, whole course** | **~$7** |
+| Per student, per 2-hour lesson (~40 questions) | ~4.4 cents |
+| Per student, whole 16-hour course | ~35 cents |
+| **Per group of 16, whole course** | **~$6** |
 
 Budget **$10 per group** and you have comfortable headroom, including Lesson 8 where
-some students will switch to Sonnet 5 to compare. Set the cap anyway — a student who puts
-a model call inside a `for` loop with the wrong range is learning, not misbehaving, but
-the bill is real.
+some students will switch to `gpt-5.4` (~3× the price) to compare. Set the cap anyway —
+a student who puts a model call inside a `for` loop with the wrong range is learning, not
+misbehaving, but the bill is real.
 
 ## 2b. Student materials, lesson by lesson
 
@@ -122,22 +125,24 @@ who finish setup early.
 
 ## 3. Running fully free / offline
 
-Embeddings are free (Hugging Face hosts that model at no charge), Chroma is local, and
-only the answering model costs anything. Switch `CHAT_MODEL` to `ollama:llama3.2` and the
-course runs with **no paid API at all** - worth doing once in Lesson 5 if the lab can run
-Ollama, as a live demonstration that the provider-agnostic layer was worth building.
+Chroma is local, and only the two OpenAI models cost anything. Switch `CHAT_MODEL` to
+`ollama:llama3.2` and the answering half runs with **no paid API** - worth doing once in
+Lesson 5 if the lab can run Ollama, as a live demonstration that the provider-agnostic
+layer was worth building.
 
-**Fully offline** needs one more step now that embeddings are hosted: swap
-`HuggingFaceEndpointEmbeddings` back to `HuggingFaceEmbeddings` (the same model, run
-locally) and add `sentence-transformers` to requirements. Good extension for a fast
-student, and a good answer to "could a hospital run this?" - but it costs the ~1.2 GB
-PyTorch install we deliberately avoided, so don't do it lab-wide.
+**Fully offline** needs one more step: swap `OpenAIEmbeddings` for `OllamaEmbeddings`
+(the comment in `retriever.py` shows how) and re-run `ingest.py`. Good extension for a
+fast student, and a good answer to "could a hospital run this?" - but it's a
+multi-gigabyte model download, so don't do it lab-wide.
 
-Note that Course B has **two different vendors in it by necessity**: Anthropic answers the
-questions, and the embedding model is a Hugging Face one, because Anthropic doesn't make an
-embedding model. Far from being awkward, that's the cleanest possible demonstration of why
-the retriever and the assistant were kept in separate files — Lesson 4 makes the point
-explicitly.
+**Armenian is the known weak spot.** `text-embedding-3-small` is strong in English and
+much weaker in Armenian: on the Kestrel files it put the right chunk in the top 4 for 7 of
+8 English questions but only 1 of 4 Armenian ones, and an Armenian question scores an
+unrelated English sentence *above* its answer. Lesson 4 measures this openly. Steer
+students towards English notes, and have anyone with Armenian notes check retrieval
+(`/sources` in `main.py`) before trusting answers. It is also the cleanest possible
+demonstration of why the retriever and the assistant were kept in separate files: a
+better multilingual embedding model could be swapped in without touching the rest.
 
 ## 4. Pre-flight check - do this with a real key before Lesson 1
 
@@ -149,9 +154,9 @@ python check_setup.py
 ```
 
 It runs eight checks in dependency order and stops at the first failure with a specific
-fix: Python version, every import, the `ANTHROPIC_API_KEY` and its `sk-ant-` prefix, the
-local embedding model, the documents folder, the built index, a retrieval with no model
-involved, and finally one real Claude call. The expensive check is last on purpose.
+fix: Python version, every import, the `OPENAI_API_KEY` and its `sk-` prefix, the
+embedding model, the documents folder, the built index, a retrieval with no model
+involved, and finally one real model call. The expensive check is last on purpose.
 
 ## 5. Group size and pacing
 
@@ -173,7 +178,7 @@ Cut in this order, and cut rather than compress:
 
 (1) The t-SNE visualisation in Lesson 4 — it's beautiful and completely optional.
 (2) The chunk-size tuning experiment in Lesson 8.
-(3) The Haiku-vs-Sonnet comparison in Lesson 8, if the test sets aren't ready in time.
+(3) The `gpt-5.4-mini`-vs-`gpt-5.4` comparison in Lesson 8, if the test sets aren't ready in time.
 
 **Never cut Lesson 5** — that's where RAG actually closes the loop — and **never cut
 Lesson 6**, the notebook-to-project move, which is the point of the whole course.

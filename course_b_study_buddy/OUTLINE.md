@@ -23,7 +23,7 @@ wrongly. Lesson 2 then tries the obvious fix, pasting the whole document in, and
 breaks too, for reasons students can measure themselves. Only then does chunking, and
 embedding, and retrieval, arrive — each one as an answer to a problem they already have.
 
-The assistant answers with **Claude Haiku 4.5**, Anthropic's cheapest current model — and
+The assistant answers with **GPT-5.4 mini**, OpenAI's fast, cheap current model — and
 that is a deliberate teaching point rather than a budget compromise. In RAG the model isn't
 doing the hard part: retrieval has already found the answer and put it in front of it, so
 the job is to read four paragraphs and write four sentences without inventing anything.
@@ -32,10 +32,9 @@ against their own questions.
 
 Everything runs through LangChain, so the model, the embeddings and the vector store are
 each swappable on one line — moving to a hosted vector database later is a change of
-configuration, not a rewrite. It also demonstrates something useful: Anthropic doesn't
-make an embedding model at all, so this project already spans three organisations
-(Anthropic for answers, Hugging Face for embeddings, Chroma for storage) and is beholden
-to none of them.
+configuration, not a rewrite. It also demonstrates something useful: OpenAI's embeddings are
+strong in English but weak in Armenian, which students measure for themselves in Lesson 4 —
+a concrete reason why being able to swap one piece without touching the rest matters.
 
 Students arrive with basic Python from other TUMO tracks, so Python is **not taught**
 here. They receive `PYTHON_CHEATSHEET.ipynb` in Lesson 1 - a JavaScript↔Python translation
@@ -76,24 +75,23 @@ conversation memory in Lesson 5, both of which make the finished assistant bette
 - **Python 3.12** and **VS Code** + Python/Jupyter extensions — installed by TUMO IT in advance
 - A personal directory on TUMO shared storage — students may change laptops between lessons. Note it is readable by everyone, so students are asked to bring general-subject notes only.
 - `PYTHON_CHEATSHEET.ipynb`, provided - a lookup reference, not homework
-- An **Anthropic API key**, supplied by TUMO (students cannot create their own - see `docs/TEACHER_NOTES.md`)
+- An **OpenAI API key**, supplied by TUMO (students cannot create their own - see `docs/TEACHER_NOTES.md`)
 - **Their own documents** — 3 to 10 text or markdown files. Students should be told to bring
   these from Lesson 2 onward. Have a backup set ready; some will forget.
 
 **Provided by the workshop**
-- `requirements.txt` (LangChain, langchain-anthropic, langchain-chroma, langchain-huggingface, sentence-transformers, chromadb, python-dotenv, jupyter)
+- `requirements.txt` (LangChain, langchain-openai, langchain-chroma, langchain-text-splitters, chromadb, python-dotenv, jupyter)
 - A sample knowledge base, so nobody is blocked on not having material
 - Five lesson notebooks (Lessons 1-5) and three student guides (Lessons 6-8)
 - `check_setup.py`
 
-**⚠️ Preparation before Lesson 1 — this one is not optional.** The local embedding model
-pulls PyTorch (~800 MB) plus the model itself. Sixteen students triggering that at once on
-shared wifi will cost you a lesson. It must be pre-cached on every machine the day before —
-exact command in `docs/TEACHER_NOTES.md`.
+**⚠️ Preparation before Lesson 1 — this one is not optional.** Packages installed on every
+machine and one run of `check_setup.py` with the real key, the day before — details in
+`docs/TEACHER_NOTES.md`.
 
-**No GPU, no hosted vector database, no server, no deployment.** Embeddings and the vector
-store both run on the student's own laptop; the only network call is the final answer from
-Claude — and even that can be switched to a local model with Ollama.
+**No GPU, no hosted vector database, no server, no deployment.** The vector store runs on
+the student's own laptop; the only network calls are to OpenAI, for embeddings and answers —
+and both can be switched to local models with Ollama.
 
 ## 4. Outcome — the final deliverable
 
